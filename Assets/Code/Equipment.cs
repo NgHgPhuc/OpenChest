@@ -9,7 +9,7 @@ public class Equipment
         None,
         Weapon,
         Helmet,
-        Paudlron,
+        Pauldron,
         Necklace,
         Vambrace,
         Gloves,
@@ -22,17 +22,22 @@ public class Equipment
         Ring,
 
     }
+    public Type type;
+
+    public Sprite Icon;
+
     public enum Quality
     {
         None,
         Common, //White
-        UnCommon, //Green
+        Uncommon, //Green
         Rare, //Blue
         Epic, //Violet
-        Exotic, //Purple
+        Exotic, //Yellow
         Legendary, //Orange
         Mythic //red
     }
+    public Quality quality;
 
     public int Level;
 
@@ -53,4 +58,6 @@ public class Equipment
     }
 
     public Dictionary<Passive, float> PassiveList = new Dictionary<Passive, float>();
+
+    public float PowerPoint;
 }

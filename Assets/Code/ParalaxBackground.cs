@@ -14,7 +14,6 @@ public class ParalaxBackground : MonoBehaviour
         Part.Add(transform.GetChild(2).gameObject);
 
         LoopPos = Part[2].transform.position+new Vector3(720,0,0);
-        Debug.Log(Part[2].transform.position);
     }
 
     // Update is called once per frame
