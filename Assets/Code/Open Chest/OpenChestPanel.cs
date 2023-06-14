@@ -9,11 +9,15 @@ public class OpenChestPanel : MonoBehaviour
 
     public Slider HealthBar;
 
+    public Button LevelUpButton;
+    public GameObject UpgradeChestPanel;
     void Start()
     {
         CurrentHealth = MaxHealth;
         HealthBar.maxValue = MaxHealth;
         HealthBar.value = CurrentHealth;
+
+        LevelUpButton.onClick.AddListener(LevelUpFunc);
     }
 
     public void ClickOnChest()
@@ -30,5 +34,10 @@ public class OpenChestPanel : MonoBehaviour
         HealthBar.value = CurrentHealth;
         ResourceManager.Instance.ChangeGold(20);
         ChestHandlerManager.Instance.RandomEquipment();
+    }
+
+    void LevelUpFunc()
+    {
+        UpgradeChestPanel.SetActive(true);
     }
 }

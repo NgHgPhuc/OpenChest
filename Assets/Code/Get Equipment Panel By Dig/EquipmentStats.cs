@@ -14,7 +14,7 @@ public class EquipmentStats : MonoBehaviour
     {
         new Color(240f/255, 240f/255, 240f/255), new Color(96f/255, 241f/255, 72f/255), //White,Green
         new Color(71f/255, 160f/255, 241f/255), new Color(255f/255,81f/255,222f/255),   //Blue, Purple
-        new Color(255f/255, 255f/255, 102f/255), new Color(230f/255, 69f/255, 255f/255),//Yellow , Orange
+        new Color(255f/255, 255f/255, 102f/255), new Color(255f/255, 199f/255, 69f/255),//Yellow , Orange
         new Color(255f/255, 69f/255, 71f/255)                                            //Red
     };
     void Start()

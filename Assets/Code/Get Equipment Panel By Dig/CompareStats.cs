@@ -30,7 +30,6 @@ public class CompareStats : MonoBehaviour
         for (int i = 0; i <= 3; i++)
         {
             float New_Stats = NewEquipmentStats.GetStatsFloat()[i];
-            print(New_Stats);
             float Old_Stats = OldEquipmentStats.GetStatsFloat()[i];
             CompareStat(New_Stats, Old_Stats, NewEquipmentStats.GetStatsText()[i]);
         }

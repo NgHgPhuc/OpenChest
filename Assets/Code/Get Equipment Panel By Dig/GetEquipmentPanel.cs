@@ -6,7 +6,7 @@ using System;
 public class GetEquipmentPanel : MonoBehaviour
 {
     public SetEquipmentPanel NewEquipmentPanel;
-    Equipment NewEquiment;
+    Equipment NewEquipment;
     public CompareStats compareNewAndOld;
     public SetEquipmentPanel OldEquipmentPanel;
     Equipment OldEquipment;
@@ -28,14 +28,9 @@ public class GetEquipmentPanel : MonoBehaviour
 
     public void SetNewEquipment(Equipment equipment)
     {
-        this.NewEquiment = equipment;
+        this.NewEquipment = equipment;
         NewEquipmentPanel.SetEquipment(equipment);
         compareNewAndOld.Compare();
-        //try
-        //{
-        //    compareNewAndOld.Compare();
-        //}
-        //catch (Exception) { }
     }
 
     public void SetOldEquipment(Equipment equipment)
@@ -47,31 +42,35 @@ public class GetEquipmentPanel : MonoBehaviour
 
     public void DropFunc()
     {
-        ResourceManager.Instance.ChangeGold(NewEquiment.PowerPoint);
-        this.NewEquiment = null;
+        ResourceManager.Instance.ChangeGold(NewEquipment.PowerPoint);
+        ResourceManager.Instance.GainExp(NewEquipment.PowerPoint/2);
+        this.NewEquipment = null;
         this.OldEquipment = null;
         gameObject.SetActive(false);
     }
 
     public void EquipFunc()
     {
-        EquipmentPanelManager.Instance.SetEquipmentSlot(this.NewEquiment);
+        EquipmentPanelManager.Instance.SetEquipmentSlot(this.NewEquipment);
+        StatsPanelManager.Instance.Unequip(this.OldEquipment);
+        StatsPanelManager.Instance.Equip(this.NewEquipment);
+
         if(this.OldEquipment == null)
         {
-            this.NewEquiment = null;
+            this.NewEquipment = null;
             gameObject.SetActive(false);
             return;
         }
         Swap_OldAndNew();
-        SetNewEquipment(this.NewEquiment);
+        SetNewEquipment(this.NewEquipment);
         SetOldEquipment(this.OldEquipment);
         compareNewAndOld.Compare();
     }
     void Swap_OldAndNew()
     {
         Equipment s = new Equipment();
-        s = this.NewEquiment;
-        this.NewEquiment = this.OldEquipment;
+        s = this.NewEquipment;
+        this.NewEquipment = this.OldEquipment;
         this.OldEquipment = s;
     }
 }
