@@ -10,6 +10,8 @@ public class ProbPanel : MonoBehaviour
     // Start is called before the first frame update
     public Button UpgradeButton;
     public Transform LevelPanel;
+    public TextMeshProUGUI CostText;
+
     void Start()
     {
         UpgradeButton.onClick.AddListener(UpgradeFunc);
@@ -47,13 +49,13 @@ public class ProbPanel : MonoBehaviour
         LevelPanel.Find("Current Level").GetComponent<TextMeshProUGUI>().SetText("Lv."+currentLevel);
         LevelPanel.Find("Next Level").GetComponent<TextMeshProUGUI>().SetText("Lv." + (currentLevel+1));
 
+        CostText.SetText(nextLevelProb.Cost.ToString());
     }
 
     void UpgradeFunc()
     {
         ChestManager.Instance.UpgradeChest();
         ShowProb();
-
     }
 
     public void ClosePanel()

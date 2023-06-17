@@ -3,10 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 public class ChestHandlerManager : MonoBehaviour
 {
     public GetEquipmentPanel getEquipmentPanel;
     public static ChestHandlerManager Instance { get; private set; }
+
+    public int ChestCount;
+    public TextMeshProUGUI ChestCountShow;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -20,11 +25,15 @@ public class ChestHandlerManager : MonoBehaviour
     }
     void Start()
     {
+        ChestCountShow.SetText(ChestCount.ToString());
     }
 
 
     public void RandomEquipment()
     {
+        if (ChestCount <= 0)
+            return;
+
         Equipment NewEquipment = ChestManager.Instance.RandomEquipment();
 
         getEquipmentPanel.gameObject.SetActive(true);
@@ -33,6 +42,7 @@ public class ChestHandlerManager : MonoBehaviour
         Equipment OldEquipment = EquipmentPanelManager.Instance.GetEquipmentSlot(NewEquipment.type);
         getEquipmentPanel.SetOldEquipment(OldEquipment);
 
-
+        ChestCount -= 1;
+        ChestCountShow.SetText(ChestCount.ToString());
     }
 }

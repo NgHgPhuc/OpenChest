@@ -7,6 +7,8 @@ public class LevelProbRandom : ScriptableObject
 {
     public List<float> RandomRate = new List<float>();
 
+    public float Cost;
+
     public List<float> GetSumRandomRate()
     {
         float s = 0;

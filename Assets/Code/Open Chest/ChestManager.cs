@@ -13,9 +13,10 @@ public class ChestManager : MonoBehaviour
 
     public Dictionary<string, Sprite> SkinCloset { get; private set; }
 
-    public List<float> levelProbRandoms = new List<float>();
-
     public static ChestManager Instance { get; private set; }
+
+    LevelProbRandom CurrentLevelProb;
+    LevelProbRandom NextLevelProb;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -30,7 +31,8 @@ public class ChestManager : MonoBehaviour
 
     void Start()
     {
-        levelProbRandoms = FindCurrentLevel().GetSumRandomRate();
+        CurrentLevelProb = FindCurrentLevel();
+        NextLevelProb = FindCurrentLevel();
     }
 
     // Update is called once per frame
@@ -101,7 +103,7 @@ public class ChestManager : MonoBehaviour
         int Quality = 0;
         for (int i=0; i < 7; i++)
         {
-            if(r < levelProbRandoms[i])
+            if(r < CurrentLevelProb.GetSumRandomRate()[i])
             {
                 Quality = i + 1;
                 break;
@@ -163,9 +165,15 @@ public class ChestManager : MonoBehaviour
 
     public void UpgradeChest()
     {
-        if(CurrentLevel < MaxLevel)
-            CurrentLevel += 1;
+        if (!ResourceManager.Instance.CheckEnought_Gold(CurrentLevelProb.Cost))
+            return;
 
-        levelProbRandoms = FindCurrentLevel().GetSumRandomRate();
+        if (CurrentLevel >= MaxLevel)
+            return;
+
+        ResourceManager.Instance.ChangeGold(CurrentLevelProb.Cost);
+        CurrentLevel += 1;
+        CurrentLevelProb = FindCurrentLevel();
+        NextLevelProb = FindNextLevel();
     }
 }

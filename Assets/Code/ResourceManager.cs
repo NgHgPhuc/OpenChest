@@ -75,4 +75,9 @@ public class ResourceManager : MonoBehaviour
         Level.SetText(PlayerLevel.ToString());
 
     }
+
+    public bool CheckEnought_Gold(float value)
+    {
+        return (Gold > value);
+    }
 }
