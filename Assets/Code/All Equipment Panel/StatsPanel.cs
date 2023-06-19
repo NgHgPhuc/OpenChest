@@ -6,7 +6,7 @@ using System;
 
 public class StatsPanel : MonoBehaviour
 {
-    float Value=0;
+    protected float Value=0;
     TextMeshProUGUI StatsValue;
     void Start()
     {
@@ -16,10 +16,13 @@ public class StatsPanel : MonoBehaviour
 
     public void ShowStatsValue()
     {
+        if(StatsValue == null)
+            StatsValue = transform.Find("Stats Value").GetComponent<TextMeshProUGUI>();
+
         StatsValue.SetText(this.Value.ToString());
     }
 
-    public void SetStatsValue(float value)
+    public virtual void SetStatsValue(float value)
     {
         this.Value += value;
         this.Value = (float)Math.Round(this.Value, 2);

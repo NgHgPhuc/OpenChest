@@ -50,7 +50,7 @@ public class ChestManager : MonoBehaviour
 
         equipment.quality = RandomQuality();
 
-        string LinkImage = equipment.type + "/" + equipment.quality;
+        string LinkImage = "Equipment/" + equipment.type + "/" + equipment.quality;
         try
         {
             Texture2D texture = Resources.Load<Texture2D>(LinkImage);
@@ -152,14 +152,14 @@ public class ChestManager : MonoBehaviour
 
     public LevelProbRandom FindCurrentLevel()
     {
-        string LinkData = "ScriptableObject/Level "+ CurrentLevel;
+        string LinkData = "Equipment/" + "ScriptableObject/Level " + CurrentLevel;
         return Resources.Load<LevelProbRandom>(LinkData);
     }
     public LevelProbRandom FindNextLevel()
     {
         int NextLevel = CurrentLevel + 1;
         if (NextLevel > MaxLevel) NextLevel = MaxLevel;
-        string LinkData = "ScriptableObject/Level " + NextLevel;
+        string LinkData = "Equipment/" + "ScriptableObject/Level " + NextLevel;
         return Resources.Load<LevelProbRandom>(LinkData);
     }
 
