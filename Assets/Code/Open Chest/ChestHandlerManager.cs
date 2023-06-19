@@ -39,8 +39,10 @@ public class ChestHandlerManager : MonoBehaviour
         getEquipmentPanel.gameObject.SetActive(true);
         getEquipmentPanel.SetNewEquipment(NewEquipment);
 
-        Equipment OldEquipment = EquipmentPanelManager.Instance.GetEquipmentSlot(NewEquipment.type);
+        Equipment OldEquipment = EquipmentPanelManager.Instance.GetEquipment(NewEquipment.type);
         getEquipmentPanel.SetOldEquipment(OldEquipment);
+
+        getEquipmentPanel.NewPanel.SetActive(true);
 
         ChestCount -= 1;
         ChestCountShow.SetText(ChestCount.ToString());

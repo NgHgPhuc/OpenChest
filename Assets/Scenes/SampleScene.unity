@@ -1217,6 +1217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd653ef3abde04fa29e809707572af04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StatsPlus: 10
+  PassivePlus: 10
 --- !u!1 &90679248
 GameObject:
   m_ObjectHideFlags: 0
@@ -1280,6 +1282,7 @@ MonoBehaviour:
   NewEquipmentPanel: {fileID: 1001794420}
   compareNewAndOld: {fileID: 1001794421}
   OldEquipmentPanel: {fileID: 1026526674}
+  NewPanel: {fileID: 1233133219}
   DropButton: {fileID: 745999847}
   EquipButton: {fileID: 629894030}
 --- !u!1 &99225738
@@ -4136,7 +4139,6 @@ GameObject:
   - component: {fileID: 313255174}
   - component: {fileID: 313255177}
   - component: {fileID: 313255176}
-  - component: {fileID: 313255175}
   m_Layer: 5
   m_Name: Weapon Slot Panel
   m_TagString: Untagged
@@ -4167,18 +4169,6 @@ RectTransform:
   m_AnchoredPosition: {x: 55.45169, y: 35.974213}
   m_SizeDelta: {x: 50.0435, y: -133.8021}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &313255175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 313255173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd653ef3abde04fa29e809707572af04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &313255176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12575,7 +12565,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.081479914, y: 0.24919084}
   m_AnchorMax: {x: 0.9146801, y: 0.33900002}
-  m_AnchoredPosition: {x: 1.5, y: -1.0899963}
+  m_AnchoredPosition: {x: 1.5, y: -1.0899658}
   m_SizeDelta: {x: -1.3899994, y: -1.3330078}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &886702574
@@ -20252,10 +20242,10 @@ RectTransform:
   m_Father: {fileID: 941629392}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -107.73273, y: 660}
-  m_SizeDelta: {x: -783.3549, y: -2034.8591}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -117, y: 660}
+  m_SizeDelta: {x: 656.6451, y: 925.14087}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1456852893
 CanvasRenderer:
@@ -25081,7 +25071,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.23174807, y: 0}
   m_AnchorMax: {x: 0.40100002, y: 1}
-  m_AnchoredPosition: {x: -0.8701172, y: -0.062332153}
+  m_AnchoredPosition: {x: -0.8691101, y: -0.062332153}
   m_SizeDelta: {x: -0.4396019, y: -0.1246}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1772154483
@@ -26079,7 +26069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   getEquipmentPanel: {fileID: 90679251}
-  ChestCount: 2
+  ChestCount: 200
   ChestCountShow: {fileID: 1909779377}
 --- !u!4 &1814114200
 Transform:
@@ -27911,7 +27901,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1327752, y: 0.056200568}
   m_AnchorMax: {x: 0.624, y: 0.9462006}
-  m_AnchoredPosition: {x: -6.2780914, y: 0.37403107}
+  m_AnchoredPosition: {x: -6.2781067, y: 0.37403107}
   m_SizeDelta: {x: -13.4761, y: 0.748}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1963539803

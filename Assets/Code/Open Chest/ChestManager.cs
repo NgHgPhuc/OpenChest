@@ -146,7 +146,6 @@ public class ChestManager : MonoBehaviour
     {
         float PassiveValue = UnityEngine.Random.Range(0f* Quality, 2f* Quality);
         PassiveValue = (float)Math.Round(PassiveValue, 2);
-        print(PassiveValue);
         return PassiveValue;
     }
 

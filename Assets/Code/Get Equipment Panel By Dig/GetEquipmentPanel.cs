@@ -11,6 +11,8 @@ public class GetEquipmentPanel : MonoBehaviour
     public SetEquipmentPanel OldEquipmentPanel;
     Equipment OldEquipment;
 
+    public GameObject NewPanel;
+
     public Button DropButton;
     public Button EquipButton;
 
@@ -51,9 +53,9 @@ public class GetEquipmentPanel : MonoBehaviour
 
     public void EquipFunc()
     {
-        EquipmentPanelManager.Instance.SetEquipmentSlot(this.NewEquipment);
-        StatsPanelManager.Instance.Unequip(this.OldEquipment);
-        StatsPanelManager.Instance.Equip(this.NewEquipment);
+        EquipmentPanelManager.Instance.SetEquipment(this.NewEquipment);
+        //StatsPanelManager.Instance.Unequip(this.OldEquipment);
+        //StatsPanelManager.Instance.Equip(this.NewEquipment);
 
         if(this.OldEquipment == null)
         {
@@ -65,6 +67,8 @@ public class GetEquipmentPanel : MonoBehaviour
         SetNewEquipment(this.NewEquipment);
         SetOldEquipment(this.OldEquipment);
         compareNewAndOld.Compare();
+
+        NewPanel.SetActive(!NewPanel.activeSelf);
     }
     void Swap_OldAndNew()
     {

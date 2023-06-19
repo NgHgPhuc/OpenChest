@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+
+//In Get new equipment after open chest
 public class SetEquipmentPanel : MonoBehaviour
 {
     EquipmentSlot equipmentSlot;

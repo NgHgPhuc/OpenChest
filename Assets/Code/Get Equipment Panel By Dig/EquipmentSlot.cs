@@ -42,4 +42,9 @@ public class EquipmentSlot : MonoBehaviour
         BackgroundSlot.color = QualityColor[(int)equipment.quality-1];
     }
 
+    public Color BackgroundColor()
+    {
+        return BackgroundSlot.color;
+    }
+
 }

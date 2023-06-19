@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class Equipment
@@ -60,4 +61,32 @@ public class Equipment
     public Dictionary<Passive, float> PassiveList = new Dictionary<Passive, float>();
 
     public float PowerPoint;
+
+    public float calPowerPoint()
+    {
+        float powerPoint = this.AttackDamage * 3 + this.HealthPoint * 1.5f + this.DefensePoint * 5 + this.Speed * 8;
+        foreach (KeyValuePair<Passive, float> kvp in this.PassiveList)
+            powerPoint += kvp.Value * 30;
+
+        return powerPoint;
+    }
+
+    public Equipment Clone()
+    {
+        Equipment e = new Equipment();
+
+        e.type = this.type;
+        e.Icon = this.Icon;
+        e.quality = this.quality;
+        e.Level = this.Level;
+        e.AttackDamage = this.AttackDamage;
+        e.HealthPoint = this.HealthPoint;
+        e.DefensePoint = this.DefensePoint;
+        e.Speed = this.Speed;
+        foreach (KeyValuePair<Passive, float> kvp in PassiveList)
+            e.PassiveList[kvp.Key] = kvp.Value;
+        e.PowerPoint = this.PowerPoint;
+
+        return e;
+    }
 }

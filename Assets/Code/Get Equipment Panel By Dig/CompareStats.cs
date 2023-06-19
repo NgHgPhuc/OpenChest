@@ -39,6 +39,10 @@ public class CompareStats : MonoBehaviour
     {
         if (NewEquipment > OldEquipment)
             text.color = new Color(96f / 255, 241f / 255, 72f / 255);
-        else text.color = new Color(255f / 255, 69f / 255, 71f / 255);
+        else
+            if(NewEquipment == OldEquipment)
+                text.color = new Color(0,0,0);
+            else
+                text.color = new Color(255f / 255, 69f / 255, 71f / 255);
     }
 }

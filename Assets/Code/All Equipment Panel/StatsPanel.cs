@@ -19,7 +19,7 @@ public class StatsPanel : MonoBehaviour
         if(StatsValue == null)
             StatsValue = transform.Find("Stats Value").GetComponent<TextMeshProUGUI>();
 
-        StatsValue.SetText(this.Value.ToString());
+        StatsValue.SetText(Math.Ceiling(this.Value).ToString());
     }
 
     public virtual void SetStatsValue(float value)

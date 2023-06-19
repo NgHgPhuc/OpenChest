@@ -18,13 +18,18 @@ public class SlotInfomationPanel : MonoBehaviour, IPointerClickHandler
 
     List<SlotStatsPanel> Passive = new List<SlotStatsPanel>();
 
-    float StatsPlus=30;
-    float PassivePlus = 20;
+    float StatsPlus;
+    float PassivePlus;
 
     TextMeshProUGUI StatsPlusText;
     TextMeshProUGUI StatsPlusUpgradeText;
     TextMeshProUGUI PassivePlusText;
     TextMeshProUGUI PassivePlusUpgradeText;
+
+    EquipmentSlot equipmentSlot;
+    TextMeshProUGUI EquipName;
+
+    EquipmentData equipmentData;
 
     private void Awake()
     {
@@ -45,12 +50,20 @@ public class SlotInfomationPanel : MonoBehaviour, IPointerClickHandler
         
     }
 
-    public void Instantiate(Equipment equipment)
+    public void Instantiate(EquipmentData equipmentData,Transform trans)
     {
+        this.equipmentData = equipmentData;
+        this.StatsPlus = equipmentData.StatsPlus;
+        this.PassivePlus = equipmentData.PassivePlus;
+
+        Equipment equipment = equipmentData.equipment;
+
         gameObject.SetActive(true);
 
         if (slotInfomation == null)
-            SetAttr();
+            SetAttr(trans);
+
+        FirstShowing();
 
         AttackDamage.SetStatsValue(equipment.AttackDamage,"", StatsPlus);
         HealthPoint.SetStatsValue(equipment.HealthPoint,"", StatsPlus);
@@ -71,9 +84,31 @@ public class SlotInfomationPanel : MonoBehaviour, IPointerClickHandler
 
     }
 
-    void SetAttr()
+    void FirstShowing()
+    {
+        equipmentSlot.SetEquipmentInSlot(equipmentData.equipment);
+        string equipName = "[" + equipmentData.equipment.quality + "]" + equipmentData.equipment.type;
+        EquipName.SetText(equipName);
+        EquipName.color = equipmentSlot.BackgroundColor();
+
+
+        StatsPlusText.SetText("+" + StatsPlus.ToString() + "%");
+        StatsPlusUpgradeText.SetText("+" + (StatsPlus + 1).ToString() + "%");
+        PassivePlusText.SetText("+" + PassivePlus.ToString() + "%");
+        PassivePlusUpgradeText.SetText("+" + (PassivePlus + 1).ToString() + "%");
+    }
+
+    void SetAttr(Transform trans)
     {
         slotInfomation = transform.Find("Slot Infomation");
+        //RectTransform transRect = (RectTransform)trans;
+        //RectTransform slotInfomationRect = (RectTransform)slotInfomation;
+        //slotInfomation.transform.position = trans.position + new Vector3(transRect.rect.height/2 - slotInfomationRect.rect.height/2, transRect.rect.width / 2 + slotInfomationRect.rect.width / 2 ,0);
+        //print(trans.position);
+        //print(slotInfomation.transform.position);
+
+        equipmentSlot = slotInfomation.Find("Weapon Slot Panel").GetComponent<EquipmentSlot>();
+        EquipName = slotInfomation.Find("Equipment Name").GetComponent<TextMeshProUGUI>();
 
         AttackDamage = slotInfomation.Find("Stats Attack Panel").GetComponent<SlotStatsPanel>();
         HealthPoint = slotInfomation.Find("Stats Health Point Panel").GetComponent<SlotStatsPanel>();
@@ -89,11 +124,6 @@ public class SlotInfomationPanel : MonoBehaviour, IPointerClickHandler
         StatsPlusUpgradeText = slotInfomation.Find("Stats Upgrade Panel").Find("Stats Upgrade Value").GetComponent<TextMeshProUGUI>();
         PassivePlusText = slotInfomation.Find("Passive Upgrade Panel").Find("Passive Current Value").GetComponent<TextMeshProUGUI>();
         PassivePlusUpgradeText = slotInfomation.Find("Passive Upgrade Panel").Find("Passive Upgrade Value").GetComponent<TextMeshProUGUI>();
-
-        StatsPlusText.SetText("+" + StatsPlus.ToString() + "%");
-        StatsPlusUpgradeText.SetText("+" + (StatsPlus + 1).ToString() + "%");
-        PassivePlusText.SetText("+" + PassivePlus.ToString() + "%");
-        PassivePlusUpgradeText.SetText("+" + (PassivePlus+1).ToString() + "%");
     }
     void ShowInfomation(Equipment equipment)
     {
@@ -103,19 +133,32 @@ public class SlotInfomationPanel : MonoBehaviour, IPointerClickHandler
     public void UpgradeStatsButton()
     {
         StatsPlus += 1;
+        equipmentData.UpgradeStats();
 
         StatsPlusText.SetText("+" + StatsPlus.ToString() + "%");
         StatsPlusUpgradeText.SetText("+" + (StatsPlus + 1).ToString() + "%");
 
-
+        AttackDamage.ShowSlotPlus(StatsPlus);
+        HealthPoint.ShowSlotPlus(StatsPlus);
+        DefensePoint.ShowSlotPlus(StatsPlus);
+        Speed.ShowSlotPlus(StatsPlus);
     }
 
     public void UpgradePassiveButton()
     {
         PassivePlus += 1;
+        equipmentData.UpgradePassive();
 
         PassivePlusText.SetText("+" + PassivePlus.ToString() + "%");
         PassivePlusUpgradeText.SetText("+" + (PassivePlus + 1).ToString() + "%");
+
+        for (int i = 0; i < 2; i++)
+        {
+            if (Passive[i].gameObject.activeSelf == false)
+                return;
+
+            Passive[i].ShowSlotPlus(PassivePlus);
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)

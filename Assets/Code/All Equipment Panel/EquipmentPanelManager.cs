@@ -21,17 +21,19 @@ public class EquipmentPanelManager : MonoBehaviour
 
     }
 
-    public void SetEquipmentSlot(Equipment equipment)
+    public void SetEquipment(Equipment equipment)
     {
         string ChildName = equipment.type.ToString() + " Slot Panel";
-        EquipmentData equipmentSlot = transform.Find(ChildName).GetComponent<EquipmentData>();
-        equipmentSlot.SetEquipmentData(equipment);
+        EquipmentData equipmentData = transform.Find(ChildName).GetComponent<EquipmentData>();
+
+        equipmentData.SetEquipmentData(equipment);
     }
 
-    public Equipment GetEquipmentSlot(Equipment.Type EquipmentType)
+    public Equipment GetEquipment(Equipment.Type EquipmentType)
     {
         string ChildName = EquipmentType.ToString() + " Slot Panel";
         EquipmentData equipmentSlot = transform.Find(ChildName).GetComponent<EquipmentData>();
         return equipmentSlot.GetEquipmentData();
     }
+
 }
