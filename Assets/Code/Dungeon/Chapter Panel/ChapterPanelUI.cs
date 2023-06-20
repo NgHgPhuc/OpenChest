@@ -11,7 +11,7 @@ public class ChapterPanelUI : MonoBehaviour
     TextMeshProUGUI ChapterName;
     EnemyTeamPanel enemyTeamPanel;
     RewardPanelUI rewardPanelUI;
-
+    EnemyTeamPanel myTeamPanel;
 
     void Start()
     {
@@ -29,6 +29,7 @@ public class ChapterPanelUI : MonoBehaviour
         ChapterName = transform.Find("Chapter Name Panel").GetChild(0).GetComponent<TextMeshProUGUI>();
         enemyTeamPanel = transform.Find("Enemy Team Panel").GetComponent<EnemyTeamPanel>();
         rewardPanelUI = transform.Find("Reward Panel").GetComponent<RewardPanelUI>();
+        myTeamPanel = transform.Find("My Team Panel").GetComponent<EnemyTeamPanel>();
     }
     public void SetChapterInfomation(Chapter chapter)
     {
@@ -37,9 +38,15 @@ public class ChapterPanelUI : MonoBehaviour
 
         this.chapter = chapter;
         gameObject.SetActive(true);
+
         this.ChapterName.SetText(this.chapter.name);
+
         enemyTeamPanel.SetCharacterData(this.chapter.EnemyTeam);
+
         rewardPanelUI.SetRewardList(this.chapter.reward);
+
+        this.chapter.MyTeam = new List<Character>(TeamManager.Instance.MyTeam());
+        myTeamPanel.SetCharacterData(this.chapter.MyTeam);
     }
 
     public void NoneChapter()

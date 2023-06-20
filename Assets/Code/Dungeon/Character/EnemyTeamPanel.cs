@@ -6,7 +6,7 @@ public class EnemyTeamPanel : MonoBehaviour
 {
     // Start is called before the first frame update
     List<CharacterUI> characterUIs = new List<CharacterUI>();
-    List<Character> characterDatas = new List<Character>();
+    //List<Character> characterDatas = new List<Character>();
     void Start()
     {
         for (int i = 1; i < 4; i++)
@@ -25,17 +25,17 @@ public class EnemyTeamPanel : MonoBehaviour
             for (int i = 1; i < 4; i++)
                 characterUIs.Add(transform.Find("Character Object Panel " + i).GetComponent<CharacterUI>());
 
-        this.characterDatas.Clear();
-        this.characterDatas = _characterDatas;
+        //this.characterDatas.Clear();
+        //this.characterDatas = new List<Character>(_characterDatas);
 
-        SetCharacterUI();
+        SetCharacterUI(_characterDatas);
     }
 
-    public void SetCharacterUI()
+    public void SetCharacterUI(List<Character> _characterDatas)
     {
         for (int i = 0; i < 3; i++)
-            if (i < characterDatas.Count)
-                characterUIs[i].SetCharacterUI(characterDatas[i]);
+            if (i < _characterDatas.Count && characterUIs[i] != null)
+                characterUIs[i].SetCharacterUI(_characterDatas[i]);
             else characterUIs[i].NoneData();
     }
 

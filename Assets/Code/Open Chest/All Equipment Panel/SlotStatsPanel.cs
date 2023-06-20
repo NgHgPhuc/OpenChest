@@ -8,12 +8,12 @@ public class SlotStatsPanel : StatsPanel
 {
     TextMeshProUGUI StatsName;
     TextMeshProUGUI SlotPlus;
-    public void SetStatsValue(float value,string name,float Percent)
+    public void SetStatsValue(float value,string name,float Percent,int mode = 0)
     {
         this.Value = value;
         this.Value = (float)Math.Round(this.Value, 2);
         ShowStatsName(name);
-        ShowStatsValue();
+        ShowStatsValue(mode);
         ShowSlotPlus(Percent);
     }
 

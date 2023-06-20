@@ -61,9 +61,9 @@ public class SlotInfomationPanel : MonoBehaviour, IPointerClickHandler
         gameObject.SetActive(true);
 
         if (slotInfomation == null)
-            SetAttr(trans);
+            SetAttr();
 
-        FirstShowing();
+        FirstShowing(trans);
 
         AttackDamage.SetStatsValue(equipment.AttackDamage,"", StatsPlus);
         HealthPoint.SetStatsValue(equipment.HealthPoint,"", StatsPlus);
@@ -76,7 +76,7 @@ public class SlotInfomationPanel : MonoBehaviour, IPointerClickHandler
             {
                 Passive[i].gameObject.SetActive(true);
                 var e = equipment.PassiveList.ElementAt(i);
-                Passive[i].SetStatsValue(e.Value, e.Key.ToString(), PassivePlus);
+                Passive[i].SetStatsValue(e.Value, e.Key.ToString(), PassivePlus,1);
 
             }
             else Passive[i].gameObject.SetActive(false);
@@ -84,7 +84,7 @@ public class SlotInfomationPanel : MonoBehaviour, IPointerClickHandler
 
     }
 
-    void FirstShowing()
+    void FirstShowing(Transform trans)
     {
         equipmentSlot.SetEquipmentInSlot(equipmentData.equipment);
         string equipName = "[" + equipmentData.equipment.quality + "]" + equipmentData.equipment.type;
@@ -96,16 +96,27 @@ public class SlotInfomationPanel : MonoBehaviour, IPointerClickHandler
         StatsPlusUpgradeText.SetText("+" + (StatsPlus + 1).ToString() + "%");
         PassivePlusText.SetText("+" + PassivePlus.ToString() + "%");
         PassivePlusUpgradeText.SetText("+" + (PassivePlus + 1).ToString() + "%");
+
+        SetPosition(trans);
     }
 
-    void SetAttr(Transform trans)
+    void SetPosition(Transform trans)
+    {
+        RectTransform transRect = (RectTransform)trans;
+        RectTransform slotInfomationRect = (RectTransform)slotInfomation;
+        float deltaX = transRect.rect.width / 2 + slotInfomationRect.rect.width / 2;
+        float deltaY = transRect.rect.height / 2 - slotInfomationRect.rect.height / 2;
+        RectTransform MainCanvas = (RectTransform)transform.root;
+
+        if (trans.position.x + transRect.rect.width / 2 + slotInfomationRect.rect.width > MainCanvas.rect.width)
+            slotInfomation.transform.position = trans.position + new Vector3(-(deltaX + deltaX * 2 / 100), deltaY, 0);
+        else
+            slotInfomation.transform.position = trans.position + new Vector3(deltaX + deltaX * 2 / 100, deltaY, 0);
+    }
+
+    void SetAttr()
     {
         slotInfomation = transform.Find("Slot Infomation");
-        //RectTransform transRect = (RectTransform)trans;
-        //RectTransform slotInfomationRect = (RectTransform)slotInfomation;
-        //slotInfomation.transform.position = trans.position + new Vector3(transRect.rect.height/2 - slotInfomationRect.rect.height/2, transRect.rect.width / 2 + slotInfomationRect.rect.width / 2 ,0);
-        //print(trans.position);
-        //print(slotInfomation.transform.position);
 
         equipmentSlot = slotInfomation.Find("Weapon Slot Panel").GetComponent<EquipmentSlot>();
         EquipName = slotInfomation.Find("Equipment Name").GetComponent<TextMeshProUGUI>();

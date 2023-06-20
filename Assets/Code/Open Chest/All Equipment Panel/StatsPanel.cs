@@ -14,18 +14,28 @@ public class StatsPanel : MonoBehaviour
         ShowStatsValue();
     }
 
-    public void ShowStatsValue()
+    public void ShowStatsValue(int mode = 0)
     {
         if(StatsValue == null)
             StatsValue = transform.Find("Stats Value").GetComponent<TextMeshProUGUI>();
 
-        StatsValue.SetText(Math.Ceiling(this.Value).ToString());
+        if(mode == 0)
+            StatsValue.SetText(Math.Ceiling(this.Value).ToString());
+        else
+            StatsValue.SetText((this.Value).ToString());
     }
 
-    public virtual void SetStatsValue(float value)
+
+
+    public virtual void SetStatsValue(float value, int mode = 0)
     {
         this.Value += value;
         this.Value = (float)Math.Round(this.Value, 2);
-        ShowStatsValue();
+        ShowStatsValue(mode);
+    }
+
+    public float GetValue()
+    {
+        return Value;
     }
 }

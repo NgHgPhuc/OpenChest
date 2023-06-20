@@ -23,10 +23,17 @@ public class CharacterUI : MonoBehaviour
     public void SetCharacterUI(Character character)
     {
         if (CharacterIcon == null)
-            CharacterIcon = transform.Find("Character Icon").GetComponent<Image>();
+            SetAttr();
 
         gameObject.SetActive(true);
         CharacterIcon.sprite = character.Icon;
+        Level.SetText("lv."+character.Level);
+    }
+
+    void SetAttr()
+    {
+        CharacterIcon = transform.Find("Character Icon").GetComponent<Image>();
+        Level = transform.Find("Level").GetComponent<TextMeshProUGUI>();
     }
 
     public void NoneData()

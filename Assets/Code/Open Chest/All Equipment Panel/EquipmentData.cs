@@ -81,6 +81,5 @@ public class EquipmentData : MonoBehaviour, IPointerClickHandler
     {
         if(equipment != null)
             SlotInfomationPanel.Instance.Instantiate(this,transform);
-        print(transform.position);
     }
 }

@@ -8,5 +8,6 @@ public class Chapter : ScriptableObject
     public string Name;
     public List<Character> EnemyTeam;
     public List<Reward> reward;
+    public List<Character> MyTeam;
 
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ChapterListManager : MonoBehaviour, IPointerClickHandler
+public class ChapterListManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject ContainerChapter;
@@ -27,13 +27,11 @@ public class ChapterListManager : MonoBehaviour, IPointerClickHandler
     public void SetAttr()
     {
         for (int i = 0; i < 10; i++)
-        {
             if (ContainerChapter.transform.GetChild(i) != null)
                 chapterPanelUI.Add(ContainerChapter.transform.GetChild(i).GetComponent<ChapterPanelUI>());
-        }
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void ClickOnBackground()
     {
         gameObject.SetActive(false);
     }
