@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.TextCore.Text;
+using UnityEngine.SceneManagement;
 
 public class ChapterPanelUI : MonoBehaviour
 {
@@ -52,5 +53,11 @@ public class ChapterPanelUI : MonoBehaviour
     public void NoneChapter()
     {
         gameObject.SetActive(false);
+    }
+
+    public void EnterButton()
+    {
+        PlayerPrefs.SetString("Current Chapter Name", ChapterName.text);
+        SceneManager.LoadScene("Fighting");
     }
 }
