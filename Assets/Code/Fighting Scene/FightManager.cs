@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class FightManager : MonoBehaviour
 {
-    public Transform Canvas;
+    public GameObject ActionPanel;
     public List<FightingUnit> PlayerTeam;
     public List<FightingUnit> EnemyTeam;
 
@@ -17,6 +18,13 @@ public class FightManager : MonoBehaviour
 
     int CurrentEnemyTargeted; //enemy target of player
     int CurrentPlayerTargeted;//player target of enemy
+
+    FightingUnit EnemyTargeted;
+    bool IsPlayerTurn;
+
+    string PlayerAction;
+
+    public FloatingObject floatingObject;
 
     public static FightManager Instance { get; private set; }
     private void Awake()
@@ -73,26 +81,134 @@ public class FightManager : MonoBehaviour
     void Start()
     {
         SortSpeed();
-        Fight();
+        ActionInTurn();
     }
 
     public void SortSpeed()
     {
         All.Sort((FightingUnit x, FightingUnit y) => y.character.Speed.CompareTo(x.character.Speed));
+        ProrityPanel.Instance.Initialize(All);
+    }
+
+    void Player_ChooseAction()
+    {
+        IsPlayerTurn = true;
+
+        PlayerAction = "";
+        ActionPanel.SetActive(true);
+    }
+    IEnumerator ChooseAction()
+    {
+        while (PlayerAction == "")
+            yield return null;
+
+        if(PlayerAction == "Strike")
+        {
+            Player_AttackAction();
+        }
+
+        if(PlayerAction == "Block")
+        {
+            foreach (FightingUnit unit in EnemyTeam)
+                unit.UntargetUI();
+
+            Player_BlockAction();
+        }
+    }
+
+    public void ChooseAction(string action)
+    {
+        if (!IsPlayerTurn)
+            return;
+
+        if (action == PlayerAction)
+            return;
+
+        StopCoroutine(ChooseTarget());
+        StopCoroutine(ChooseAction());
+        PlayerAction = action;
+        StartCoroutine(ChooseAction());
     }
 
 
-    void Fight()
+    #region Attack Action
+    //PLAYER CHOOSE ATTACK
+    void Player_AttackAction()
+    {
+        EnemyTargeted = null;   //enemy target set null
+        IsPlayerTurn = true;    //Set this is player turn
+
+        //Turn on a signal that enemy can be target
+        foreach (FightingUnit unit in EnemyTeam)
+            unit.IsTargetUI();
+
+        //Start coroutine to wait to gamer chosen enemy
+        StartCoroutine(ChooseTarget());
+    }
+    //COROUTINE FUNCTION
+    IEnumerator ChooseTarget()
+    {
+        //if haven't chosen target yet
+        while (EnemyTargeted == null)
+            yield return null;  //Continue wait
+
+        //Go to this - mean have chosen enemy
+        foreach (FightingUnit unit in EnemyTeam)
+            unit.UntargetUI();
+
+        //character in this turn attack enemy whom chosen
+        All[currentTurn].Attack(EnemyTargeted);
+
+        //end player turn
+        IsPlayerTurn = false;
+
+        ActionPanel.SetActive(false);
+
+        //out of coroutine function
+        yield break;
+
+    }
+    //CHOSEN ENEMY - CALL FROM ENEMY OBJECT
+    public void ChooseEnemy(FightingUnit unit)
+    {
+        if (!IsPlayerTurn)
+            return;
+
+        EnemyTargeted = unit;
+    }
+    #endregion
+
+    void Player_BlockAction()
+    {
+        IsPlayerTurn = false;
+        ActionPanel.SetActive(false);
+        All[currentTurn].Block();
+    }
+
+    //ENEMY ATTACK
+    void Enemy_AttackAction()
+    {
+        All[currentTurn].Attack(PlayerTeam[CurrentPlayerTargeted]);
+    }
+
+
+    //CHOOSE WHAT ACTION WILL DO IN TURN
+    void ActionInTurn()
     {
         if (All[currentTurn].stateFighting == FightingUnit.StateFighting.Death)
         {
             Endturn();
             return;
         }
-        if(All[currentTurn].team == FightingUnit.Team.Player)
-            All[currentTurn].Attack(EnemyTeam[CurrentEnemyTargeted]);
+
+        All[currentTurn].ItsMyTurn();
+        ProrityPanel.Instance.SetUnitTurn(currentTurn);
+
+        if (All[currentTurn].team == FightingUnit.Team.Player)
+            Player_ChooseAction();
+
         if (All[currentTurn].team == FightingUnit.Team.Enemy)
-            All[currentTurn].Attack(PlayerTeam[CurrentPlayerTargeted]);
+            Enemy_AttackAction();
     }
 
     public void Endturn()
@@ -100,14 +216,16 @@ public class FightManager : MonoBehaviour
         currentTurn++;
         if (currentTurn == All.Count)
             currentTurn = 0;
-        Fight();
+        ActionInTurn();
     }
 
-    public void TargerDie(FightingUnit.Team team)
+    public void TargerDie(FightingUnit unit)
     {
-        if (team == FightingUnit.Team.Enemy)
+        ProrityPanel.Instance.Initialize(All);
+
+        if (unit.team == FightingUnit.Team.Enemy)
             CurrentEnemyTargeted = (CurrentEnemyTargeted - 1 < 0) ? 2 : 0;
-        if (team == FightingUnit.Team.Player)
+        if (unit.team == FightingUnit.Team.Player)
             CurrentPlayerTargeted = (CurrentPlayerTargeted - 1 < 0) ? 2 : 0;
 
     }

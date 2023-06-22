@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class FightingUnit : MonoBehaviour
+using UnityEngine.EventSystems;
+using TMPro;
+using System;
+public class FightingUnit : MonoBehaviour, IPointerClickHandler
 {
     public Character character;
 
@@ -33,66 +35,190 @@ public class FightingUnit : MonoBehaviour
     public enum StateFighting
     {
         Alive,
-        Death
+        Death,
+        Block
     }
-    public StateFighting stateFighting;
+    public StateFighting stateFighting = StateFighting.Alive;
 
+    public int Range;
+
+    //UI
     Slider healthBar;
+    TextMeshProUGUI IndexHealthBar;
     float MaxHP;
-    float CurrentHP;
+    public float CurrentHP;
     Image Icon;
-    private void Start()
-    {
-        healthBar = transform.Find("Health Bar").GetComponent<Slider>();
-        Icon = transform.Find("Icon").GetComponent<Image>();
+    Image TargetSignal;
+    Transform FloatingPoint;
+    FloatingObject floatingObject;
 
+    private void Awake()
+    {
+        if (healthBar == null)
+        {
+            healthBar = transform.Find("Health Bar").GetComponent<Slider>();
+            IndexHealthBar = healthBar.transform.Find("Index").GetComponent<TextMeshProUGUI>();
+        }
+
+        if (Icon == null)
+            Icon = transform.Find("Icon").GetComponent<Image>();
+
+        if (TargetSignal == null)
+            TargetSignal = transform.Find("Target Signal").GetComponent<Image>();
+        TargetSignal.gameObject.SetActive(false);
+
+        if (FloatingPoint == null)
+            FloatingPoint = transform.Find("Floating Point");
     }
 
+    //SET UI OF TARGET BY fightManager.Instance
+    public void IsTargetUI()
+    {
+        if (TargetSignal == null)
+            TargetSignal = transform.Find("Target Signal").GetComponent<Image>();
+
+        TargetSignal.gameObject.SetActive(true);
+        TargetSignal.color = Color.red;
+    }
+    public void IsAllyUI()
+    {
+        if(TargetSignal == null)
+            TargetSignal = transform.Find("Target Signal").GetComponent<Image>();
+
+        TargetSignal.gameObject.SetActive(true);
+        TargetSignal.color = Color.green;
+    }
+    public void EndTurnUI()
+    {
+        if(TargetSignal == null)
+            TargetSignal = transform.Find("Target Signal").GetComponent<Image>();
+
+        TargetSignal.color = Color.white;
+        TargetSignal.gameObject.SetActive(false);
+    }
+    public void InTurnUI()
+    {
+        if (TargetSignal == null)
+            TargetSignal = transform.Find("Target Signal").GetComponent<Image>();
+
+        TargetSignal.color = Color.yellow;
+        TargetSignal.gameObject.SetActive(true);
+    }
+    public void UntargetUI()
+    {
+        if (TargetSignal == null)
+            TargetSignal = transform.Find("Target Signal").GetComponent<Image>();
+
+        TargetSignal.color = Color.white;
+        TargetSignal.gameObject.SetActive(false);
+    }
+
+    //INSTANTIATE VALUE OF THIS
     public void Instantiate()
     {
-        if(healthBar == null)
+        if (healthBar == null)
+        {
             healthBar = transform.Find("Health Bar").GetComponent<Slider>();
+            IndexHealthBar = healthBar.transform.Find("Index").GetComponent<TextMeshProUGUI>();
+        }
 
         MaxHP = character.HealthPoint;
         CurrentHP = MaxHP;
+        UpdateHealthBar();
+
+        if(Icon == null)
+            Icon = transform.Find("Icon").GetComponent<Image>();
+
+        Icon.sprite = character.Icon;
+
+        floatingObject = FightManager.Instance.floatingObject;
+    }
+
+    void UpdateHealthBar()
+    {
+        IndexHealthBar.SetText(Math.Ceiling(CurrentHP) + "/" + MaxHP);
         healthBar.maxValue = MaxHP;
         healthBar.value = CurrentHP;
     }
-    public void Attack(FightingUnit target)
+
+    public void ItsMyTurn()
     {
-        if (stateFighting == StateFighting.Death)
+        InTurnUI();
+        if (stateFighting == StateFighting.Block)
         {
-            FightManager.Instance.Endturn();
-            return;
+            stateFighting = StateFighting.Alive;
+            Icon.color = Color.white;
         }
-        target.BeingAttacked();
-        Icon.color = Color.green;
-        print(this.name + " -> " + target.name);
-        Invoke("EndAttack", 1f);
     }
-    public void EndAttack()
+
+    public void EndMyTurn()
     {
-        Icon.color = Color.white;
+        EndTurnUI();
         FightManager.Instance.Endturn();
     }
 
-    public void BeingAttacked()
+    public void Block()
     {
-        CurrentHP -= 5;
-        healthBar.value = CurrentHP;
+        stateFighting = StateFighting.Block;
+        Icon.color = Color.blue;
+        EndMyTurn();
+    }
+
+    //ATTACK - END ATTACK
+    public void Attack(FightingUnit target)
+    {
+        target.BeingAttacked(this.character.AttackDamage);
+        Invoke("EndAttack", 1f);
+    }
+
+    public void EndAttack()
+    {
+        Icon.color = Color.white;
+        EndMyTurn();
+    }
+
+    //BEING ATTACKED - END BEING ATTACKED
+    public void BeingAttacked(float Damage)
+    {
+        float DamageReceive = CalculateDamage(Damage);
+        CurrentHP -= DamageReceive;
+
+        FloatingObject fo = Instantiate(floatingObject, FloatingPoint.position,transform.rotation,transform);
+        fo.Iniatialize("-" + Math.Round(DamageReceive,1), Color.red);
+
+        UpdateHealthBar();
         if (CurrentHP <= 0)
         {
-            this.stateFighting = StateFighting.Death;
-            FightManager.Instance.TargerDie(this.team);
-            gameObject.SetActive(false);
+            Death();
             return;
         }
         Icon.color = Color.red;
         Invoke("EndAttacked", 1f);
     }
+    float CalculateDamage(float Damage)
+    {
+        float DamageReceive = Damage * 100 / (100 + this.character.DefensePoint);
 
+        if (stateFighting == StateFighting.Block)
+            DamageReceive /= 2;
+
+        return DamageReceive;
+    }
     public void EndAttacked()
     {
         Icon.color = Color.white;
+    }
+
+    //DEATH EFFECT
+    void Death()
+    {
+        this.stateFighting = StateFighting.Death;
+        FightManager.Instance.TargerDie(this);
+        gameObject.SetActive(false);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        FightManager.Instance.ChooseEnemy(this);
     }
 }
