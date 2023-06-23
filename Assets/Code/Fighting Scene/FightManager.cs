@@ -26,6 +26,9 @@ public class FightManager : MonoBehaviour
 
     public FloatingObject floatingObject;
 
+    int EnemyCount;
+    public GameObject VictoryPanelObject;
+
     public static FightManager Instance { get; private set; }
     private void Awake()
     {
@@ -63,6 +66,8 @@ public class FightManager : MonoBehaviour
                 EnemyTeam[i].team = FightingUnit.Team.Enemy;
                 EnemyTeam[i].position = (FightingUnit.Position)i;
                 EnemyTeam[i].Instantiate();
+
+                EnemyCount++;
             }
             else EnemyTeam[i].gameObject.SetActive(false);
         }
@@ -224,9 +229,19 @@ public class FightManager : MonoBehaviour
         ProrityPanel.Instance.Initialize(All);
 
         if (unit.team == FightingUnit.Team.Enemy)
-            CurrentEnemyTargeted = (CurrentEnemyTargeted - 1 < 0) ? 2 : 0;
+        {
+            EnemyCount--;
+            if (EnemyCount == 0)
+                Invoke("victoryPanel", 1f);
+        }
         if (unit.team == FightingUnit.Team.Player)
             CurrentPlayerTargeted = (CurrentPlayerTargeted - 1 < 0) ? 2 : 0;
 
+    }
+
+    void victoryPanel()
+    {
+        VictoryPanelObject.SetActive(true);
+        VictoryPanelObject.GetComponent<VictoryPanel>().Initialize(CurrentChapter);
     }
 }

@@ -11,11 +11,14 @@ public class OpenChestPanel : MonoBehaviour
 
     public Button LevelUpButton;
     public GameObject UpgradeChestPanel;
+    public FloatingObject floatingObjectPref;
+    Transform floatingPoint;
     void Start()
     {
         CurrentHealth = MaxHealth;
         HealthBar.maxValue = MaxHealth;
         HealthBar.value = CurrentHealth;
+        floatingPoint = transform.Find("Floating Point");
 
         LevelUpButton.onClick.AddListener(LevelUpFunc);
     }
@@ -24,7 +27,11 @@ public class OpenChestPanel : MonoBehaviour
     {
         CurrentHealth -= 10;
         if (CurrentHealth > 0)
+        {
             HealthBar.value = CurrentHealth;
+            FloatingObject foPref = Instantiate(floatingObjectPref, floatingPoint.position, floatingPoint.rotation, transform);
+            foPref.Iniatialize("-10", Color.red);
+        }
         else EarnChest();
 
     }
