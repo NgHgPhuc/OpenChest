@@ -14,14 +14,14 @@ public class FloatingObject : MonoBehaviour
 
     }
 
-    public void Iniatialize(string text,Color color)
+    public void Iniatialize(string text,Color color,string animation = "Floating On")
     {
         image = transform.Find("Image").GetComponent<Image>();
         image.gameObject.SetActive(false);
         this.text = transform.Find("Text").GetComponent<TextMeshProUGUI>();
         animator = GetComponent<Animator>();
 
-        animator.Play("Floating On");
+        animator.Play(animation);
         this.text.SetText(text);
         this.text.color = color;
     }

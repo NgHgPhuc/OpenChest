@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SlotInfomationPanel : MonoBehaviour, IPointerClickHandler
+public class SlotInfomationPanel : MonoBehaviour
 {
     public static SlotInfomationPanel Instance;
     Transform slotInfomation;
@@ -172,7 +172,7 @@ public class SlotInfomationPanel : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void ClickBackground()
     {
         gameObject.SetActive(false);
     }

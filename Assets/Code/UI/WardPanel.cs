@@ -8,6 +8,7 @@ public class WardPanel : MonoBehaviour
     // Start is called before the first frame update
     public GameObject DungeonPanel;
     public GameObject OpenChestPanel;
+    public GameObject ShopPanel;
     GameObject CurrentGameObject;
     void Start()
     {
@@ -28,6 +29,11 @@ public class WardPanel : MonoBehaviour
     public void OpenChestWarp()
     {
         SetCurrentGameObject(OpenChestPanel);
+    }
+
+    public void ShopWarp()
+    {
+        SetCurrentGameObject(ShopPanel);
     }
 
     void SetCurrentGameObject(GameObject g)
