@@ -9,6 +9,7 @@ public class WardPanel : MonoBehaviour
     public GameObject DungeonPanel;
     public GameObject OpenChestPanel;
     public GameObject ShopPanel;
+    public GameObject AllyPanel;
     GameObject CurrentGameObject;
     void Start()
     {
@@ -34,6 +35,11 @@ public class WardPanel : MonoBehaviour
     public void ShopWarp()
     {
         SetCurrentGameObject(ShopPanel);
+    }
+
+    public void AllyWarp()
+    {
+        SetCurrentGameObject(AllyPanel);
     }
 
     void SetCurrentGameObject(GameObject g)

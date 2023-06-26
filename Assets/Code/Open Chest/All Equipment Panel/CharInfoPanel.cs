@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Collections;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
+using UnityEngine.UI;
 
 public class CharInfoPanel : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class CharInfoPanel : MonoBehaviour
     public TextMeshProUGUI Name;
     public TextMeshProUGUI Quality;
     public TextMeshProUGUI Power;
+    public Image CharacterIcon;
+
+    public Transform starPanel;
 
     public Transform StatsPanel;
 
@@ -54,12 +58,20 @@ public class CharInfoPanel : MonoBehaviour
     }
 
 
-    public void Equip(Character character)
+    public void ShowInfo(Character character)
     {
         Panel.SetActive(true);
 
         if (character == null)
             return;
+
+        Name.SetText(character.Name);
+        Quality.SetText("--Error404--");
+        Power.SetText(character.calPowerPoint().ToString());
+        CharacterIcon.sprite = character.Icon;
+
+        for (int i = 0; i < starPanel.childCount; i++)
+            starPanel.GetChild(i).GetComponent<Image>().color = (i < character.StarCount) ? Color.white : Color.black;
 
         AllStatsPanel[0].SetStatsValue(character.AttackDamage);
         AllStatsPanel[1].SetStatsValue(character.HealthPoint);
@@ -68,11 +80,6 @@ public class CharInfoPanel : MonoBehaviour
 
         foreach (KeyValuePair<Equipment.Passive, float> kvp in character.PassiveList)
             AllPassivePanel[(int)kvp.Key - 1].SetStatsValue(kvp.Value, 1);
-
-        TeamManager.Instance.SetStatsPlayer(AllStatsPanel, AllPassivePanel);
-
-        Power.SetText((Convert.ToUInt32(character.PowerPoint)).ToString());
-
     }
 
     public void ClickBackground()

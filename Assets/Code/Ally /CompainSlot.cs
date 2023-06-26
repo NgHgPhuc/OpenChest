@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CharacterSlot : MonoBehaviour,IPointerClickHandler
+public class CompainSlot : MonoBehaviour
 {
     Image BackgroundSlot;
     Image EquipmentImage;
@@ -43,10 +44,5 @@ public class CharacterSlot : MonoBehaviour,IPointerClickHandler
         this.EquipmentLevel.SetText("lv." + this.character.Level);
         for (int i = 0; i < StarList.Count; i++)
             StarList[i].GetComponent<Image>().color = (i < character.StarCount) ? Color.white : Color.black;
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        CharInfoPanel.Instance.ShowInfo(this.character);
     }
 }

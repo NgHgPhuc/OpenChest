@@ -59,7 +59,7 @@ public class ResourceManager : MonoBehaviour
         if(Mount < 0)
             f.Iniatialize(Mount.ToString(), Color.red,"Floating Down");
         else
-            f.Iniatialize("+"+Mount, Color.green, "Floating Up");
+            f.Iniatialize("+"+Mount, Color.green, "Floating On");
 
         UpdateShowUI();
     }
@@ -72,7 +72,7 @@ public class ResourceManager : MonoBehaviour
         if (Mount < 0)
             f.Iniatialize(Mount.ToString(), Color.red, "Floating Down");
         else
-            f.Iniatialize("+" + Mount, Color.green, "Floating Up");
+            f.Iniatialize("+" + Mount, Color.green, "Floating On");
 
         UpdateShowUI();
     }
@@ -86,7 +86,7 @@ public class ResourceManager : MonoBehaviour
         if (value < 0)
             f.Iniatialize(value.ToString(), Color.red, "Floating Down");
         else
-            f.Iniatialize("+" + value, Color.green, "Floating Up");
+            f.Iniatialize("+" + value, Color.green, "Floating On");
 
         Progress.SetText(Math.Round(progress, 1) + "%");
         if (CurrentExp > NeedExp)

@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class OpenChestPanel : MonoBehaviour
 {
     public int CurrentHealth;
-    public int MaxHealth = 60;
+    public int MaxHealth;
+
+    public TextMeshProUGUI index;
 
     public Slider HealthBar;
 
@@ -16,6 +20,8 @@ public class OpenChestPanel : MonoBehaviour
     void Start()
     {
         CurrentHealth = MaxHealth;
+        index.SetText(CurrentHealth + "/" + MaxHealth);
+
         HealthBar.maxValue = MaxHealth;
         HealthBar.value = CurrentHealth;
         floatingPoint = transform.Find("Floating Point");
@@ -28,6 +34,7 @@ public class OpenChestPanel : MonoBehaviour
         CurrentHealth -= 10;
         if (CurrentHealth > 0)
         {
+            index.SetText(CurrentHealth + "/" + MaxHealth);
             HealthBar.value = CurrentHealth;
             FloatingObject foPref = Instantiate(floatingObjectPref, floatingPoint.position, floatingPoint.rotation, transform);
             foPref.Iniatialize("-10", Color.red);

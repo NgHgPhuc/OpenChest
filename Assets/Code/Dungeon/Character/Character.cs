@@ -4,39 +4,51 @@ using UnityEngine;
 using static Equipment;
 
 [System.Serializable]
-public class Character
+public class Character : BaseStats
 {
     public int Level;
 
     public Sprite Icon;
+    public string Name;
 
-    public float AttackDamage;
-    public float HealthPoint;
-    public float DefensePoint;
-    public float Speed;
+    public int StarCount;
 
-    public Dictionary<Equipment.Passive, float> PassiveList = new Dictionary<Equipment.Passive, float>();
+    public float CurrentExp;
+    public float NeedExp;
 
-    public float PowerPoint;
+    public int CurrentSharp;
+    public int NeedSharp;
 
-    public float calPowerPoint()
-    {
-        float powerPoint = this.AttackDamage * 3 + this.HealthPoint * 1.5f + this.DefensePoint * 5 + this.Speed * 8;
-        foreach (KeyValuePair<Equipment.Passive, float> kvp in this.PassiveList)
-            powerPoint += kvp.Value * 30;
+    public bool IsOwn;
 
-        return powerPoint;
-    }
+    public bool IsInTeam;
 
     public Character Clone()
     {
         Character character = new Character();
 
-        character.Icon = this.Icon;
         character.AttackDamage = this.AttackDamage;
         character.HealthPoint = this.HealthPoint;
         character.DefensePoint = this.DefensePoint;
         character.Speed = this.Speed;
+
+        character.Level = this.Level;
+
+        character.Icon = this.Icon;
+        character.Name = this.Name;
+
+        character.StarCount = this.StarCount;
+
+        character.CurrentExp = this.CurrentExp;
+        character.NeedExp = this.NeedExp;
+
+        character.CurrentSharp = this.CurrentSharp;
+        character.NeedSharp = this.NeedSharp;
+
+        character.IsOwn = this.IsOwn;
+
+        character.IsInTeam = this.IsInTeam;
+
         foreach (KeyValuePair<Passive, float> kvp in PassiveList)
             character.PassiveList[kvp.Key] = kvp.Value;
         character.PowerPoint = this.PowerPoint;
@@ -44,4 +56,21 @@ public class Character
         return character;
     }
 
+    public void Transcend()
+    {
+        if (CurrentSharp < NeedSharp)
+            return;
+
+        CurrentSharp -= NeedSharp;
+        StarCount += 1;
+    }
+
+    public void LevelUp()
+    {
+        if (CurrentExp < NeedExp)
+            return;
+
+        CurrentExp -= NeedExp;
+        Level += 1;
+    }
 }

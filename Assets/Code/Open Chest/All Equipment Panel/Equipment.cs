@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-public class Equipment
+public class Equipment : BaseStats
 {
     public enum Type
     {
@@ -41,35 +41,6 @@ public class Equipment
     public Quality quality;
 
     public int Level;
-
-    public float AttackDamage;
-    public float HealthPoint;
-    public float DefensePoint;
-    public float Speed;
-
-    public enum Passive
-    {
-        None,
-        Stun,
-        Dodge,
-        LifeSteal,
-        CounterAttack,
-        CriticalChance,
-        CriticalDamage
-    }
-
-    public Dictionary<Passive, float> PassiveList = new Dictionary<Passive, float>();
-
-    public float PowerPoint;
-
-    public float calPowerPoint()
-    {
-        float powerPoint = this.AttackDamage * 3 + this.HealthPoint * 1.5f + this.DefensePoint * 5 + this.Speed * 8;
-        foreach (KeyValuePair<Passive, float> kvp in this.PassiveList)
-            powerPoint += kvp.Value * 30;
-
-        return powerPoint;
-    }
 
     public Equipment Clone()
     {

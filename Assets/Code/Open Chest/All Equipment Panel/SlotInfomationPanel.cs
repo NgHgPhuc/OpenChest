@@ -8,7 +8,8 @@ using UnityEngine.EventSystems;
 
 public class SlotInfomationPanel : MonoBehaviour
 {
-    public static SlotInfomationPanel Instance;
+    public Transform Panel;
+
     Transform slotInfomation;
 
     SlotStatsPanel AttackDamage;
@@ -31,6 +32,7 @@ public class SlotInfomationPanel : MonoBehaviour
 
     EquipmentData equipmentData;
 
+    public static SlotInfomationPanel Instance;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -102,11 +104,13 @@ public class SlotInfomationPanel : MonoBehaviour
 
     void SetPosition(Transform trans)
     {
+        Panel.gameObject.SetActive(true);
+
         RectTransform transRect = (RectTransform)trans;
         RectTransform slotInfomationRect = (RectTransform)slotInfomation;
         float deltaX = transRect.rect.width / 2 + slotInfomationRect.rect.width / 2;
         float deltaY = transRect.rect.height / 2 - slotInfomationRect.rect.height / 2;
-        RectTransform MainCanvas = (RectTransform)transform.root;
+        RectTransform MainCanvas = (RectTransform)Panel.root;
 
         if (trans.position.x + transRect.rect.width / 2 + slotInfomationRect.rect.width > MainCanvas.rect.width)
             slotInfomation.transform.position = trans.position + new Vector3(-(deltaX + deltaX * 2 / 100), deltaY, 0);
@@ -116,7 +120,7 @@ public class SlotInfomationPanel : MonoBehaviour
 
     void SetAttr()
     {
-        slotInfomation = transform.Find("Slot Infomation");
+        slotInfomation = Panel.Find("Slot Infomation");
 
         equipmentSlot = slotInfomation.Find("Weapon Slot Panel").GetComponent<EquipmentSlot>();
         EquipName = slotInfomation.Find("Equipment Name").GetComponent<TextMeshProUGUI>();
@@ -174,6 +178,6 @@ public class SlotInfomationPanel : MonoBehaviour
 
     public void ClickBackground()
     {
-        gameObject.SetActive(false);
+        Panel.gameObject.SetActive(false);
     }
 }

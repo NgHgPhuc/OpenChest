@@ -77,14 +77,14 @@ public class ChestManager : MonoBehaviour
 
             float PassiveValue = RandomPassiveValue((int)equipment.quality);
 
-            if (equipment.PassiveList.ContainsKey((Equipment.Passive)PassiveNum))
-                equipment.PassiveList[(Equipment.Passive)PassiveNum] += PassiveValue;
+            if (equipment.PassiveList.ContainsKey((BaseStats.Passive)PassiveNum))
+                equipment.PassiveList[(BaseStats.Passive)PassiveNum] += PassiveValue;
 
-            else equipment.PassiveList[(Equipment.Passive)PassiveNum] = PassiveValue;
+            else equipment.PassiveList[(BaseStats.Passive)PassiveNum] = PassiveValue;
         }
 
         float PowerPoint = equipment.AttackDamage * 3 + equipment.HealthPoint * 1.5f + equipment.DefensePoint * 5 + equipment.Speed * 8;
-        foreach (KeyValuePair<Passive, float> kvp in equipment.PassiveList)
+        foreach (KeyValuePair<BaseStats.Passive, float> kvp in equipment.PassiveList)
             PowerPoint += kvp.Value * 30;
         equipment.PowerPoint = PowerPoint;
 
