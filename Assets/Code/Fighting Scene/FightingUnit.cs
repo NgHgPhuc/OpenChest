@@ -167,7 +167,15 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     //ATTACK - END ATTACK
     public void Attack(FightingUnit target)
     {
-        target.BeingAttacked(this.character.AttackDamage);
+        float CriticalRate = UnityEngine.Random.Range(0f, 100f);
+        float DamageCause = this.character.AttackDamage;
+        if (CriticalRate < character.PassiveList[BaseStats.Passive.CriticalChance])
+        {
+            DamageCause *= (100 + character.PassiveList[BaseStats.Passive.CriticalDamage]) * 2 / 100;
+        }
+
+
+        target.BeingAttacked(this,DamageCause);
         Invoke("EndAttack", 1f);
     }
 
@@ -178,7 +186,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     }
 
     //BEING ATTACKED - END BEING ATTACKED
-    public void BeingAttacked(float Damage)
+    public void BeingAttacked(FightingUnit Causer,float Damage)
     {
         float DamageReceive = CalculateDamage(Damage);
         CurrentHP -= DamageReceive;
@@ -193,6 +201,16 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
             return;
         }
         Icon.color = Color.red;
+
+
+        float CounterRate = UnityEngine.Random.Range(0f, 100f);
+        if(CounterRate < 100)
+        {
+            Attack(Causer);
+        }
+        
+
+
         Invoke("EndAttacked", 1f);
     }
     float CalculateDamage(float Damage)

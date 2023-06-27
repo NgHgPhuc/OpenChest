@@ -27,4 +27,4 @@ MonoBehaviour:
     CurrentSharp: 500
     NeedSharp: 50
     IsOwn: 0
-    IsInTeam: 1
+    IsInTeam: 0

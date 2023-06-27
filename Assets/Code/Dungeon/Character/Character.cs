@@ -6,6 +6,16 @@ using static Equipment;
 [System.Serializable]
 public class Character : BaseStats
 {
+    public new Dictionary<BaseStats.Passive, float> PassiveList = new Dictionary<BaseStats.Passive, float>()
+    {
+        {Passive.Stun , 0f },
+        {Passive.Dodge , 0f },
+        {Passive.LifeSteal , 0f },
+        {Passive.CounterAttack , 0f },
+        {Passive.CriticalChance , 0f },
+        {Passive.CriticalDamage , 0f },
+    };
+
     public int Level;
 
     public Sprite Icon;
