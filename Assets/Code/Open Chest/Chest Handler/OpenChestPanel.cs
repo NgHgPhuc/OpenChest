@@ -17,6 +17,7 @@ public class OpenChestPanel : MonoBehaviour
     public GameObject UpgradeChestPanel;
     public FloatingObject floatingObjectPref;
     Transform floatingPoint;
+    Animator animator;
     void Start()
     {
         CurrentHealth = MaxHealth;
@@ -27,6 +28,9 @@ public class OpenChestPanel : MonoBehaviour
         floatingPoint = transform.Find("Floating Point");
 
         LevelUpButton.onClick.AddListener(LevelUpFunc);
+
+        animator = transform.Find("Chest").GetComponent<Animator>();
+        Invoke("ChestAFK_animation", 10f);
     }
 
     public void ClickOnChest()
@@ -38,10 +42,22 @@ public class OpenChestPanel : MonoBehaviour
             HealthBar.value = CurrentHealth;
             FloatingObject foPref = Instantiate(floatingObjectPref, floatingPoint.position, floatingPoint.rotation, transform);
             foPref.Iniatialize("-10", Color.red);
+
+            animator.SetTrigger("Click");
+
+            //if 10s dont click - play idle animation
+            CancelInvoke("ChestAFK_animation");
+            Invoke("ChestAFK_animation", 10f);
         }
         else EarnChest();
 
     }
+
+    void ChestAFK_animation()
+    {
+        animator.SetTrigger("Afk");
+    }
+
     public void EarnChest()
     {
         CurrentHealth = MaxHealth;

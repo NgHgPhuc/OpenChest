@@ -18,13 +18,14 @@ MonoBehaviour:
     DefensePoint: 5
     Speed: 5
     PowerPoint: 0
+    tier: 0
     Level: 1
-    Icon: {fileID: 21300000, guid: d25d6665f19b44c15ad9bd34c7f85f1b, type: 3}
+    Icon: {fileID: 21300000, guid: b76be0caaeeab43c8bbc606f248a489f, type: 3}
     Name: Froggo
     StarCount: 1
     CurrentExp: 10000
     NeedExp: 100
-    CurrentSharp: 500
+    CurrentSharp: 1730
     NeedSharp: 50
-    IsOwn: 0
-    IsInTeam: 1
+    IsOwn: 1
+    IsInTeam: 0

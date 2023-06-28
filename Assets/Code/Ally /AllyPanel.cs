@@ -7,6 +7,9 @@ public class AllyPanel : MonoBehaviour
 {
     public Transform AllyListTranform;
     List<AllyObject> AllyList = new List<AllyObject>();
+    List<GameObject> hoizontals = new List<GameObject>();
+    int Top = 0;
+    int Bot = 2;
 
     void Start()
     {
@@ -19,9 +22,13 @@ public class AllyPanel : MonoBehaviour
             for (int i = 0; i < AllyListTranform.childCount; i++)
             {
                 Transform Horizontal = AllyListTranform.GetChild(i);
+                hoizontals.Add(Horizontal.gameObject);
 
                 for (int j = 0; j < Horizontal.childCount; j++)
                     AllyList.Add(Horizontal.GetChild(j).GetComponent<AllyObject>());
+
+                if (i > Bot)
+                    Horizontal.gameObject.SetActive(false);
             }
     }
 
@@ -45,5 +52,36 @@ public class AllyPanel : MonoBehaviour
     {
         gameObject.SetActive(true);
         UpdateAllyShow();
+    }
+
+    public void InShowZone()
+    {
+        RectTransform r = (RectTransform)AllyListTranform.parent;
+        float len = AllyListTranform.parent.position.y + r.rect.height/2;
+
+
+        if (hoizontals[Top].transform.position.y > len)
+        {
+            hoizontals[Top].SetActive(false);
+            Top += 1;
+            hoizontals[Bot + 1].SetActive(true);
+            Bot += 1;
+
+            return;
+        }
+
+        if (Top == 0)
+            return;
+
+        if(hoizontals[Top-1].transform.position.y < len)
+        {
+            hoizontals[Top-1].SetActive(true);
+            Top -= 1;
+            hoizontals[Bot].SetActive(false);
+            Bot -= 1;
+
+            return;
+        }
+
     }
 }

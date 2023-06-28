@@ -16,6 +16,8 @@ public class GetEquipmentPanel : MonoBehaviour
     public Button DropButton;
     public Button EquipButton;
 
+    public Animator animator;
+
     void Start()
     {
         DropButton.onClick.AddListener(DropFunc);
@@ -44,8 +46,21 @@ public class GetEquipmentPanel : MonoBehaviour
 
     public void DropFunc()
     {
-        ResourceManager.Instance.ChangeGold(NewEquipment.PowerPoint);
-        ResourceManager.Instance.GainExp(NewEquipment.PowerPoint/2);
+        if (this.OldEquipment == null || this.NewEquipment.calPowerPoint() > this.OldEquipment.calPowerPoint())
+        {
+            string paragraph = "The new equipment you found have stronger than you old equipment\nAre you sure to drop it?";
+            InformManager.Instance.Initialize_QuestionObject("Warning!", paragraph, Drop);
+        }
+        else Drop();
+            
+    }
+    void Drop()
+    {
+        if (this.NewEquipment == null)
+            return;
+
+        ResourceManager.Instance.ChangeGold(NewEquipment.calPowerPoint());
+        ResourceManager.Instance.GainExp(NewEquipment.PowerPoint / 2);
         this.NewEquipment = null;
         this.OldEquipment = null;
         gameObject.SetActive(false);
@@ -54,8 +69,6 @@ public class GetEquipmentPanel : MonoBehaviour
     public void EquipFunc()
     {
         EquipmentPanelManager.Instance.SetEquipment(this.NewEquipment);
-        //StatsPanelManager.Instance.Unequip(this.OldEquipment);
-        //StatsPanelManager.Instance.Equip(this.NewEquipment);
 
         if(this.OldEquipment == null)
         {

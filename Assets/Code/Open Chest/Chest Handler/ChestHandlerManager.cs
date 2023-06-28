@@ -37,6 +37,7 @@ public class ChestHandlerManager : MonoBehaviour
         Equipment NewEquipment = ChestManager.Instance.RandomEquipment();
 
         getEquipmentPanel.gameObject.SetActive(true);
+        getEquipmentPanel.animator.Play("Open");
         getEquipmentPanel.SetNewEquipment(NewEquipment);
 
         Equipment OldEquipment = EquipmentPanelManager.Instance.GetEquipment(NewEquipment.type);

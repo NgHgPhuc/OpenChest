@@ -19,6 +19,8 @@ public class CharInfoPanel : MonoBehaviour
 
     public Transform StatsPanel;
 
+    public Animator animator;
+
     public static CharInfoPanel Instance { get; private set; }
 
     List<StatsPanel> AllStatsPanel;
@@ -80,6 +82,8 @@ public class CharInfoPanel : MonoBehaviour
 
         foreach (KeyValuePair<Equipment.Passive, float> kvp in character.PassiveList)
             AllPassivePanel[(int)kvp.Key - 1].SetStatsValue(kvp.Value, 1);
+
+        animator.Play("Open");
     }
 
     public void ClickBackground()
@@ -87,4 +91,5 @@ public class CharInfoPanel : MonoBehaviour
         Panel.SetActive(false);
 
     }
+
 }

@@ -8635,18 +8635,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character:
-    Level: 0
-    Icon: {fileID: 0}
     AttackDamage: 0
     HealthPoint: 0
     DefensePoint: 0
     Speed: 0
     PowerPoint: 0
+    Level: 0
+    Icon: {fileID: 0}
+    Name: 
+    StarCount: 0
+    CurrentExp: 0
+    NeedExp: 0
+    CurrentSharp: 0
+    NeedSharp: 0
+    IsOwn: 0
+    IsInTeam: 0
   stateData: 1
   position: 0
   team: 0
   stateFighting: 0
   Range: 0
+  IsInTurn: 0
   CurrentHP: 0
 --- !u!114 &1774991345
 MonoBehaviour:

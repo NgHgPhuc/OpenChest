@@ -47,6 +47,9 @@ public class CharacterSlot : MonoBehaviour,IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (CharInfoPanel.Instance == null)
+            return;
+
         CharInfoPanel.Instance.ShowInfo(this.character);
     }
 }

@@ -18,13 +18,14 @@ MonoBehaviour:
     DefensePoint: 10
     Speed: 15
     PowerPoint: 0
+    tier: 3
     Level: 1
     Icon: {fileID: 21300000, guid: 90f206a5d9baa43c7b2f9a83aeb7e100, type: 3}
     Name: Sensei
-    StarCount: 3
+    StarCount: 1
     CurrentExp: 10000
     NeedExp: 200
-    CurrentSharp: 500
+    CurrentSharp: 660
     NeedSharp: 50
-    IsOwn: 0
+    IsOwn: 1
     IsInTeam: 0

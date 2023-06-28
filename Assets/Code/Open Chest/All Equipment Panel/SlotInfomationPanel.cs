@@ -32,6 +32,7 @@ public class SlotInfomationPanel : MonoBehaviour
 
     EquipmentData equipmentData;
 
+    Animator animator;
     public static SlotInfomationPanel Instance;
     private void Awake()
     {
@@ -84,6 +85,7 @@ public class SlotInfomationPanel : MonoBehaviour
             else Passive[i].gameObject.SetActive(false);
         }
 
+        animator.Play("Open");
     }
 
     void FirstShowing(Transform trans)
@@ -139,6 +141,9 @@ public class SlotInfomationPanel : MonoBehaviour
         StatsPlusUpgradeText = slotInfomation.Find("Stats Upgrade Panel").Find("Stats Upgrade Value").GetComponent<TextMeshProUGUI>();
         PassivePlusText = slotInfomation.Find("Passive Upgrade Panel").Find("Passive Current Value").GetComponent<TextMeshProUGUI>();
         PassivePlusUpgradeText = slotInfomation.Find("Passive Upgrade Panel").Find("Passive Upgrade Value").GetComponent<TextMeshProUGUI>();
+
+        animator = GetComponent<Animator>();
+
     }
     void ShowInfomation(Equipment equipment)
     {

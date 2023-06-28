@@ -51,7 +51,6 @@ public class FightManager : MonoBehaviour
             {
                 PlayerTeam[i].gameObject.SetActive(true);
                 PlayerTeam[i].character = CurrentChapter.MyTeam[i];
-                print(PlayerTeam[i].character.PassiveList.Keys);
                 PlayerTeam[i].stateData = FightingUnit.StateData.HaveChamp;
                 PlayerTeam[i].team = FightingUnit.Team.Player;
                 PlayerTeam[i].position = (FightingUnit.Position)i;
@@ -194,6 +193,11 @@ public class FightManager : MonoBehaviour
     //ENEMY ATTACK
     void Enemy_AttackAction()
     {
+        IsPlayerTurn = false;
+
+        PlayerAction = "";
+        ActionPanel.SetActive(false);
+
         All[currentTurn].Attack(PlayerTeam[CurrentPlayerTargeted]);
     }
 

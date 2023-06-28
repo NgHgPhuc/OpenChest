@@ -27,6 +27,9 @@ public class BaseStats
 
     public float calPowerPoint()
     {
+        if (this == null)
+            return 0;
+
         float powerPoint = this.AttackDamage * 3 + this.HealthPoint * 1.5f + this.DefensePoint * 5 + this.Speed * 8;
         foreach (KeyValuePair<BaseStats.Passive, float> kvp in this.PassiveList)
             powerPoint += kvp.Value * 30;
