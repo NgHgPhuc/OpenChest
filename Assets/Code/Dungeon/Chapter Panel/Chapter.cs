@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class Chapter : ScriptableObject
 {
     public string Name;
+    public bool IsOpen;
+    public bool IsDone;
+    public int StarCount;
     public List<Character> EnemyTeam;
     public List<Reward> reward;
     public List<Character> MyTeam;

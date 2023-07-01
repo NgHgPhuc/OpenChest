@@ -83,6 +83,7 @@ public class AllyGachaPanel : MonoBehaviour
     Character RandomCharacter(List<Character> characters)
     {
         int index = UnityEngine.Random.Range(0,characters.Count);
+        print(index);
         return characters[index];
 
     }

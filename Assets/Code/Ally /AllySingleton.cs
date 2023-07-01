@@ -31,6 +31,12 @@ public class AllySingleton : MonoBehaviour
 
     public void Initialize()
     {
+        if(allyPanel == null || detailAllyPanel == null)
+        {
+            allyPanel = transform.Find("Ally UI Panel").GetComponent<AllyPanel>();
+            detailAllyPanel = transform.Find("Detail Ally Panel").GetComponent<DetailAllyPanel>();
+        }
+
         detailAllyPanel.gameObject.SetActive(false);
         allyPanel.gameObject.SetActive(true);
         allyPanel.Initialize();

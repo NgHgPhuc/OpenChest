@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cfef659fca4740868533b12bb1e1c39, type: 3}
+  m_Name: Steel Knight
+  m_EditorClassIdentifier: 
+  character:
+    AttackDamage: 30
+    HealthPoint: 200
+    DefensePoint: 10
+    Speed: 15
+    PowerPoint: 0
+    tier: 2
+    Level: 1
+    Icon: {fileID: 21300000, guid: acfc9707003b542689398575010a3bfb, type: 3}
+    Name: Steel Knight
+    StarCount: 1
+    CurrentExp: 10000
+    NeedExp: 200
+    CurrentSharp: 680
+    NeedSharp: 50
+    IsOwn: 1
+    IsInTeam: 0

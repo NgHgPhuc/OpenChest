@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cfef659fca4740868533b12bb1e1c39, type: 3}
+  m_Name: Blubber Cucumber
+  m_EditorClassIdentifier: 
+  character:
+    AttackDamage: 0.00003287415
+    HealthPoint: 0.00024655613
+    DefensePoint: 0.000016437076
+    Speed: 15
+    PowerPoint: 0
+    tier: 1
+    Level: 14
+    Icon: {fileID: 21300000, guid: 4eed66446e31c49e6a9001ac01f14012, type: 3}
+    Name: Blubber Cucumber
+    StarCount: 2
+    CurrentExp: 300.67383
+    NeedExp: 2139.8652
+    CurrentSharp: 1050
+    NeedSharp: 50
+    IsOwn: 1
+    IsInTeam: 0

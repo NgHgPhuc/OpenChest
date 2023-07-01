@@ -10,7 +10,7 @@ public class ChestHandlerManager : MonoBehaviour
     public GetEquipmentPanel getEquipmentPanel;
     public static ChestHandlerManager Instance { get; private set; }
 
-    public int ChestCount;
+    int ChestCount;
     public TextMeshProUGUI ChestCountShow;
     private void Awake()
     {
@@ -25,6 +25,11 @@ public class ChestHandlerManager : MonoBehaviour
     }
     void Start()
     {
+    }
+
+    public void LoadChest()
+    {
+        ChestCount = Convert.ToInt32(PlayerPrefs.GetString("ChestCount"));
         ChestCountShow.SetText(ChestCount.ToString());
     }
 
@@ -32,7 +37,10 @@ public class ChestHandlerManager : MonoBehaviour
     public void RandomEquipment()
     {
         if (ChestCount <= 0)
+        {
+            InformManager.Instance.Initialize_FloatingInform("You dont have anymore chest");
             return;
+        }
 
         Equipment NewEquipment = ChestManager.Instance.RandomEquipment();
 
@@ -47,5 +55,14 @@ public class ChestHandlerManager : MonoBehaviour
 
         ChestCount -= 1;
         ChestCountShow.SetText(ChestCount.ToString());
+
+        DataManager.Instance.SaveData("ChestCount", ChestCount.ToString());
+    }
+
+    public void GetChest(int Mount)
+    {
+        ChestCount += Mount;
+        ChestCountShow.SetText(ChestCount.ToString());
+        DataManager.Instance.SaveData("ChestCount", ChestCount.ToString());
     }
 }

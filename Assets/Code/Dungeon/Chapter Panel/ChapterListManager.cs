@@ -8,6 +8,7 @@ public class ChapterListManager : MonoBehaviour
     // Start is called before the first frame update
     public GameObject ContainerChapter;
     List<ChapterPanelUI> chapterPanelUI = new List<ChapterPanelUI>();
+    int showIndex = 0;
     void Start()
     {
         
@@ -28,7 +29,18 @@ public class ChapterListManager : MonoBehaviour
     {
         for (int i = 0; i < 10; i++)
             if (ContainerChapter.transform.GetChild(i) != null)
-                chapterPanelUI.Add(ContainerChapter.transform.GetChild(i).GetComponent<ChapterPanelUI>());
+            {
+                ChapterPanelUI c = ContainerChapter.transform.GetChild(i).GetComponent<ChapterPanelUI>();
+                chapterPanelUI.Add(c);
+                //if (i != showIndex)
+                //    c.gameObject.SetActive(false);
+            }
+    }
+
+    public void ShowWhenMoveScroll()
+    {
+        //if(showIndex)
+        //showIndex
     }
 
     public void ClickOnBackground()

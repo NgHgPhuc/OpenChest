@@ -13,12 +13,16 @@ MonoBehaviour:
   m_Name: Chapter 1
   m_EditorClassIdentifier: 
   Name: Chapter 1
+  IsOpen: 1
+  IsDone: 1
+  StarCount: 3
   EnemyTeam:
   - AttackDamage: 1000
-    HealthPoint: 100000
+    HealthPoint: 1
     DefensePoint: 300
     Speed: 20
     PowerPoint: 0
+    tier: 0
     Level: 5
     Icon: {fileID: 21300000, guid: 94252b2bb7a2f4fd0a04cbf49ceb825c, type: 3}
     Name: Bee
@@ -30,10 +34,11 @@ MonoBehaviour:
     IsOwn: 0
     IsInTeam: 0
   - AttackDamage: 500
-    HealthPoint: 100000
+    HealthPoint: 1
     DefensePoint: 500
     Speed: 6
     PowerPoint: 0
+    tier: 0
     Level: 1
     Icon: {fileID: 21300000, guid: 2b5edd196eacb41ab9317eb17cfb869f, type: 3}
     Name: Egg
@@ -45,10 +50,11 @@ MonoBehaviour:
     IsOwn: 0
     IsInTeam: 0
   - AttackDamage: 2000
-    HealthPoint: 400000
+    HealthPoint: 1
     DefensePoint: 100
     Speed: 7
     PowerPoint: 0
+    tier: 0
     Level: 1
     Icon: {fileID: 21300000, guid: 2b5edd196eacb41ab9317eb17cfb869f, type: 3}
     Name: Egg
@@ -60,46 +66,63 @@ MonoBehaviour:
     IsOwn: 0
     IsInTeam: 0
   reward:
-  - {fileID: 11400000, guid: fabfc5403d2f54a66a562a2ea9259813, type: 2}
+  - type: 0
+    Icon: {fileID: 21300000, guid: 5ba29d41883d64880a4ad288468055d8, type: 3}
+    Mount: 10
+  - type: 1
+    Icon: {fileID: 21300000, guid: 28ea0b710e4ff476a9ddd9e76f41f02a, type: 3}
+    Mount: 1
+  - type: 2
+    Icon: {fileID: 21300000, guid: f4f429ad5ba0542a0a6c84c446a33d24, type: 3}
+    Mount: 100
+  - type: 1
+    Icon: {fileID: 21300000, guid: 28ea0b710e4ff476a9ddd9e76f41f02a, type: 3}
+    Mount: 2
+  - type: 3
+    Icon: {fileID: 21300000, guid: dca95b8d9450d4f688b9488eb1d5904d, type: 3}
+    Mount: 17
   MyTeam:
-  - AttackDamage: 5000
-    HealthPoint: 100000
+  - AttackDamage: 5
+    HealthPoint: 5
     DefensePoint: 5
     Speed: 5
-    PowerPoint: 0
-    Level: 1
+    PowerPoint: 5
+    tier: 0
+    Level: 5
     Icon: {fileID: 21300000, guid: d25d6665f19b44c15ad9bd34c7f85f1b, type: 3}
     Name: Froggo
-    StarCount: 1
-    CurrentExp: 10000
-    NeedExp: 100
-    CurrentSharp: 500
-    NeedSharp: 50
+    StarCount: 5
+    CurrentExp: 5
+    NeedExp: 5
+    CurrentSharp: 5
+    NeedSharp: 5
     IsOwn: 0
-    IsInTeam: 1
-  - AttackDamage: 1000
-    HealthPoint: 150000
-    DefensePoint: 5
-    Speed: 10
+    IsInTeam: 0
+  - AttackDamage: 0
+    HealthPoint: 0
+    DefensePoint: 0
+    Speed: 0
     PowerPoint: 0
-    Level: 1
-    Icon: {fileID: 21300000, guid: 34eda253a7b284fd2bb2c7bafb702edb, type: 3}
-    Name: Legace
-    StarCount: 2
-    CurrentExp: 10000
-    NeedExp: 100
-    CurrentSharp: 500
-    NeedSharp: 50
-    IsOwn: 0
-    IsInTeam: 1
-  - AttackDamage: 10000
-    HealthPoint: 1000000
-    DefensePoint: 29.7
-    Speed: 23.1
-    PowerPoint: 0
+    tier: 0
     Level: 0
-    Icon: {fileID: 21300000, guid: 90f206a5d9baa43c7b2f9a83aeb7e100, type: 3}
-    Name: ' sensei'
+    Icon: {fileID: 0}
+    Name: 
+    StarCount: 0
+    CurrentExp: 0
+    NeedExp: 0
+    CurrentSharp: 0
+    NeedSharp: 0
+    IsOwn: 0
+    IsInTeam: 0
+  - AttackDamage: 133.1
+    HealthPoint: 382.8
+    DefensePoint: 88
+    Speed: 55
+    PowerPoint: 0
+    tier: 0
+    Level: 0
+    Icon: {fileID: 21300000, guid: 41d892d181dea45d98f75142587db8c8, type: 3}
+    Name: 
     StarCount: 0
     CurrentExp: 0
     NeedExp: 0

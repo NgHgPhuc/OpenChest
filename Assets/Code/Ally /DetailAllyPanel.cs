@@ -77,6 +77,9 @@ public class DetailAllyPanel : MonoBehaviour
         characterData.LevelUp();
         Set_LevelUpPanel();
         Set_StatsPanel();
+
+        DataManager.Instance.SaveData(characterData.Name, characterData.ToStringData());
+
         InformManager.Instance.Initialize_FloatingInform("Upgrade your ally's level successfully!");
     }
 
@@ -102,6 +105,9 @@ public class DetailAllyPanel : MonoBehaviour
         Set_TranscendPanel();
         Set_StatsPanel();
         Set_InfomationPanel();
+
+        DataManager.Instance.SaveData(characterData.Name, characterData.ToStringData());
+
         InformManager.Instance.Initialize_FloatingInform("Transcend your ally successfully!");
     }
 
@@ -211,7 +217,8 @@ public class DetailAllyPanel : MonoBehaviour
     {
         if (this.characterData.IsOwn == false)
         {
-            CompainButtonText.transform.parent.gameObject.SetActive(false);
+            CompainIcon.gameObject.SetActive(false);
+            CompainButtonText.transform.parent.gameObject.SetActive(false);//button off
             return;
         }
 

@@ -56,6 +56,10 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
     public bool IsInTurn;
 
+    public Animator animator;
+    GameObject Shield;
+    Animator BeingAttackEffect; 
+
     //UI
     Slider healthBar;
     TextMeshProUGUI IndexHealthBar;
@@ -83,6 +87,12 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         if (FloatingPoint == null)
             FloatingPoint = transform.Find("Floating Point");
+
+        if (Shield == null)
+            Shield = transform.Find("Shield Effect").gameObject;
+
+        if (BeingAttackEffect == null)
+            BeingAttackEffect = transform.Find("Being Attacked Effect").GetComponent<Animator>();
     }
 
 
@@ -152,6 +162,15 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         Icon.sprite = character.Icon;
 
         floatingObject = FightManager.Instance.floatingObject;
+
+        try
+        {
+            animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animator/" + character.Name + "/" + character.Name);
+        }
+        catch(Exception)
+        {
+
+        }
     }
 
     void UpdateHealthBar()
@@ -177,6 +196,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         if (stateFighting == StateFighting.Block)
         {
             stateFighting = StateFighting.Alive;
+            Shield.SetActive(false);
             Icon.color = Color.white;
         }
 
@@ -193,6 +213,9 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     {
         IsInTurn = false;
         EndTurnUI();
+
+        animator.Play("Idle");
+
         FightManager.Instance.Endturn();
     }
 
@@ -213,7 +236,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     public void Block()
     {
         stateFighting = StateFighting.Block;
-        Icon.color = Color.blue;
+        Shield.SetActive(true);
         EndMyTurn();
     }
 
@@ -245,6 +268,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
             Floating("Stun", Color.grey);
             target.effectFighting = EffectFighting.Stunned;
         }
+
+        animator.Play("Attack");
 
         target.BeingAttacked(this, DamageCause);
     }
@@ -279,6 +304,14 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         float DamageReceive = CalculateDamage(Damage);
         CurrentHP -= DamageReceive;
 
+        BeingAttackEffect.Play("Effect");
+
+        if (CurrentHP <= 0)
+        {
+            Death(Causer);
+            return;
+        }
+
         Causer.LifeSteal(DamageReceive);
 
         Floating(Math.Ceiling(DamageReceive).ToString(), Color.red);
@@ -286,12 +319,6 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         this.Icon.color = Color.red;
 
         UpdateHealthBar();
-
-        if (CurrentHP <= 0)
-        {
-            Death(Causer);
-            return;
-        }
 
         IEnumerator coroutine = EndBeingAttack(Causer);
         StartCoroutine(coroutine);
@@ -341,8 +368,11 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         if (mes == "Counter")
             return;
 
-        if (mes == "End Turn" || mes == "Target Die")
+        if (mes == "End Turn")
             EndMyTurn();
+
+        if (mes == "Target Die")
+            Invoke("EndMyTurn", 1f);
     }
 
 

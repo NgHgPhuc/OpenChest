@@ -7,17 +7,20 @@ using Unity.VisualScripting;
 
 public class ResourceManager : MonoBehaviour
 {
-    float Gold = 500;
+    float Gold;
     public TextMeshProUGUI GoldMount;
 
-    float Diamond = 50000;
+    float Diamond;
     public TextMeshProUGUI DiamondMount;
 
-    float CurrentExp = 0f;
-    float NeedExp = 500f;
-    int PlayerLevel = 1;
+    float CurrentExp;
+    float NeedExp;
+    int PlayerLevel;
+
     public TextMeshProUGUI Progress;
     public TextMeshProUGUI Level;
+
+    public int Ticket { get; private set; }
 
     public FloatingObject floatingObject;
 
@@ -36,10 +39,22 @@ public class ResourceManager : MonoBehaviour
     void Start()
     {
         UpdateShowUI();
-
-
     }
 
+    public void GetData()
+    {
+        Gold = (float)Convert.ToDouble(PlayerPrefs.GetString("Gold"));
+        Diamond = (float)Convert.ToDouble(PlayerPrefs.GetString("Diamond"));
+        PlayerLevel = Convert.ToInt32(PlayerPrefs.GetString("Level"));
+        NeedExp = (float)Convert.ToDouble(PlayerPrefs.GetString("NeedExp"));
+        CurrentExp = (float)Convert.ToDouble(PlayerPrefs.GetString("CurrentExp"));
+        Ticket = Convert.ToInt32(PlayerPrefs.GetString("Ticket"));
+
+        float progress = CurrentExp * 100 / NeedExp;
+        Progress.SetText(Math.Round(progress, 1) + "%");
+
+        UpdateShowUI();
+    }
 
     void UpdateShowUI()
     {
@@ -61,6 +76,7 @@ public class ResourceManager : MonoBehaviour
         else
             f.Iniatialize("+"+Mount, Color.green, "Floating On");
 
+        DataManager.Instance.SaveData("Gold", Gold.ToString());
         UpdateShowUI();
     }
 
@@ -88,6 +104,8 @@ public class ResourceManager : MonoBehaviour
         else
             f.Iniatialize("+" + value, Color.green, "Floating On");
 
+        DataManager.Instance.SaveData("CurrentExp", CurrentExp.ToString());
+
         Progress.SetText(Math.Round(progress, 1) + "%");
         if (CurrentExp > NeedExp)
             LevelUp();
@@ -97,12 +115,20 @@ public class ResourceManager : MonoBehaviour
     {
         PlayerLevel += 1;
         ChestManager.Instance.PlayerLevel = PlayerLevel;
-        CurrentExp -= NeedExp;
+        GainExp(-NeedExp);
         NeedExp += NeedExp * (10 + PlayerLevel)/ 100;
 
-        float progress = CurrentExp * 100 / NeedExp;
-        Progress.SetText(Math.Round(progress, 1) + "%");
+        DataManager.Instance.SaveData("NeedExp", NeedExp.ToString());
+        DataManager.Instance.SaveData("Level", PlayerLevel.ToString());
+
         Level.SetText(PlayerLevel.ToString());
+
+    }
+
+    public void UsingTicket(int Mount)
+    {
+        Ticket += Mount;
+        DataManager.Instance.SaveData("Ticket", Ticket.ToString());
 
     }
 
@@ -115,4 +141,5 @@ public class ResourceManager : MonoBehaviour
     {
         return (Diamond > value);
     }
+
 }

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cfef659fca4740868533b12bb1e1c39, type: 3}
+  m_Name: Pink Star
+  m_EditorClassIdentifier: 
+  character:
+    AttackDamage: 5
+    HealthPoint: 100
+    DefensePoint: 5
+    Speed: 5
+    PowerPoint: 0
+    tier: 0
+    Level: 1
+    Icon: {fileID: 21300000, guid: fcf2f2901c248453ca5f92a81a9a0df4, type: 3}
+    Name: Pink Star
+    StarCount: 1
+    CurrentExp: 10000
+    NeedExp: 100
+    CurrentSharp: 1810
+    NeedSharp: 50
+    IsOwn: 1
+    IsInTeam: 0

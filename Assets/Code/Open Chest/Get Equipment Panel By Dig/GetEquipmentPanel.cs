@@ -33,6 +33,7 @@ public class GetEquipmentPanel : MonoBehaviour
     public void SetNewEquipment(Equipment equipment)
     {
         this.NewEquipment = equipment;
+        this.NewEquipment.PowerPoint = this.NewEquipment.calPowerPoint(); 
         NewEquipmentPanel.SetEquipment(equipment);
         compareNewAndOld.Compare();
     }
@@ -40,6 +41,8 @@ public class GetEquipmentPanel : MonoBehaviour
     public void SetOldEquipment(Equipment equipment)
     {
         this.OldEquipment = equipment;
+        if(this.OldEquipment != null)
+            this.OldEquipment.PowerPoint = this.OldEquipment.calPowerPoint();
         OldEquipmentPanel.SetEquipment(equipment);
         compareNewAndOld.Compare();
     }
@@ -59,7 +62,7 @@ public class GetEquipmentPanel : MonoBehaviour
         if (this.NewEquipment == null)
             return;
 
-        ResourceManager.Instance.ChangeGold(NewEquipment.calPowerPoint());
+        ResourceManager.Instance.ChangeGold(NewEquipment.PowerPoint);
         ResourceManager.Instance.GainExp(NewEquipment.PowerPoint / 2);
         this.NewEquipment = null;
         this.OldEquipment = null;

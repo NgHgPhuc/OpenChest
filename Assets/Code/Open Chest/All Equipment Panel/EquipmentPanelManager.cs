@@ -26,6 +26,7 @@ public class EquipmentPanelManager : MonoBehaviour
         string ChildName = equipment.type.ToString() + " Slot Panel";
         EquipmentData equipmentData = transform.Find(ChildName).GetComponent<EquipmentData>();
 
+        SaveEquipment(equipment);
         equipmentData.SetEquipmentData(equipment);
     }
 
@@ -36,4 +37,13 @@ public class EquipmentPanelManager : MonoBehaviour
         return equipmentSlot.GetEquipmentData();
     }
 
+    public void LoadEquipment(Equipment equipment)
+    {
+        SetEquipment(equipment);
+    }
+
+    public void SaveEquipment(Equipment equipment)
+    {
+        DataManager.Instance.SaveData(equipment.type.ToString(), equipment.ToStringData());
+    }
 }

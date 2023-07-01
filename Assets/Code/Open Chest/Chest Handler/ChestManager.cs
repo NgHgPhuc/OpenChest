@@ -83,10 +83,7 @@ public class ChestManager : MonoBehaviour
             else equipment.PassiveList[(BaseStats.Passive)PassiveNum] = PassiveValue;
         }
 
-        float PowerPoint = equipment.AttackDamage * 3 + equipment.HealthPoint * 1.5f + equipment.DefensePoint * 5 + equipment.Speed * 8;
-        foreach (KeyValuePair<BaseStats.Passive, float> kvp in equipment.PassiveList)
-            PowerPoint += kvp.Value * 30;
-        equipment.PowerPoint = PowerPoint;
+        equipment.PowerPoint = equipment.calPowerPoint();
 
         return equipment;
     }
