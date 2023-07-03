@@ -43,13 +43,13 @@ public class DetailAllyPanel : MonoBehaviour
     public Image CompainIcon;
     public TextMeshProUGUI CompainButtonText;
 
-    List<Color> colors = new List<Color>()
-    {
-        new Color(240f/255, 240f/255, 240f/255),
-        new Color(71f/255, 160f/255, 241f/255),
-        new Color(255f/255,81f/255,222f/255),
-        new Color(255f/255, 199f/255, 69f/255),
-    };
+    [Header("Tier Effect")]
+    public GameObject TierEffect;
+    public Image TierEffect_Image;
+    public Animator TierEffect_Animation;
+
+    [Header("Unlock")]
+    public GameObject UnlockButton;
 
     void Start()
     {
@@ -142,9 +142,17 @@ public class DetailAllyPanel : MonoBehaviour
 
         string tier = characterData.tier.ToString();
         Quality.SetText("[" + tier + "]");
-        Quality.color = colors[(int)characterData.tier];
+        Quality.color = characterData.GetColor();
 
         Name.SetText(this.characterData.Name);
+
+        if ((int)characterData.tier >= 2)
+        {
+            TierEffect.SetActive(true);
+            TierEffect_Image.color = characterData.GetColor();
+        }
+        else
+            TierEffect.SetActive(false);
     }
 
     void Set_CharacterPanel()
@@ -153,6 +161,9 @@ public class DetailAllyPanel : MonoBehaviour
             return;
 
         this.character.sprite = this.characterData.Icon;
+        if (this.characterData.IsOwn == false)
+            this.character.color = new Color(120f / 255, 120f / 255, 120f / 255);
+        else this.character.color = Color.white;
     }
 
     void Set_StatsPanel()
@@ -219,9 +230,12 @@ public class DetailAllyPanel : MonoBehaviour
         {
             CompainIcon.gameObject.SetActive(false);
             CompainButtonText.transform.parent.gameObject.SetActive(false);//button off
+
+            UnlockButton.SetActive(true);
             return;
         }
 
+        UnlockButton.SetActive(false);
         CompainButtonText.transform.parent.gameObject.SetActive(true);
 
         if (this.characterData.IsInTeam)

@@ -17,7 +17,15 @@ public class Character : BaseStats
     }
     
     public Tier tier;
+    Dictionary<Tier, Color> colors = new Dictionary<Tier, Color>()
+    {
+        { Tier.Common,new Color(240f/255, 240f/255, 240f/255) },
+        { Tier.Rare, new Color(71f / 255, 160f / 255, 241f / 255)},
+        { Tier.Epic, new Color(255f / 255, 81f / 255, 222f / 255)},
+        { Tier.Legendary, new Color(255f / 255, 199f / 255, 69f / 255)},
+    };
 
+    //override
     public new Dictionary<BaseStats.Passive, float> PassiveList = new Dictionary<BaseStats.Passive, float>()
     {
         {Passive.Stun , 0f },
@@ -44,6 +52,11 @@ public class Character : BaseStats
     public bool IsOwn;
 
     public bool IsInTeam;
+
+    public Color GetColor()
+    {
+        return colors[tier];
+    }
 
     public Character Clone()
     {

@@ -83,6 +83,7 @@ public class ResourceManager : MonoBehaviour
     public void ChangeDiamond(float Mount)
     {
         Diamond += Mount;
+        DataManager.Instance.SaveData("Diamond", Diamond.ToString());
 
         FloatingObject f = Instantiate(floatingObject, DiamondMount.transform.position, DiamondMount.transform.rotation, DiamondMount.transform);
         if (Mount < 0)

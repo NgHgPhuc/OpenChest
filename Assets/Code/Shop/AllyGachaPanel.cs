@@ -55,6 +55,7 @@ public class AllyGachaPanel : MonoBehaviour
             int t = RandomTier(r);
             Character.Tier tier = (Character.Tier)t;
             Character getChar = RandomCharacter(RateInfomation[tier]);
+            
 
             getCharList.Add(getChar.Clone());
 
@@ -62,6 +63,8 @@ public class AllyGachaPanel : MonoBehaviour
                 getChar.CurrentSharp += 10 * (t + 1);
 
             getChar.IsOwn = true;
+
+            DataManager.Instance.SaveData(getChar.Name, getChar.ToStringData());
 
         }
 
@@ -83,7 +86,6 @@ public class AllyGachaPanel : MonoBehaviour
     Character RandomCharacter(List<Character> characters)
     {
         int index = UnityEngine.Random.Range(0,characters.Count);
-        print(index);
         return characters[index];
 
     }

@@ -33,7 +33,7 @@ public class DataManager : MonoBehaviour
 
         string username = PlayerPrefs.GetString("Username");
         string password = PlayerPrefs.GetString("Password");
-        LoginAccount(username, password);
+        LoginAccount("qweasd", "qweasd");
 
         LoadingProgress.maxValue = 50;
         LoadingProgress.value = 0;
@@ -51,9 +51,6 @@ public class DataManager : MonoBehaviour
             Username = username,
             Password = password,
         };
-
-        PlayerPrefs.SetString("Username", username);
-        PlayerPrefs.SetString("Password", password);
 
         PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnLoginFail);
     }

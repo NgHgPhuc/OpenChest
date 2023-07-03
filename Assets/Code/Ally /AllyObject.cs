@@ -16,6 +16,11 @@ public class AllyObject : MonoBehaviour, IPointerClickHandler
     TextMeshProUGUI Level;
     Transform StarListPanel;
     List<GameObject> StarShow = new List<GameObject>();
+    GameObject TierEffect;
+    Image TierEffect_Image;
+    Animator TierEffect_Animator;
+
+    CanvasGroup canvasGroup;
 
     void Attr()
     {
@@ -24,8 +29,13 @@ public class AllyObject : MonoBehaviour, IPointerClickHandler
         StarCount = transform.Find("Star Count").GetComponent<TextMeshProUGUI>();
         Level = transform.Find("Level").GetComponent<TextMeshProUGUI>();
         StarListPanel = transform.Find("Star List Panel");
+        TierEffect = transform.Find("Tier Effect").gameObject;
+        TierEffect_Image = TierEffect.GetComponent<Image>();
+        TierEffect_Animator = TierEffect.GetComponent<Animator>();
 
-        for(int i = 0; i < StarListPanel.childCount; i++)
+        canvasGroup = GetComponent<CanvasGroup>();
+
+        for (int i = 0; i < StarListPanel.childCount; i++)
         {
             GameObject star = StarListPanel.GetChild(i).gameObject;
             if (star != null)
@@ -45,13 +55,14 @@ public class AllyObject : MonoBehaviour, IPointerClickHandler
         Attr();
 
         if (!character.IsOwn)
-            Icon.color = Color.gray;
+            canvasGroup.alpha = 0.7f;
         else
-            Icon.color = Color.white;
+            canvasGroup.alpha = 1f;
 
         Icon.sprite = this.character.Icon;
         StarCount.SetText(this.character.StarCount.ToString());
         Name.SetText(this.character.Name);
+        Name.color = character.GetColor();
         Level.SetText(this.character.Level.ToString());
 
         for (int i = 0; i < StarListPanel.childCount; i++)
@@ -60,6 +71,13 @@ public class AllyObject : MonoBehaviour, IPointerClickHandler
             else
                 StarShow[i].GetComponent<Image>().color = Color.black;
 
+        if((int)character.tier >= 2)
+        {
+            TierEffect.SetActive(true);
+            TierEffect_Image.color = character.GetColor();
+        }
+        else
+            TierEffect.SetActive(false);
 
     }
 

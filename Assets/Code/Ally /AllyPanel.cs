@@ -59,7 +59,8 @@ public class AllyPanel : MonoBehaviour
         RectTransform r = (RectTransform)AllyListTranform.parent;
         float len = AllyListTranform.parent.position.y + r.rect.height/2;
 
-
+        if (Top >= 9)
+            return;
         if (hoizontals[Top].transform.position.y > len)
         {
             hoizontals[Top].SetActive(false);

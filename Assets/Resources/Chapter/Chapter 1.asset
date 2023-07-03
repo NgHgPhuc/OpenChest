@@ -17,10 +17,10 @@ MonoBehaviour:
   IsDone: 1
   StarCount: 3
   EnemyTeam:
-  - AttackDamage: 1000
-    HealthPoint: 1
-    DefensePoint: 300
-    Speed: 20
+  - AttackDamage: 50
+    HealthPoint: 300
+    DefensePoint: 10
+    Speed: 10
     PowerPoint: 0
     tier: 0
     Level: 5
@@ -33,10 +33,10 @@ MonoBehaviour:
     NeedSharp: 0
     IsOwn: 0
     IsInTeam: 0
-  - AttackDamage: 500
-    HealthPoint: 1
-    DefensePoint: 500
-    Speed: 6
+  - AttackDamage: 30
+    HealthPoint: 200
+    DefensePoint: 10
+    Speed: 8
     PowerPoint: 0
     tier: 0
     Level: 1
@@ -49,10 +49,10 @@ MonoBehaviour:
     NeedSharp: 0
     IsOwn: 0
     IsInTeam: 0
-  - AttackDamage: 2000
-    HealthPoint: 1
-    DefensePoint: 100
-    Speed: 7
+  - AttackDamage: 100
+    HealthPoint: 400
+    DefensePoint: 20
+    Speed: 15
     PowerPoint: 0
     tier: 0
     Level: 1
