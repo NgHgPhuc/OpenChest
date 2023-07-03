@@ -7,37 +7,27 @@ using System;
 [Serializable]
 public class Reward 
 {
-    public enum Type
-    {
-        Gold,
-        Diamond,
-        Exp,
-        Chest
-    }
-
-    public Type type;
-
-    public Sprite Icon;
+    public RewardItem item;
 
     public int Mount;
 
     public void Earning()
     {
-        switch(type)
+        switch(item.type)
         {
-            case Type.Gold:
+            case RewardItem.Type.Gold:
                 ResourceManager.Instance.ChangeGold(Mount);
                 break;
 
-            case Type.Diamond:
+            case RewardItem.Type.Diamond:
                 ResourceManager.Instance.ChangeDiamond(Mount);
                 break;
 
-            case Type.Exp:
+            case RewardItem.Type.Exp:
                 ResourceManager.Instance.GainExp(Mount);
                 break;
 
-            case Type.Chest:
+            case RewardItem.Type.Chest:
                 ChestHandlerManager.Instance.GetChest(Mount);
                 break;
             default:

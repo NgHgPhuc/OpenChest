@@ -170,6 +170,7 @@ public class DataManager : MonoBehaviour
 
         AllyOwnManager.Instance.SetAllAly();
 
+        MissionManager.Instance.LoadNextMission();
 
         LoadingPanel.SetActive(false);
     }

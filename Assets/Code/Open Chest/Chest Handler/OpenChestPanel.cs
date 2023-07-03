@@ -64,6 +64,8 @@ public class OpenChestPanel : MonoBehaviour
         HealthBar.value = CurrentHealth;
         ResourceManager.Instance.ChangeGold(20);
         ChestHandlerManager.Instance.RandomEquipment();
+
+        MissionManager.Instance.DoingMission_EarnChest();
     }
 
     void LevelUpFunc()

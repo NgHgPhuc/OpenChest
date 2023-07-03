@@ -15,7 +15,7 @@ public class ResourceManager : MonoBehaviour
 
     float CurrentExp;
     float NeedExp;
-    int PlayerLevel;
+    public int PlayerLevel { get; private set; }
 
     public TextMeshProUGUI Progress;
     public TextMeshProUGUI Level;
@@ -69,6 +69,7 @@ public class ResourceManager : MonoBehaviour
     public void ChangeGold(float Mount)
     {
         Gold += Mount;
+        DataManager.Instance.SaveData("Gold", Gold.ToString());
 
         FloatingObject f = Instantiate(floatingObject, GoldMount.transform.position, GoldMount.transform.rotation, GoldMount.transform);
         if(Mount < 0)
@@ -76,8 +77,9 @@ public class ResourceManager : MonoBehaviour
         else
             f.Iniatialize("+"+Mount, Color.green, "Floating On");
 
-        DataManager.Instance.SaveData("Gold", Gold.ToString());
         UpdateShowUI();
+
+        MissionManager.Instance.DoingMission_UseGold(Mount);
     }
 
     public void ChangeDiamond(float Mount)
@@ -92,6 +94,8 @@ public class ResourceManager : MonoBehaviour
             f.Iniatialize("+" + Mount, Color.green, "Floating On");
 
         UpdateShowUI();
+
+        MissionManager.Instance.DoingMission_UseDiamond(Mount);
     }
 
     public void GainExp(float value)
@@ -123,6 +127,8 @@ public class ResourceManager : MonoBehaviour
         DataManager.Instance.SaveData("Level", PlayerLevel.ToString());
 
         Level.SetText(PlayerLevel.ToString());
+
+        MissionManager.Instance.DoingMission_LevelUp();
 
     }
 

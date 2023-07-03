@@ -22,7 +22,7 @@ public class RewardItemUI : MonoBehaviour
         }
 
         gameObject.SetActive(true);
-        Icon.sprite = reward.Icon;
+        Icon.sprite = reward.item.Icon;
         Mount.SetText(reward.Mount.ToString());
     }
 

@@ -15,6 +15,7 @@ public class AccountManager : MonoBehaviour
     public Button LoginButton;
     void Start()
     {
+        Application.targetFrameRate = 60;
         LoginButton.onClick.AddListener(() => { loginPanel.SetActive(true); });
     }
 

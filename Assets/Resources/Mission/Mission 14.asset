@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fff00bded2d84198a7b087050ec7db8, type: 3}
+  m_Name: Mission 14
+  m_EditorClassIdentifier: 
+  Index: 14
+  Name: Break 100 Chest
+  reward:
+    item: {fileID: 11400000, guid: d946d76166f7f4b268bdfd22673db63a, type: 2}
+    Mount: 100
+  type: 1
+  Goal: 100
+  Current: 0
+  IsDone: 0

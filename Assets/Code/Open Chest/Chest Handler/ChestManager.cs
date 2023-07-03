@@ -161,7 +161,7 @@ public class ChestManager : MonoBehaviour
 
     public void UpgradeChest()
     {
-        if (!ResourceManager.Instance.CheckEnought_Gold(CurrentLevelProb.Cost))
+        if (!ResourceManager.Instance.CheckEnought_Gold(-CurrentLevelProb.Cost))
             return;
 
         if (CurrentLevel >= MaxLevel)
