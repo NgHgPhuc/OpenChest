@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751c17d1d6af34194896834350db78a4, type: 3}
   m_Name: Chapter 3
   m_EditorClassIdentifier: 
-  Name: Chapter 1
-  IsOpen: 1
-  IsDone: 1
-  StarCount: 3
+  Name: Chapter 3
+  IsOpen: 0
+  IsDone: 0
+  StarCount: 0
   EnemyTeam:
   - AttackDamage: 50
     HealthPoint: 300
@@ -66,21 +66,10 @@ MonoBehaviour:
     IsOwn: 0
     IsInTeam: 0
   reward:
-  - type: 0
-    Icon: {fileID: 21300000, guid: 5ba29d41883d64880a4ad288468055d8, type: 3}
+  - item: {fileID: 11400000, guid: 4d51e5b187a3546d58cc2c10edbd8c54, type: 2}
+    Mount: 20
+  - item: {fileID: 11400000, guid: f576e4212ffd04e9294edb9455ea0e22, type: 2}
     Mount: 10
-  - type: 1
-    Icon: {fileID: 21300000, guid: 28ea0b710e4ff476a9ddd9e76f41f02a, type: 3}
-    Mount: 1
-  - type: 2
-    Icon: {fileID: 21300000, guid: f4f429ad5ba0542a0a6c84c446a33d24, type: 3}
-    Mount: 100
-  - type: 1
-    Icon: {fileID: 21300000, guid: 28ea0b710e4ff476a9ddd9e76f41f02a, type: 3}
-    Mount: 2
-  - type: 3
-    Icon: {fileID: 21300000, guid: dca95b8d9450d4f688b9488eb1d5904d, type: 3}
-    Mount: 17
   MyTeam:
   - AttackDamage: 5
     HealthPoint: 5

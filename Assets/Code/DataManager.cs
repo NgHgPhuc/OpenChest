@@ -90,37 +90,41 @@ public class DataManager : MonoBehaviour
     }
     IEnumerator LoadResource()
     {
-        ShowStateLoading("Loading Gold...");
-        PlayerPrefs.SetString("Gold", DataReceive.Data["Gold"].Value);
-        yield return new WaitForSeconds(0.1f);
+        if(PlayerPrefs.GetString("LoadingResourceState") == "Done")
+        {
+            ShowStateLoading("Loading Gold...");
+            PlayerPrefs.SetString("Gold", DataReceive.Data["Gold"].Value);
+            yield return new WaitForSeconds(0.1f);
 
-        ShowStateLoading("Loading Diamond...");
-        PlayerPrefs.SetString("Diamond", DataReceive.Data["Diamond"].Value);
-        yield return new WaitForSeconds(0.1f);
+            ShowStateLoading("Loading Diamond...");
+            PlayerPrefs.SetString("Diamond", DataReceive.Data["Diamond"].Value);
+            yield return new WaitForSeconds(0.1f);
 
-        ShowStateLoading("Loading Level...");
-        PlayerPrefs.SetString("Level", DataReceive.Data["Level"].Value);
-        yield return new WaitForSeconds(0.1f);
+            ShowStateLoading("Loading Level...");
+            PlayerPrefs.SetString("Level", DataReceive.Data["Level"].Value);
+            yield return new WaitForSeconds(0.1f);
 
-        ShowStateLoading("Loading Current Exp...");
-        PlayerPrefs.SetString("CurrentExp", DataReceive.Data["CurrentExp"].Value);
-        yield return new WaitForSeconds(0.1f);
+            ShowStateLoading("Loading Current Exp...");
+            PlayerPrefs.SetString("CurrentExp", DataReceive.Data["CurrentExp"].Value);
+            yield return new WaitForSeconds(0.1f);
 
-        ShowStateLoading("Loading Need Exp...");
-        PlayerPrefs.SetString("NeedExp", DataReceive.Data["NeedExp"].Value);
-        yield return new WaitForSeconds(0.1f);
+            ShowStateLoading("Loading Need Exp...");
+            PlayerPrefs.SetString("NeedExp", DataReceive.Data["NeedExp"].Value);
+            yield return new WaitForSeconds(0.1f);
 
-        ShowStateLoading("Loading Chest Count...");
-        PlayerPrefs.SetString("ChestCount", DataReceive.Data["ChestCount"].Value);
-        yield return new WaitForSeconds(0.1f);
+            ShowStateLoading("Loading Chest Count...");
+            PlayerPrefs.SetString("ChestCount", DataReceive.Data["ChestCount"].Value);
+            yield return new WaitForSeconds(0.1f);
 
-        ShowStateLoading("Loading Ticket...");
-        PlayerPrefs.SetString("Ticket", DataReceive.Data["Ticket"].Value);
-        yield return new WaitForSeconds(0.1f);
+            ShowStateLoading("Loading Ticket...");
+            PlayerPrefs.SetString("Ticket", DataReceive.Data["Ticket"].Value);
+            yield return new WaitForSeconds(0.1f);
+
+            PlayerPrefs.SetString("LoadingResourceState", "Done");
+        }
 
         ResourceManager.Instance.GetData();
         ChestHandlerManager.Instance.LoadChest();
-
 
         for (int i = 1; i <= 13; i++)
         {

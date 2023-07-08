@@ -60,26 +60,11 @@ public class ChapterPanelUI : MonoBehaviour
         myTeamPanel.SetCharacterData(this.chapter.MyTeam);
 
         DoneIcon.gameObject.SetActive(chapter.IsDone);
-
-        if (chapter.IsOpen)
-            OpenedChap();
-        else NotOpenChap();
     }
 
     public void NoneChapter()
     {
         gameObject.SetActive(false);
-    }
-    void OpenedChap()
-    {
-        canvasGroup.alpha = 1f;
-        canvasGroup.interactable = true;
-    }
-
-    void NotOpenChap()
-    {
-        canvasGroup.alpha = 0.7f;
-        canvasGroup.interactable = false;
     }
 
     public void EnterButton()

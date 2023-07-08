@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using System.Globalization;
 
 //In Get new equipment after open chest
 public class SetEquipmentPanel : MonoBehaviour
@@ -25,7 +26,7 @@ public class SetEquipmentPanel : MonoBehaviour
         equipmentSlot.SetEquipmentInSlot(equipment);
         equipmentStats.SetStatsInSlot(equipment);
         if(equipment != null)
-            equipmentPower.SetText(equipment.PowerPoint.ToString());
+            equipmentPower.SetText(equipment.PowerPoint.ToString(CultureInfo.InvariantCulture));
         else equipmentPower.SetText("No Equipment");
     }
 

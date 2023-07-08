@@ -53,6 +53,8 @@ public class Character : BaseStats
 
     public bool IsInTeam;
 
+    public List<BaseSkill> skill;
+
     public Color GetColor()
     {
         return colors[tier];

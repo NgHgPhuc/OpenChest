@@ -10,6 +10,23 @@ using System.Security.Cryptography;
 using static FightingUnit;
 using static UnityEngine.GraphicsBuffer;
 
+public class Attack
+{
+    public FightingUnit Causer;
+    public float DamageCause;
+    public bool IsCrit = false;
+    public bool IsStun = false;
+}
+
+public class Defense
+{
+    public float TakenDmgPercent;
+    public bool IsDogde = false;
+    public bool IsCounter = false;
+
+}
+
+
 public class FightingUnit : MonoBehaviour, IPointerClickHandler
 {
     public Character character;
@@ -58,8 +75,10 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
     public Animator animator;
     GameObject Shield;
-    Animator BeingAttackEffect; 
+    Animator BeingAttackEffect;
 
+    public bool IsTarget;
+    public List<int> CoolDown;
     //UI
     Slider healthBar;
     TextMeshProUGUI IndexHealthBar;
@@ -109,13 +128,15 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         TargetSignal.gameObject.SetActive(true);
         TargetSignal.color = Color.red;
+        IsTarget = true;
     }
     public void UntargetUI()
     {
         SetTargetSignal();
 
-        TargetSignal.color = Color.white;
         TargetSignal.gameObject.SetActive(false);
+        TargetSignal.color = Color.white;
+        IsTarget = false;
     }
     public void IsAllyUI()
     {
@@ -123,24 +144,58 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         TargetSignal.gameObject.SetActive(true);
         TargetSignal.color = Color.green;
+        IsTarget = true;
     }
     public void EndTurnUI()
     {
         SetTargetSignal();
 
-        TargetSignal.color = Color.white;
         TargetSignal.gameObject.SetActive(false);
+        TargetSignal.color = Color.white;
     }
     public void InTurnUI()
     {
         SetTargetSignal();
 
-        TargetSignal.color = Color.yellow;
         TargetSignal.gameObject.SetActive(true);
+        TargetSignal.color = Color.yellow;
+    }
+    public void AttackUI()
+    {
+
+    }
+    public void BeingAttackUI()
+    {
+        this.Icon.color = Color.red;
+        Invoke("EndBeingAttackUI", 1f);
+    }
+    public void EndBeingAttackUI()
+    {
+        this.Icon.color = Color.white;
+    }
+    public void CritUI()
+    {
+        Floating("Crit", Color.grey);
     }
 
+    public void CounterUI()
+    {
 
+    }
 
+    public void DogdeUI()
+    {
+
+    }
+
+    public void StunUI()
+    {
+
+    }
+    public void HealUI()
+    {
+
+    }
 
 
     //INSTANTIATE VALUE OF THIS
@@ -171,6 +226,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         {
 
         }
+
+        CoolDown = new List<int>(new int[this.character.skill.Count]);
     }
 
     void UpdateHealthBar()
@@ -188,11 +245,17 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     }
 
 
+
+
     //ACTIVITY FLOW ===== ItsMyTurn -> Action -> EndMyTurn
     public void ItsMyTurn()
     {
         IsInTurn = true;
         InTurnUI();
+
+        for (int i = 0; i < CoolDown.Count; i++)
+            CoolDown[i] -= 1;
+
         if (stateFighting == StateFighting.Block)
         {
             stateFighting = StateFighting.Alive;
@@ -205,6 +268,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
             effectFighting = EffectFighting.None;
             Icon.color = Color.white;
             EndMyTurn();
+            Invoke("EndTurn",1f);
         }
 
     }
@@ -215,20 +279,31 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         EndTurnUI();
 
         animator.Play("Idle");
+    }
 
+    void EndTurn()
+    {
         FightManager.Instance.Endturn();
     }
 
 
     //CALCULATE RECEIVE DAMAGE
-    float CalculateDamage(float Damage)
+    float CalculateDamage()
     {
-        float DamageReceive = Damage * 100 / (100 + this.character.DefensePoint);
+        float TakenDamagePercent = 100 / (100 + this.character.DefensePoint);
 
         if (stateFighting == StateFighting.Block)
-            DamageReceive /= 2;
+            TakenDamagePercent /= 2;
 
-        return DamageReceive;
+        return TakenDamagePercent;
+    }
+
+
+    //SKILL
+    public void Skill(List<FightingUnit> ChosenUnit,int skillCount)
+    {
+        TurnManager.Instance.UsingSkillDamage(this,ChosenUnit);
+        this.CoolDown[skillCount-1] = this.character.skill[skillCount-1].Cooldown +1;
     }
 
 
@@ -238,43 +313,36 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         stateFighting = StateFighting.Block;
         Shield.SetActive(true);
         EndMyTurn();
+
+        Invoke("EndTurn", 1f);
     }
 
 
 
-    //ATTACK - END ATTACK
-    public void Attack(FightingUnit target)
+    //ATTACK
+    public Attack attack()
     {
-        float DamageCause = this.character.AttackDamage;
+        Attack attack = new Attack();
+
+        attack.Causer = this;
+
+        attack.DamageCause = this.character.AttackDamage;
 
         float CriticalRate = UnityEngine.Random.Range(0f, 100f);
         if (CriticalRate < character.PassiveList[BaseStats.Passive.CriticalChance])
         {
-            DamageCause *= (100 + character.PassiveList[BaseStats.Passive.CriticalDamage]) * 2 / 100;
-            Floating("Crit", Color.grey);
-        }    
-
-        float DogdeRate = UnityEngine.Random.Range(0f, 100f);
-        if (DogdeRate < target.character.PassiveList[BaseStats.Passive.Dodge])
-        {
-            Invoke("EndMyTurn", 1f);
-            target.Floating("Dogde", Color.grey);
-            return;
+            attack.DamageCause *= (100 + character.PassiveList[BaseStats.Passive.CriticalDamage]) * 2 / 100;
+            attack.IsCrit = true;
         }
 
         float StunRate = UnityEngine.Random.Range(0f, 100f);
         if (StunRate < this.character.PassiveList[BaseStats.Passive.Dodge])
-        {
-            Floating("Stun", Color.grey);
-            target.effectFighting = EffectFighting.Stunned;
-        }
+            attack.IsStun = true;
 
         animator.Play("Attack");
 
-        target.BeingAttacked(this, DamageCause);
+        return attack;
     }
-
-
 
     //LIFESTEAL - recover % damage cause
     public void LifeSteal(float DamageCause)
@@ -289,108 +357,64 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     public void Heal(float mount)
     {
         CurrentHP += mount;
+        if (CurrentHP > MaxHP)
+            CurrentHP = MaxHP;
 
         UpdateHealthBar();
-
+        HealUI();
         Floating(Math.Ceiling(mount).ToString(), Color.green);
     }
 
 
 
     //BEING ATTACKED - END BEING ATTACKED
-    public void BeingAttacked(FightingUnit Causer, float Damage)
+    public Defense defense()
     {
+        Defense defense = new Defense();
+        defense.TakenDmgPercent = this.CalculateDamage();
 
-        float DamageReceive = CalculateDamage(Damage);
-        CurrentHP -= DamageReceive;
+        float CounterRate = UnityEngine.Random.Range(0f, 100f);
+        if (CounterRate < character.PassiveList[BaseStats.Passive.CounterAttack])
+            defense.IsCounter = true;
+
+        float DogdeRate = UnityEngine.Random.Range(0f, 100f);
+        if (DogdeRate < this.character.PassiveList[BaseStats.Passive.Dodge])
+            defense.IsDogde = true;
+
+        return defense;
+    }
+
+
+    public void BeingAttacked(float DamageTaken)
+    {
+        CurrentHP -= DamageTaken;
+
+        Floating(Math.Ceiling(DamageTaken).ToString(), Color.red);
 
         BeingAttackEffect.Play("Effect");
 
         if (CurrentHP <= 0)
         {
-            Death(Causer);
+            Death();
             return;
         }
 
-        Causer.LifeSteal(DamageReceive);
-
-        Floating(Math.Ceiling(DamageReceive).ToString(), Color.red);
-
-        this.Icon.color = Color.red;
+        BeingAttackUI();
 
         UpdateHealthBar();
-
-        IEnumerator coroutine = EndBeingAttack(Causer);
-        StartCoroutine(coroutine);
     }
 
-    private IEnumerator EndBeingAttack(FightingUnit Causer)
-    {
-        yield return new WaitForSeconds(1f);
-
-        this.Icon.color = Color.white;
-
-        if (this.effectFighting == EffectFighting.Stunned)
-        {
-            this.SendMessage("End Turn", Causer);
-            Floating("Stuning", Color.grey);
-            yield break;
-        }
-
-        float CounterRate = UnityEngine.Random.Range(0f, 100f);
-        if (CounterRate < character.PassiveList[BaseStats.Passive.CounterAttack])
-        {
-            Floating("Counter", Color.grey);
-            this.SendMessage("Counter", Causer);
-            Attack(Causer);
-            yield break;
-        }
-
-        if (IsInTurn == true)
-            EndMyTurn();
-        else
-            this.SendMessage("End Turn", Causer);
-    }
-
-
-
-    // MESSAGE FLOW
-    void SendMessage(string mes,FightingUnit to)
-    {
-        to.ReceiveMessage(mes, this);
-    }
-
-    void ReceiveMessage(string mes,FightingUnit from)
-    {
-        if (IsInTurn == false)
-            return;
-
-        if (mes == "Counter")
-            return;
-
-        if (mes == "End Turn")
-            EndMyTurn();
-
-        if (mes == "Target Die")
-            Invoke("EndMyTurn", 1f);
-    }
-
-
-
-    //DEATH EFFECT
-    void Death(FightingUnit Causer)
+    void Death()
     {
         this.stateFighting = StateFighting.Death;
         FightManager.Instance.TargerDie(this);
         gameObject.SetActive(false);
-
-        this.SendMessage("Target Die", Causer);
     }
-
 
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        FightManager.Instance.ChooseEnemy(this);
+        if(this.IsTarget == true)
+            FightManager.Instance.ChooseTarget(this);
     }
 }

@@ -2,35 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class MapObject : MonoBehaviour, IPointerClickHandler
 {
     // Start is called before the first frame update
+    Chapter chapter;
+
+    public int Index;
     public ChapterListManager chapterListManager;
-    int ChapterDoneCount=0;
-    public List<Chapter> chapter = new List<Chapter>();
+    public StarListPanel starListPanel;
+    public TextMeshProUGUI ChapterName;
     void Start()
     {
-        int ChapterCount = Resources.LoadAll<Chapter>("Chapter").Length;
-        for (int i = 1; i <= ChapterCount; i++)
-        {
-            Chapter c = Resources.Load<Chapter>("Chapter/Chapter " + i);
-            chapter.Add(c);
-            if (c.IsDone == true)
-                ChapterDoneCount++;
-        }
+        this.chapter = Resources.Load<Chapter>("Chapter/Chapter " + Index);
+        ChapterName.SetText(this.chapter.Name);
+        starListPanel.SetStarCount(this.chapter.StarCount);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 
     public void OnPointerClick(PointerEventData eventData)
     {
         chapterListManager.gameObject.SetActive(true);
-        chapterListManager.SetChapterList(chapter);
+        chapterListManager.SetChapter(this.chapter);
     }
 }

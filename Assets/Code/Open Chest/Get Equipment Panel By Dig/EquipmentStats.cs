@@ -4,6 +4,8 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 using System;
+using System.Globalization;
+
 public class EquipmentStats : MonoBehaviour
 {
     TextMeshProUGUI Name;
@@ -53,10 +55,10 @@ public class EquipmentStats : MonoBehaviour
         Name.SetText("[" + equipment.quality + "] " + equipment.type);
         Name.color = QualityColor[(int)equipment.quality - 1];
 
-        Stats[0].SetText(equipment.AttackDamage.ToString());
-        Stats[1].SetText(equipment.HealthPoint.ToString());
-        Stats[2].SetText(equipment.DefensePoint.ToString());
-        Stats[3].SetText(equipment.Speed.ToString());
+        Stats[0].SetText(equipment.AttackDamage.ToString(CultureInfo.InvariantCulture));
+        Stats[1].SetText(equipment.HealthPoint.ToString(CultureInfo.InvariantCulture));
+        Stats[2].SetText(equipment.DefensePoint.ToString(CultureInfo.InvariantCulture));
+        Stats[3].SetText(equipment.Speed.ToString(CultureInfo.InvariantCulture));
 
         for (int i = 0; i < 2; i++)
         {

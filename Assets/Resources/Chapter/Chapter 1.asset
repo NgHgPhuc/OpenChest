@@ -33,6 +33,8 @@ MonoBehaviour:
     NeedSharp: 0
     IsOwn: 0
     IsInTeam: 0
+    skill:
+    - {fileID: 0}
   - AttackDamage: 30
     HealthPoint: 200
     DefensePoint: 10
@@ -49,6 +51,8 @@ MonoBehaviour:
     NeedSharp: 0
     IsOwn: 0
     IsInTeam: 0
+    skill:
+    - {fileID: 0}
   - AttackDamage: 100
     HealthPoint: 400
     DefensePoint: 20
@@ -65,22 +69,11 @@ MonoBehaviour:
     NeedSharp: 0
     IsOwn: 0
     IsInTeam: 0
+    skill:
+    - {fileID: 0}
   reward:
-  - type: 0
-    Icon: {fileID: 21300000, guid: 5ba29d41883d64880a4ad288468055d8, type: 3}
+  - item: {fileID: 11400000, guid: 4d51e5b187a3546d58cc2c10edbd8c54, type: 2}
     Mount: 10
-  - type: 1
-    Icon: {fileID: 21300000, guid: 28ea0b710e4ff476a9ddd9e76f41f02a, type: 3}
-    Mount: 1
-  - type: 2
-    Icon: {fileID: 21300000, guid: f4f429ad5ba0542a0a6c84c446a33d24, type: 3}
-    Mount: 100
-  - type: 1
-    Icon: {fileID: 21300000, guid: 28ea0b710e4ff476a9ddd9e76f41f02a, type: 3}
-    Mount: 2
-  - type: 3
-    Icon: {fileID: 21300000, guid: dca95b8d9450d4f688b9488eb1d5904d, type: 3}
-    Mount: 17
   MyTeam:
   - AttackDamage: 5
     HealthPoint: 5
@@ -98,6 +91,7 @@ MonoBehaviour:
     NeedSharp: 5
     IsOwn: 0
     IsInTeam: 0
+    skill: []
   - AttackDamage: 0
     HealthPoint: 0
     DefensePoint: 0
@@ -114,6 +108,7 @@ MonoBehaviour:
     NeedSharp: 0
     IsOwn: 0
     IsInTeam: 0
+    skill: []
   - AttackDamage: 133.1
     HealthPoint: 382.8
     DefensePoint: 88
@@ -130,3 +125,6 @@ MonoBehaviour:
     NeedSharp: 0
     IsOwn: 0
     IsInTeam: 0
+    skill:
+    - {fileID: 11400000, guid: 68278dc773d26455c863906859ae37d6, type: 2}
+    - {fileID: 11400000, guid: 68278dc773d26455c863906859ae37d6, type: 2}
