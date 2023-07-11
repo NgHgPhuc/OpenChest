@@ -7,6 +7,8 @@ public abstract class BaseSkill : ScriptableObject
 {
     public string Name;
     public int Cooldown;
+    public Sprite Icon;
+    public string Description;
 
     public enum Range
     {

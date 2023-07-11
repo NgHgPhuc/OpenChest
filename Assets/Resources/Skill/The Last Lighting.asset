@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5536418d4683642a1adbad8ec47fb2a3, type: 3}
+  m_Name: The Last Lighting
+  m_EditorClassIdentifier: 
+  Name: The Last Lighting
+  Cooldown: 3
+  Icon: {fileID: 21300000, guid: 89fef0180f7e1476093c7e434c43d9a6, type: 3}
+  Description: 
+  range: 3
+  DamagePercent: 0
+  DamagePlus: 0
+  type: 0

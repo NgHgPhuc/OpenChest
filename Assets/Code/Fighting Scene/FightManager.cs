@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
+using TMPro;
 
 public class FightManager : MonoBehaviour
 {
@@ -34,6 +34,10 @@ public class FightManager : MonoBehaviour
     public GameObject FailPanelObject;
 
     public List<ButtonSkillUI> SkillButtonList;
+
+    public TextMeshProUGUI RoundText;
+    int RoundIndex = 1;
+
     public static FightManager Instance { get; private set; }
     private void Awake()
     {
@@ -55,7 +59,7 @@ public class FightManager : MonoBehaviour
             if (i < CurrentChapter.MyTeam.Count)
             {
                 PlayerTeam[i].gameObject.SetActive(true);
-                PlayerTeam[i].character = CurrentChapter.MyTeam[i];
+                PlayerTeam[i].character = CurrentChapter.MyTeam[i].Clone();
                 PlayerTeam[i].stateData = FightingUnit.StateData.HaveChamp;
                 PlayerTeam[i].team = FightingUnit.Team.Player;
                 PlayerTeam[i].position = (FightingUnit.Position)i;
@@ -68,7 +72,7 @@ public class FightManager : MonoBehaviour
             if (i < CurrentChapter.EnemyTeam.Count)
             {
                 EnemyTeam[i].gameObject.SetActive(true);
-                EnemyTeam[i].character = CurrentChapter.EnemyTeam[i];
+                EnemyTeam[i].character = CurrentChapter.EnemyTeam[i].Clone();
                 EnemyTeam[i].stateData = FightingUnit.StateData.HaveChamp;
                 EnemyTeam[i].team = FightingUnit.Team.Enemy;
                 EnemyTeam[i].position = (FightingUnit.Position)i;
@@ -96,6 +100,8 @@ public class FightManager : MonoBehaviour
         ActionInTurn();
 
         TurnManager.Instance.SetTeam(PlayerTeam, EnemyTeam);
+
+        RoundText.SetText("Round " + RoundIndex.ToString());
     }
 
     public void SortSpeed()
@@ -144,10 +150,11 @@ public class FightManager : MonoBehaviour
 
             case "Skill 1":
             {
-                if (All[currentTurn].CoolDown[0] > 0)
+                int skillIndex = 0;
+                if (All[currentTurn].CoolDown[skillIndex] > 0)
                     break;
 
-                switch (All[currentTurn].character.skill[0].range)
+                switch (All[currentTurn].character.skill[skillIndex].range)
                 {
                     case BaseSkill.Range.OnEnemy:
                         TargetAllEnemy();
@@ -161,8 +168,40 @@ public class FightManager : MonoBehaviour
                         TargetAllAlly();
                         break;
 
+                    case BaseSkill.Range.OnMySelf:
+                        TargetAllAlly();
+                        break;
+
+                    }
+                Player_SkillAction(skillIndex);
+                break;
+            }
+            case "Skill 2":
+            {
+                int skillIndex = 1;
+                if (All[currentTurn].CoolDown[skillIndex] > 0)
+                    break;
+
+                switch (All[currentTurn].character.skill[skillIndex].range)
+                {
+                    case BaseSkill.Range.OnEnemy:
+                        TargetAllEnemy();
+                        break;
+
+                    case BaseSkill.Range.OnEnemyTeam:
+                        TargetAllEnemy();
+                        break;
+
+                    case BaseSkill.Range.OnAlly:
+                        TargetAllAlly();
+                        break;
+
+                    case BaseSkill.Range.OnMySelf:
+                        TargetAllAlly();
+                        break;
+
                 }
-                Player_SkillAction();
+                Player_SkillAction(skillIndex);
                 break;
             }
         }
@@ -234,15 +273,16 @@ public class FightManager : MonoBehaviour
         All[currentTurn].Block();
     }
 
-    void Player_SkillAction()
+    void Player_SkillAction(int skillIndex)
     {
         ChosenTarget = null;   //enemy target set null
         IsPlayerTurn = true;    //Set this is player turn
 
         //Start coroutine to wait to gamer chosen enemy
-        StartCoroutine(ChooseTarger_NoCoroutine());
+        IEnumerator coroutine = ChooseTarger_NoCoroutine(skillIndex);
+        StartCoroutine(coroutine);
     }
-    IEnumerator ChooseTarger_NoCoroutine()
+    IEnumerator ChooseTarger_NoCoroutine(int skillIndex)
     {
         while (ChosenTarget == null)
             yield return null;
@@ -253,7 +293,7 @@ public class FightManager : MonoBehaviour
         switch (All[currentTurn].character.skill[0].range)
         {
             case BaseSkill.Range.OnEnemy: 
-                All[currentTurn].Skill(new List<FightingUnit>() { ChosenTarget },1);
+                All[currentTurn].Skill(new List<FightingUnit>() { ChosenTarget }, skillIndex);
                 break;
 
             case BaseSkill.Range.OnEnemyTeam:
@@ -261,9 +301,13 @@ public class FightManager : MonoBehaviour
                 break;
 
             case BaseSkill.Range.OnAlly:
-                All[currentTurn].Skill(new List<FightingUnit>() { ChosenTarget },1);
+                All[currentTurn].Skill(new List<FightingUnit>() { ChosenTarget }, skillIndex);
                 break;
-            
+
+            case BaseSkill.Range.OnMySelf:
+                All[currentTurn].Skill(new List<FightingUnit>() { All[currentTurn] }, skillIndex);
+                break;
+
         }
 
         IsPlayerTurn = false;
@@ -314,7 +358,11 @@ public class FightManager : MonoBehaviour
 
         currentTurn++;
         if (currentTurn == All.Count)
+        {
             currentTurn = 0;
+            RoundIndex += 1;
+            RoundText.SetText("Round "+RoundIndex.ToString());
+        }
         ActionInTurn();
     }
 

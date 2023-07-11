@@ -1,0 +1,50 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class EffectIcon : MonoBehaviour
+{
+    List<Image> EffectIconList = new List<Image>();
+    List<TextMeshProUGUI> EffectIconText = new List<TextMeshProUGUI>();
+
+    void Start()
+    {
+        
+    }
+
+    void SetAttr()
+    {
+        if (EffectIconList.Count > 0)
+            return;
+
+        for(int i = 0; i<10; i++)
+        {
+            EffectIconList.Add(transform.GetChild(i).GetComponent<Image>());
+            EffectIconText.Add(EffectIconList[i].GetComponentInChildren<TextMeshProUGUI>());
+        }
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void SetBuffIcon(List<Buff> buffs)
+    {
+        SetAttr();
+
+        for (int i = 0; i < 10; i++)
+            if (i < buffs.Count)
+            {
+                EffectIconList[i].gameObject.SetActive(true);
+                EffectIconList[i].sprite = buffs[i].Icon;
+                EffectIconText[i].SetText((buffs[i].duration+1).ToString());
+            }
+            else
+            {
+                EffectIconList[i].gameObject.SetActive(false);
+            }
+    }
+}

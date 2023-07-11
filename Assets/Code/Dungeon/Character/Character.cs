@@ -92,6 +92,8 @@ public class Character : BaseStats
             character.PassiveList[kvp.Key] = kvp.Value;
         character.PowerPoint = this.PowerPoint;
 
+        character.skill = new List<BaseSkill>(this.skill);
+
         return character;
     }
 

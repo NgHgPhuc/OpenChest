@@ -75,9 +75,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 4d51e5b187a3546d58cc2c10edbd8c54, type: 2}
     Mount: 10
   MyTeam:
-  - AttackDamage: 5
-    HealthPoint: 5
-    DefensePoint: 5
+  - AttackDamage: 50
+    HealthPoint: 500
+    DefensePoint: 20
     Speed: 5
     PowerPoint: 5
     tier: 0
@@ -91,11 +91,12 @@ MonoBehaviour:
     NeedSharp: 5
     IsOwn: 0
     IsInTeam: 0
-    skill: []
-  - AttackDamage: 0
-    HealthPoint: 0
-    DefensePoint: 0
-    Speed: 0
+    skill:
+    - {fileID: 11400000, guid: 39b80f0d759f249e4915850341b123ae, type: 2}
+  - AttackDamage: 60
+    HealthPoint: 200
+    DefensePoint: 50
+    Speed: 10
     PowerPoint: 0
     tier: 0
     Level: 0
@@ -108,9 +109,10 @@ MonoBehaviour:
     NeedSharp: 0
     IsOwn: 0
     IsInTeam: 0
-    skill: []
-  - AttackDamage: 133.1
-    HealthPoint: 382.8
+    skill:
+    - {fileID: 11400000, guid: 1739d4140968546fda7c6411fa65294c, type: 2}
+  - AttackDamage: 100
+    HealthPoint: 400
     DefensePoint: 88
     Speed: 55
     PowerPoint: 0
@@ -127,4 +129,4 @@ MonoBehaviour:
     IsInTeam: 0
     skill:
     - {fileID: 11400000, guid: 68278dc773d26455c863906859ae37d6, type: 2}
-    - {fileID: 11400000, guid: 68278dc773d26455c863906859ae37d6, type: 2}
+    - {fileID: 11400000, guid: 74a420f604f50433499e345fce94f624, type: 2}

@@ -6,6 +6,7 @@ using TMPro;
 
 public class ButtonSkillUI : MonoBehaviour
 {
+    Image SkillIcon;
     Image CooldownImage;
     TextMeshProUGUI CooldownText;
     TextMeshProUGUI SkillName;
@@ -26,9 +27,10 @@ public class ButtonSkillUI : MonoBehaviour
         if (CooldownImage != null && CooldownText != null && SkillName != null)
             return;
 
+        SkillIcon = transform.Find("Icon Button").GetComponent<Image>();
         CooldownImage = transform.Find("Cooldown Image").GetComponent<Image>();
         CooldownText = CooldownImage.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
-        SkillName = transform.Find("Name").GetComponent<TextMeshProUGUI>();
+        SkillName = transform.Find("Button Name").GetComponent<TextMeshProUGUI>();
     }
 
     public void SetSkill(BaseSkill skill,int Cooldown)
@@ -42,8 +44,11 @@ public class ButtonSkillUI : MonoBehaviour
         SetAttr();
 
         gameObject.SetActive(true);
+
         this.skill = skill;
+        SkillIcon.sprite = this.skill.Icon;
         SkillName.SetText(this.skill.Name);
+
         SetCooldown(skill.Cooldown,Cooldown);
 
     }
@@ -61,5 +66,5 @@ public class ButtonSkillUI : MonoBehaviour
             CooldownImage.gameObject.SetActive(false);
         }
     }
-    
+
 }

@@ -30,6 +30,7 @@ public class Defense
 public class FightingUnit : MonoBehaviour, IPointerClickHandler
 {
     public Character character;
+    public Character basicStatsCharacter;
 
     public enum StateData
     {
@@ -75,7 +76,6 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
     public Animator animator;
     GameObject Shield;
-    Animator BeingAttackEffect;
 
     public bool IsTarget;
     public List<int> CoolDown;
@@ -84,10 +84,15 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     TextMeshProUGUI IndexHealthBar;
     float MaxHP;
     public float CurrentHP;
-    Image Icon;
+    Image CharacterIcon;
     Image TargetSignal;
+    Image InTurnSignal;
     Transform FloatingPoint;
     FloatingObject floatingObject;
+    Transform EffectPanel;
+    Dictionary<EffectPos, Transform> EffectDict = new Dictionary<EffectPos, Transform>();
+    BuffOfUnit buffOfUnit;
+    EffectIcon effectIcon;
 
     private void Awake()
     {
@@ -96,9 +101,6 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
             healthBar = transform.Find("Health Bar").GetComponent<Slider>();
             IndexHealthBar = healthBar.transform.Find("Index").GetComponent<TextMeshProUGUI>();
         }
-
-        if (Icon == null)
-            Icon = transform.Find("Icon").GetComponent<Image>();
 
         if (TargetSignal == null)
             TargetSignal = transform.Find("Target Signal").GetComponent<Image>();
@@ -110,8 +112,72 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         if (Shield == null)
             Shield = transform.Find("Shield Effect").gameObject;
 
-        if (BeingAttackEffect == null)
-            BeingAttackEffect = transform.Find("Being Attacked Effect").GetComponent<Animator>();
+        if (EffectPanel == null)
+            EffectPanel = transform.Find("Effect Panel");
+
+        if (EffectDict.Count == 0)
+            for (int i = 0; i < EffectPanel.childCount; i++)
+                EffectDict.Add((EffectPos)i, EffectPanel.GetChild(i));
+
+        if (buffOfUnit == null)
+            buffOfUnit = transform.Find("Buff Of Unit").GetComponent<BuffOfUnit>();
+
+        if (effectIcon == null)
+            effectIcon = transform.Find("Effect Icon").GetComponent<EffectIcon>();
+
+        if (InTurnSignal == null)
+            InTurnSignal = transform.Find("In Turn Signal").GetComponent<Image>();
+        InTurnSignal.gameObject.SetActive(false);
+    }
+
+
+
+    //INSTANTIATE VALUE OF THIS
+    public void Instantiate()
+    {
+        if (healthBar == null)
+        {
+            healthBar = transform.Find("Health Bar").GetComponent<Slider>();
+            IndexHealthBar = healthBar.transform.Find("Index").GetComponent<TextMeshProUGUI>();
+        }
+
+        MaxHP = character.HealthPoint;
+        CurrentHP = MaxHP;
+        UpdateHealthBar();
+
+        if (CharacterIcon == null)
+            CharacterIcon = transform.Find("Character Icon").GetComponent<Image>();
+
+        CharacterIcon.sprite = character.Icon;
+
+        floatingObject = FightManager.Instance.floatingObject;
+
+        try
+        {
+            animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animator/" + character.Name + "/" + character.Name);
+        }
+        catch (Exception)
+        {
+
+        }
+
+        CoolDown = new List<int>(new int[this.character.skill.Count]);
+
+        basicStatsCharacter = character.Clone();
+    }
+
+    void UpdateHealthBar()
+    {
+        IndexHealthBar.SetText(Math.Ceiling(CurrentHP) + "/" + MaxHP);
+        healthBar.maxValue = MaxHP;
+        healthBar.value = CurrentHP;
+    }
+
+    public void Floating(string msg, Color color)
+    {
+
+        FloatingObject fo = Instantiate(floatingObject, FloatingPoint.position, transform.rotation, transform);
+        fo.Iniatialize(msg, color);
     }
 
 
@@ -121,6 +187,9 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     {
         if (TargetSignal == null)
             TargetSignal = transform.Find("Target Signal").GetComponent<Image>();
+
+        if (InTurnSignal == null)
+            InTurnSignal = transform.Find("In Turn Signal").GetComponent<Image>();
     }
     public void IsTargetUI()
     {
@@ -150,15 +219,14 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     {
         SetTargetSignal();
 
-        TargetSignal.gameObject.SetActive(false);
-        TargetSignal.color = Color.white;
+
+        InTurnSignal.gameObject.SetActive(false);
     }
     public void InTurnUI()
     {
         SetTargetSignal();
 
-        TargetSignal.gameObject.SetActive(true);
-        TargetSignal.color = Color.yellow;
+        InTurnSignal.gameObject.SetActive(true);
     }
     public void AttackUI()
     {
@@ -166,12 +234,13 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     }
     public void BeingAttackUI()
     {
-        this.Icon.color = Color.red;
+        this.CharacterIcon.color = Color.red;
+        EffectManager.Instance.InitializeEffect(EffectDict[EffectPos.InMiddle], EffectManager.EffectName.BeingAttack, 0.5f);
         Invoke("EndBeingAttackUI", 1f);
     }
     public void EndBeingAttackUI()
     {
-        this.Icon.color = Color.white;
+        this.CharacterIcon.color = Color.white;
     }
     public void CritUI()
     {
@@ -194,56 +263,13 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     }
     public void HealUI()
     {
-
+        EffectManager.Instance.InitializeEffect(EffectDict[EffectPos.InMiddle], EffectManager.EffectName.Healing, 0.5f);
     }
-
-
-    //INSTANTIATE VALUE OF THIS
-    public void Instantiate()
+    //Effect UI
+    public void InitializeEffect(EffectPos effectPos,EffectManager.EffectName effectName, float LivingTime)
     {
-        if (healthBar == null)
-        {
-            healthBar = transform.Find("Health Bar").GetComponent<Slider>();
-            IndexHealthBar = healthBar.transform.Find("Index").GetComponent<TextMeshProUGUI>();
-        }
-
-        MaxHP = character.HealthPoint;
-        CurrentHP = MaxHP;
-        UpdateHealthBar();
-
-        if(Icon == null)
-            Icon = transform.Find("Icon").GetComponent<Image>();
-
-        Icon.sprite = character.Icon;
-
-        floatingObject = FightManager.Instance.floatingObject;
-
-        try
-        {
-            animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animator/" + character.Name + "/" + character.Name);
-        }
-        catch(Exception)
-        {
-
-        }
-
-        CoolDown = new List<int>(new int[this.character.skill.Count]);
+        EffectManager.Instance.InitializeEffect(EffectDict[effectPos], effectName, LivingTime);
     }
-
-    void UpdateHealthBar()
-    {
-        IndexHealthBar.SetText(Math.Ceiling(CurrentHP) + "/" + MaxHP);
-        healthBar.maxValue = MaxHP;
-        healthBar.value = CurrentHP;
-    }
-
-    public void Floating(string msg,Color color)
-    {
-
-        FloatingObject fo = Instantiate(floatingObject, FloatingPoint.position, transform.rotation, transform);
-        fo.Iniatialize(msg, color);
-    }
-
 
 
 
@@ -253,6 +279,10 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         IsInTurn = true;
         InTurnUI();
 
+        CheckBuff();
+        ShowBuff();
+
+
         for (int i = 0; i < CoolDown.Count; i++)
             CoolDown[i] -= 1;
 
@@ -260,13 +290,13 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         {
             stateFighting = StateFighting.Alive;
             Shield.SetActive(false);
-            Icon.color = Color.white;
+            CharacterIcon.color = Color.white;
         }
 
         if (effectFighting == EffectFighting.Stunned)
         {
             effectFighting = EffectFighting.None;
-            Icon.color = Color.white;
+            CharacterIcon.color = Color.white;
             EndMyTurn();
             Invoke("EndTurn",1f);
         }
@@ -302,8 +332,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     //SKILL
     public void Skill(List<FightingUnit> ChosenUnit,int skillCount)
     {
-        TurnManager.Instance.UsingSkillDamage(this,ChosenUnit);
-        this.CoolDown[skillCount-1] = this.character.skill[skillCount-1].Cooldown +1;
+        TurnManager.Instance.UsingSkillDamage(this,ChosenUnit, skillCount);
+        this.CoolDown[skillCount] = this.character.skill[skillCount].Cooldown +1;
     }
 
 
@@ -364,6 +394,17 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         HealUI();
         Floating(Math.Ceiling(mount).ToString(), Color.green);
     }
+    public void UsingPercentHP(float percentHP)
+    {
+        float usingMount = percentHP * MaxHP/100;
+        CurrentHP -= usingMount;
+        if (CurrentHP <= 0)
+            Death();
+
+        UpdateHealthBar();
+        HealUI();
+        Floating(Math.Ceiling(usingMount).ToString(), Color.red);
+    }
 
 
 
@@ -391,8 +432,6 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         Floating(Math.Ceiling(DamageTaken).ToString(), Color.red);
 
-        BeingAttackEffect.Play("Effect");
-
         if (CurrentHP <= 0)
         {
             Death();
@@ -403,6 +442,23 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         UpdateHealthBar();
     }
+
+
+    //BUFF
+    public void AddBuff(Buff buff)
+    {
+        buffOfUnit.AddBuff(buff);
+        ShowBuff();
+    }
+    public void CheckBuff()
+    {
+        buffOfUnit.CheckBuff();
+    }
+    public void ShowBuff()
+    {
+        effectIcon.SetBuffIcon(buffOfUnit.buffs);
+    }
+
 
     void Death()
     {

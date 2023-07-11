@@ -88,10 +88,10 @@ public class TurnManager : MonoBehaviour
 
     }
 
-    public void UsingSkillDamage(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
+    public void UsingSkillDamage(FightingUnit currentUnit, List<FightingUnit> ChosenUnit,int skillCount)
     {
         this.currentUnit = currentUnit;
-        currentUnit.character.skill[0].UsingSkill(currentUnit, ChosenUnit);
+        currentUnit.character.skill[skillCount].UsingSkill(currentUnit, ChosenUnit);
         EndCurrentTurn();
     }
 
