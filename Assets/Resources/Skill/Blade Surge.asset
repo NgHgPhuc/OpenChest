@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4ae2c55f223446a6a7e4a4a5effc2b0, type: 3}
+  m_Name: Blade Surge
+  m_EditorClassIdentifier: 
+  Name: Blade Surge
+  Cooldown: 2
+  Icon: {fileID: 21300000, guid: 7894d6890027c49c2af7c9f92f63ca85, type: 3}
+  Description: Deal 150% Attack Damage to an Enemy and healing 20% losing HP
+  range: 1
+  DamagePercent: 0
+  DamagePlus: 0
+  type: 0

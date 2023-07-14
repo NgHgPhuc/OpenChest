@@ -13,9 +13,7 @@ public class DarknessBlade : BaseSkill
         IncreaseDamaged.type = Buff.Type.IncreaseDamage;
         IncreaseDamaged.duration = 1;
 
-        Texture2D texture = Resources.Load<Texture2D>("Buff/Attack Boost");
-        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-        IncreaseDamaged.Icon = sprite;
+        IncreaseDamaged.SetIcon();
 
         IncreaseDamaged.ValueChange = currentUnit.basicStatsCharacter.AttackDamage * 0.3f;
 

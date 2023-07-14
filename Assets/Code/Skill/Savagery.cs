@@ -9,9 +9,10 @@ public class Savagery : BaseSkill
     {
         Attack currentUnitAttack = currentUnit.attack();
 
-        currentUnitAttack.DamageCause *= 1.5f;
+        currentUnitAttack.DamageCause *= 2.5f;
 
-        foreach (FightingUnit targetUnit in ChosenUnit) if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
+        foreach (FightingUnit targetUnit in ChosenUnit)
+            if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
             {
                 Defense targetUnitDefense = targetUnit.defense();
                 float targetGetDamage = currentUnitAttack.DamageCause * targetUnitDefense.TakenDmgPercent;
@@ -30,30 +31,12 @@ public class Savagery : BaseSkill
                     continue;
                 }
 
-                if (currentUnitAttack.IsStun)
+                //if (currentUnitAttack.IsStun)
+                if (true)
                 {
+                    Debug.Log("Stun");
                     targetUnit.StunUI();
                     continue;
-                }
-
-                if (targetUnitDefense.IsCounter)
-                {
-                    Attack targetUnitAttack = targetUnit.attack();
-                    Defense currentUnitDefense = currentUnit.defense();
-                    float tarGetDmg = currentUnitAttack.DamageCause * targetUnitDefense.TakenDmgPercent;
-
-                    if (targetUnitDefense.IsDogde)
-                    {
-                        targetUnit.DogdeUI();
-                        continue;
-                    }
-
-                    currentUnit.BeingAttacked(tarGetDmg);
-
-                    if (targetUnit.stateFighting == FightingUnit.StateFighting.Death)
-                    {
-                        continue;
-                    }
                 }
 
             }

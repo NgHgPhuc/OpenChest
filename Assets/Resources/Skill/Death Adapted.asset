@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1671644fdfa454fd1a09fe2d8cec61aa, type: 3}
+  m_Name: Death Adapted
+  m_EditorClassIdentifier: 
+  Name: Death Adapted
+  Cooldown: 999
+  Icon: {fileID: 21300000, guid: d2c12710b048b4fa09d0dbf5168f3519, type: 3}
+  Description: 'USING 1 TIMES IN EACH FIGHTING.\n If you have more than 50% hp, you
+    will increase max hp then 40% and if you have less, will get 30% atk and 30%
+    def.\nIf number of your team less than enemy, you will get 50% losing hp healing
+    and 20% atk, or not, your ally will increase 10% atk '
+  range: 0
+  DamagePercent: 0
+  DamagePlus: 0
+  type: 0

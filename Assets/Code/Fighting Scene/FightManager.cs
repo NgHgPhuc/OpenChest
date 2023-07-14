@@ -17,8 +17,8 @@ public class FightManager : MonoBehaviour
 
     int currentTurn;
 
-    int CurrentEnemyTargeted; //enemy target of player
-    int CurrentPlayerTargeted;//player target of enemy
+    FightingUnit CurrentEnemyTargeted; //enemy target of player when being taunted
+    FightingUnit CurrentPlayerTargeted;//player target of enemy when being taunted
 
     FightingUnit ChosenTarget;
     bool IsPlayerTurn;
@@ -82,10 +82,6 @@ public class FightManager : MonoBehaviour
             }
             else EnemyTeam[i].gameObject.SetActive(false);
         }
-        
-
-        CurrentEnemyTargeted = (EnemyTeam[1].stateData == FightingUnit.StateData.NotHaveChamp) ? 0 : 1;
-        CurrentPlayerTargeted = (PlayerTeam[1].stateData == FightingUnit.StateData.NotHaveChamp) ? 0 : 1;
 
         PlayerTeam = PlayerTeam.Where(x => x.stateData == FightingUnit.StateData.HaveChamp).ToList();
         EnemyTeam = EnemyTeam.Where(x => x.stateData == FightingUnit.StateData.HaveChamp).ToList();
@@ -112,6 +108,9 @@ public class FightManager : MonoBehaviour
 
     void Player_ChooseAction()
     {
+        if (All[currentTurn].IsStuning)
+            return;
+
         IsPlayerTurn = true;
 
         PlayerAction = "";
@@ -123,6 +122,37 @@ public class FightManager : MonoBehaviour
             else
                 SkillButtonList[i].SetSkill(null, 0);
 
+    }
+
+    private void OnUsingSkillUI(int skillIndex)
+    {
+        if (All[currentTurn].CoolDown[skillIndex] > 0)
+            return;
+
+        switch (All[currentTurn].character.skill[skillIndex].range)
+        {
+            case BaseSkill.Range.OnEnemy:
+                TargetEnemy(EnemyTeam);
+                break;
+
+            case BaseSkill.Range.OnEnemyTeam:
+                TargetEnemy(EnemyTeam);
+                break;
+
+            case BaseSkill.Range.OnAlly:
+                TargetAlly(PlayerTeam);
+                break;
+
+            case BaseSkill.Range.OnMySelf:
+                TargetAlly(new List<FightingUnit>() { All[currentTurn] });
+                break;
+
+            case BaseSkill.Range.OnAllyTeam:
+                TargetAlly(PlayerTeam);
+                break;
+        }
+
+        Player_SkillAction(skillIndex);
     }
     void ChooseAction()
     {
@@ -136,7 +166,7 @@ public class FightManager : MonoBehaviour
         {
             case "Strike":
             {
-                TargetAllEnemy();
+                TargetEnemy(EnemyTeam);
                 Player_AttackAction();
                 break;
             }
@@ -151,57 +181,19 @@ public class FightManager : MonoBehaviour
             case "Skill 1":
             {
                 int skillIndex = 0;
-                if (All[currentTurn].CoolDown[skillIndex] > 0)
-                    break;
-
-                switch (All[currentTurn].character.skill[skillIndex].range)
-                {
-                    case BaseSkill.Range.OnEnemy:
-                        TargetAllEnemy();
-                        break;
-
-                    case BaseSkill.Range.OnEnemyTeam:
-                        TargetAllEnemy();
-                        break;
-
-                    case BaseSkill.Range.OnAlly:
-                        TargetAllAlly();
-                        break;
-
-                    case BaseSkill.Range.OnMySelf:
-                        TargetAllAlly();
-                        break;
-
-                    }
-                Player_SkillAction(skillIndex);
+                OnUsingSkillUI(skillIndex);
                 break;
             }
             case "Skill 2":
             {
                 int skillIndex = 1;
-                if (All[currentTurn].CoolDown[skillIndex] > 0)
-                    break;
-
-                switch (All[currentTurn].character.skill[skillIndex].range)
-                {
-                    case BaseSkill.Range.OnEnemy:
-                        TargetAllEnemy();
-                        break;
-
-                    case BaseSkill.Range.OnEnemyTeam:
-                        TargetAllEnemy();
-                        break;
-
-                    case BaseSkill.Range.OnAlly:
-                        TargetAllAlly();
-                        break;
-
-                    case BaseSkill.Range.OnMySelf:
-                        TargetAllAlly();
-                        break;
-
-                }
-                Player_SkillAction(skillIndex);
+                OnUsingSkillUI(skillIndex);
+                break;
+            }
+            case "Skill 3":
+            {
+                int skillIndex = 2;
+                OnUsingSkillUI(skillIndex);
                 break;
             }
         }
@@ -245,7 +237,7 @@ public class FightManager : MonoBehaviour
             unit.UntargetUI();
 
         //character in this turn attack enemy whom chosen
-        TurnManager.Instance.AttackOneEnemy(All[currentTurn], ChosenTarget);
+        TurnManager.Instance.Attack(All[currentTurn], ChosenTarget);
 
         //end player turn
         IsPlayerTurn = false;
@@ -290,14 +282,14 @@ public class FightManager : MonoBehaviour
         UntargetAllEnemy();
         UntargetAllAlly();
 
-        switch (All[currentTurn].character.skill[0].range)
+        switch (All[currentTurn].character.skill[skillIndex].range)
         {
             case BaseSkill.Range.OnEnemy: 
                 All[currentTurn].Skill(new List<FightingUnit>() { ChosenTarget }, skillIndex);
                 break;
 
             case BaseSkill.Range.OnEnemyTeam:
-                All[currentTurn].Skill(EnemyTeam,1);
+                All[currentTurn].Skill(EnemyTeam, skillIndex);
                 break;
 
             case BaseSkill.Range.OnAlly:
@@ -306,6 +298,10 @@ public class FightManager : MonoBehaviour
 
             case BaseSkill.Range.OnMySelf:
                 All[currentTurn].Skill(new List<FightingUnit>() { All[currentTurn] }, skillIndex);
+                break;
+
+            case BaseSkill.Range.OnAllyTeam:
+                All[currentTurn].Skill(PlayerTeam, skillIndex);
                 break;
 
         }
@@ -327,9 +323,23 @@ public class FightManager : MonoBehaviour
         PlayerAction = "";
         ActionPanel.SetActive(false);
 
-        TurnManager.Instance.AttackOneEnemy(All[currentTurn], PlayerTeam[CurrentPlayerTargeted]);
+        if (All[currentTurn].IsTaunted == false)
+            CurrentPlayerTargeted = EnemyRandomTarget();
+
+        if (All[currentTurn].IsStuning == false)
+            TurnManager.Instance.Attack(All[currentTurn], CurrentPlayerTargeted);
     }
 
+    FightingUnit EnemyRandomTarget()
+    {
+        int c = PlayerTeam.Count;
+        int TargetIndex = UnityEngine.Random.Range(0, c);
+        return PlayerTeam[TargetIndex];
+    }
+    public void SetPlayerTargeted(FightingUnit f)
+    {
+        this.CurrentPlayerTargeted = f;
+    }
 
     //CHOOSE WHAT ACTION WILL DO IN TURN
     void ActionInTurn()
@@ -341,6 +351,7 @@ public class FightManager : MonoBehaviour
         }
 
         All[currentTurn].ItsMyTurn();
+
         ProrityPanel.Instance.SetUnitTurn(currentTurn);
 
         if (All[currentTurn].team == FightingUnit.Team.Player)
@@ -379,12 +390,12 @@ public class FightManager : MonoBehaviour
         if (unit.team == FightingUnit.Team.Player)
         {
             PlayerCount--;
+            PlayerTeam = PlayerTeam.Where(x => x.stateFighting == FightingUnit.StateFighting.Death).ToList();
             if (PlayerCount == 0)
             {
                 Invoke("failPanel", 1f);
                 return;
             }
-            CurrentPlayerTargeted = (CurrentPlayerTargeted - 1 < 0) ? 2 : 0;
         }
 
     }
@@ -394,7 +405,7 @@ public class FightManager : MonoBehaviour
         foreach (FightingUnit unit in EnemyTeam)
             unit.UntargetUI();
     }
-    void TargetAllEnemy()
+    void TargetEnemy(List<FightingUnit> EnemyTeam)
     {
         foreach (FightingUnit unit in EnemyTeam)
             unit.IsTargetUI();
@@ -404,7 +415,7 @@ public class FightManager : MonoBehaviour
         foreach (FightingUnit unit in PlayerTeam)
             unit.UntargetUI();
     }
-    void TargetAllAlly()
+    void TargetAlly(List<FightingUnit> PlayerTeam)
     {
         foreach (FightingUnit unit in PlayerTeam)
             unit.IsAllyUI();

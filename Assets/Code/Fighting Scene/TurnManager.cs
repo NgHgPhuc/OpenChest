@@ -30,62 +30,53 @@ public class TurnManager : MonoBehaviour
     }
 
 
-    public void AttackOneEnemy(FightingUnit currentUnit, FightingUnit targetUnit)
+    public void Attack(FightingUnit currentUnit, FightingUnit targetUnit)
     {
         this.currentUnit = currentUnit;
+
         Attack currentUnitAttack = currentUnit.attack();
         Defense targetUnitDefense = targetUnit.defense();
+
+        AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
+
+        EndCurrentTurn();
+    }
+
+    public void AttackOneEnemy(FightingUnit currentUnit, FightingUnit targetUnit,Attack currentUnitAttack,Defense targetUnitDefense)
+    {
+        if(currentUnitAttack.IsHaveEffect == true)
+        this.currentUnit.Unit_Attack?.Invoke(currentUnit, targetUnit);
+
         float targetGetDamage = currentUnitAttack.DamageCause * targetUnitDefense.TakenDmgPercent;
 
         if (targetUnitDefense.IsDogde)
         {
             targetUnit.DogdeUI();
-            EndCurrentTurn();
             return;
         }
 
         targetUnit.BeingAttacked(targetGetDamage);
+        if (targetUnitDefense.IsHaveEffect == true)
+            targetUnit.Unit_BeAttacked?.Invoke(targetUnit, currentUnit);
+
         currentUnit.LifeSteal(targetGetDamage);
 
         if (targetUnit.stateFighting == FightingUnit.StateFighting.Death)
-        {
-            EndCurrentTurn();
             return;
-        }
 
-        if(currentUnitAttack.IsStun)
+        if (currentUnitAttack.IsStun)
         {
             targetUnit.StunUI();
-            EndCurrentTurn();
             return;
         }
 
-        if(targetUnitDefense.IsCounter)
+        if (targetUnitDefense.IsCounter)
         {
             Attack targetUnitAttack = targetUnit.attack();
             Defense currentUnitDefense = currentUnit.defense();
-            float tarGetDmg = currentUnitAttack.DamageCause * targetUnitDefense.TakenDmgPercent;
-
-            if (targetUnitDefense.IsDogde)
-            {
-                targetUnit.DogdeUI();
-                EndCurrentTurn();
-                return;
-            }
-
-            currentUnit.BeingAttacked(tarGetDmg);
-            //currentUnit.LifeSteal(tarGetDmg);
-            //Counter will be without lifesteal
-
-            if (targetUnit.stateFighting == FightingUnit.StateFighting.Death)
-            {
-                EndCurrentTurn();
-                return;
-            }
+            currentUnitDefense.IsCounter = false;
+            AttackOneEnemy(targetUnit, currentUnit, targetUnitAttack, currentUnitDefense);
         }
-
-        EndCurrentTurn();
-
     }
 
     public void UsingSkillDamage(FightingUnit currentUnit, List<FightingUnit> ChosenUnit,int skillCount)

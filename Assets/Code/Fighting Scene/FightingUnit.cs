@@ -9,6 +9,7 @@ using Unity.VisualScripting.Antlr3.Runtime;
 using System.Security.Cryptography;
 using static FightingUnit;
 using static UnityEngine.GraphicsBuffer;
+using UnityEngine.Events;
 
 public class Attack
 {
@@ -16,6 +17,7 @@ public class Attack
     public float DamageCause;
     public bool IsCrit = false;
     public bool IsStun = false;
+    public bool IsHaveEffect = true;
 }
 
 public class Defense
@@ -23,7 +25,7 @@ public class Defense
     public float TakenDmgPercent;
     public bool IsDogde = false;
     public bool IsCounter = false;
-
+    public bool IsHaveEffect = true;
 }
 
 
@@ -63,12 +65,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     }
     public StateFighting stateFighting = StateFighting.Alive;
 
-    public enum EffectFighting
-    {
-        None,
-        Stunned
-    }
-    public EffectFighting effectFighting = EffectFighting.None;
+    public bool IsStuning = false;
+    public bool IsTaunted = false;
 
     public int Range;
 
@@ -94,6 +92,12 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     BuffOfUnit buffOfUnit;
     EffectIcon effectIcon;
 
+    //Event Catcher
+    public delegate void ActionCatcher(FightingUnit currentUnit,FightingUnit targetUnit);
+    public ActionCatcher Unit_Attack;
+    public ActionCatcher Unit_BeAttacked;
+    //public UnityEvent Unit_Block;
+    
     private void Awake()
     {
         if (healthBar == null)
@@ -129,7 +133,6 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
             InTurnSignal = transform.Find("In Turn Signal").GetComponent<Image>();
         InTurnSignal.gameObject.SetActive(false);
     }
-
 
 
     //INSTANTIATE VALUE OF THIS
@@ -168,6 +171,9 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
     void UpdateHealthBar()
     {
+        if (CurrentHP > MaxHP)
+            CurrentHP = MaxHP;
+
         IndexHealthBar.SetText(Math.Ceiling(CurrentHP) + "/" + MaxHP);
         healthBar.maxValue = MaxHP;
         healthBar.value = CurrentHP;
@@ -228,19 +234,17 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         InTurnSignal.gameObject.SetActive(true);
     }
+
     public void AttackUI()
     {
 
     }
+
     public void BeingAttackUI()
     {
         this.CharacterIcon.color = Color.red;
         EffectManager.Instance.InitializeEffect(EffectDict[EffectPos.InMiddle], EffectManager.EffectName.BeingAttack, 0.5f);
-        Invoke("EndBeingAttackUI", 1f);
-    }
-    public void EndBeingAttackUI()
-    {
-        this.CharacterIcon.color = Color.white;
+        animator.Play("Hit " + character.Name);
     }
     public void CritUI()
     {
@@ -259,7 +263,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
     public void StunUI()
     {
-
+        Floating("Stuning", Color.white);
     }
     public void HealUI()
     {
@@ -293,11 +297,10 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
             CharacterIcon.color = Color.white;
         }
 
-        if (effectFighting == EffectFighting.Stunned)
+        if (this.IsStuning)
         {
-            effectFighting = EffectFighting.None;
-            CharacterIcon.color = Color.white;
-            EndMyTurn();
+            StunUI();
+            EndTurnUI();
             Invoke("EndTurn",1f);
         }
 
@@ -308,24 +311,12 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         IsInTurn = false;
         EndTurnUI();
 
-        animator.Play("Idle");
+        animator.Play("Idle " + character.Name);
     }
 
     void EndTurn()
     {
         FightManager.Instance.Endturn();
-    }
-
-
-    //CALCULATE RECEIVE DAMAGE
-    float CalculateDamage()
-    {
-        float TakenDamagePercent = 100 / (100 + this.character.DefensePoint);
-
-        if (stateFighting == StateFighting.Block)
-            TakenDamagePercent /= 2;
-
-        return TakenDamagePercent;
     }
 
 
@@ -342,6 +333,9 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     {
         stateFighting = StateFighting.Block;
         Shield.SetActive(true);
+
+        //Unit_Block?.Invoke();
+
         EndMyTurn();
 
         Invoke("EndTurn", 1f);
@@ -366,10 +360,10 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         }
 
         float StunRate = UnityEngine.Random.Range(0f, 100f);
-        if (StunRate < this.character.PassiveList[BaseStats.Passive.Dodge])
+        if (StunRate < this.character.PassiveList[BaseStats.Passive.Stun])
             attack.IsStun = true;
 
-        animator.Play("Attack");
+        animator.Play("Attack " + character.Name);
 
         return attack;
     }
@@ -387,13 +381,12 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     public void Heal(float mount)
     {
         CurrentHP += mount;
-        if (CurrentHP > MaxHP)
-            CurrentHP = MaxHP;
 
+        Floating(Math.Ceiling(mount).ToString(), Color.green);
         UpdateHealthBar();
         HealUI();
-        Floating(Math.Ceiling(mount).ToString(), Color.green);
     }
+
     public void UsingPercentHP(float percentHP)
     {
         float usingMount = percentHP * MaxHP/100;
@@ -405,14 +398,31 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         HealUI();
         Floating(Math.Ceiling(usingMount).ToString(), Color.red);
     }
-
+    public float GetPercentMaxHP(float percent)
+    {
+        return MaxHP * percent / 100f;
+    }
+    public void IncreaseMaxHP(float IncreaseMaxHP)
+    {
+        this.character.HealthPoint += IncreaseMaxHP;
+        this.MaxHP = this.character.HealthPoint;
+        this.Heal(IncreaseMaxHP);
+        UpdateHealthBar();
+    }
+    public void DecreaseMaxHP(float DecreaseMaxHP)
+    {
+        this.character.HealthPoint -= DecreaseMaxHP;
+        this.MaxHP = this.character.HealthPoint;
+        
+        UpdateHealthBar();
+    }
 
 
     //BEING ATTACKED - END BEING ATTACKED
-    public Defense defense()
+    public Defense defense(float ArmorPenetration = 0)
     {
         Defense defense = new Defense();
-        defense.TakenDmgPercent = this.CalculateDamage();
+        defense.TakenDmgPercent = this.CalculateDamage(ArmorPenetration);
 
         float CounterRate = UnityEngine.Random.Range(0f, 100f);
         if (CounterRate < character.PassiveList[BaseStats.Passive.CounterAttack])
@@ -424,6 +434,18 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         return defense;
     }
+
+    //CALCULATE RECEIVE DAMAGE
+    float CalculateDamage(float ArmorPenetration)
+    {
+        float TakenDamagePercent = 100 / (100 + this.character.DefensePoint*(1-ArmorPenetration/100f));
+
+        if (stateFighting == StateFighting.Block && ArmorPenetration < 100)
+            TakenDamagePercent /= 2;
+
+        return TakenDamagePercent;
+    }
+
 
 
     public void BeingAttacked(float DamageTaken)
@@ -437,7 +459,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
             Death();
             return;
         }
-
+        
         BeingAttackUI();
 
         UpdateHealthBar();
@@ -458,7 +480,6 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     {
         effectIcon.SetBuffIcon(buffOfUnit.buffs);
     }
-
 
     void Death()
     {

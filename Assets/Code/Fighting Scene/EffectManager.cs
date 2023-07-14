@@ -11,6 +11,12 @@ public enum EffectPos
     InRight,
     AtBot
 }
+public class EffectTurn
+{
+    public GameObject effect;
+    public int LivingTurn;
+}
+
 public class EffectManager : MonoBehaviour
 {
     public enum EffectName
@@ -18,7 +24,8 @@ public class EffectManager : MonoBehaviour
         BeingAttack,
         Healing,
         TheLastLighting,
-        TheDarknessBlade
+        TheDarknessBlade,
+        PlayerStuning
     }
 
     public List<GameObject> EffectList;
@@ -47,5 +54,11 @@ public class EffectManager : MonoBehaviour
     {
         GameObject g = effect[efName];
         Destroy(Instantiate(g, Place.position, Place.rotation, Place),LivingTime);
+    }
+
+    public void InitializeEffect(Transform Place, EffectName efName)
+    {
+        GameObject g = effect[efName];
+        Instantiate(g, Place.position, Place.rotation, Place);
     }
 }

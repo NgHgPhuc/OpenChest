@@ -111,6 +111,7 @@ MonoBehaviour:
     IsInTeam: 0
     skill:
     - {fileID: 11400000, guid: 1739d4140968546fda7c6411fa65294c, type: 2}
+    - {fileID: 11400000, guid: e122a65450fd745d4ac7d8eb8a00e562, type: 2}
   - AttackDamage: 100
     HealthPoint: 400
     DefensePoint: 88
@@ -128,5 +129,6 @@ MonoBehaviour:
     IsOwn: 0
     IsInTeam: 0
     skill:
-    - {fileID: 11400000, guid: 68278dc773d26455c863906859ae37d6, type: 2}
+    - {fileID: 11400000, guid: 4ee68bb1c2bee4c388865348156d981f, type: 2}
     - {fileID: 11400000, guid: 74a420f604f50433499e345fce94f624, type: 2}
+    - {fileID: 11400000, guid: f0d43dc82f9ac4dbab82fc597e7c4503, type: 2}

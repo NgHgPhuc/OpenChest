@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53de37d0aa4f9474d947fff922ecb1cb, type: 3}
+  m_Name: Defiance Shout
+  m_EditorClassIdentifier: 
+  Name: Defiance Shout
+  Cooldown: 3
+  Icon: {fileID: 21300000, guid: 213f00f82b8f84d98838057abbc42e4e, type: 3}
+  Description: Deal 40% Attack Damage to all enemy, increase 30% Def and have 30%
+    chance to taunt enemy
+  range: 2
+  DamagePercent: 0
+  DamagePlus: 0
+  type: 0
