@@ -19,9 +19,10 @@ public class AllyOwnManager : MonoBehaviour
         }
     }
 
-    public void SetAllAly()
+    public void SetAllAlly(List<AllySO> ListAllySO)
     {
-        ListAllySO = new List<AllySO>(Resources.LoadAll<AllySO>("Character"));
+        //ListAllySO = new List<AllySO>(Resources.LoadAll<AllySO>("Character"));
+        this.ListAllySO = ListAllySO;
         foreach (AllySO a in ListAllySO)
             OwnAlly[a.character.Name] = a.character;
     }

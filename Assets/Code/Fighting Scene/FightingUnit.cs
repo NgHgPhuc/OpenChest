@@ -61,12 +61,12 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     {
         Alive,
         Death,
-        Block,
     }
     public StateFighting stateFighting = StateFighting.Alive;
 
     public bool IsStuning = false;
     public bool IsTaunted = false;
+    public bool IsBlock = false;
 
     public int Range;
 
@@ -93,7 +93,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     EffectIcon effectIcon;
 
     //Event Catcher
-    public delegate void ActionCatcher(FightingUnit currentUnit,FightingUnit targetUnit);
+    public delegate void ActionCatcher(FightingUnit currentUnit, FightingUnit targetUnit, Attack currentAttack, Defense targetDefense);
     public ActionCatcher Unit_Attack;
     public ActionCatcher Unit_BeAttacked;
     //public UnityEvent Unit_Block;
@@ -290,12 +290,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         for (int i = 0; i < CoolDown.Count; i++)
             CoolDown[i] -= 1;
 
-        if (stateFighting == StateFighting.Block)
-        {
-            stateFighting = StateFighting.Alive;
-            Shield.SetActive(false);
-            CharacterIcon.color = Color.white;
-        }
+        if (IsBlock == true)
+            EndShield();
 
         if (this.IsStuning)
         {
@@ -331,7 +327,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     //BLOCK - Decrease 50% taken damage
     public void Block()
     {
-        stateFighting = StateFighting.Block;
+        IsBlock = true;
         Shield.SetActive(true);
 
         //Unit_Block?.Invoke();
@@ -341,7 +337,12 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         Invoke("EndTurn", 1f);
     }
 
-
+    public void EndShield()
+    {
+        IsBlock = false;
+        Shield.SetActive(false);
+        CharacterIcon.color = Color.white;
+    }
 
     //ATTACK
     public Attack attack()
@@ -436,17 +437,22 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     }
 
     //CALCULATE RECEIVE DAMAGE
-    float CalculateDamage(float ArmorPenetration)
+    public float CalculateDamage(float ArmorPenetration)
     {
         float TakenDamagePercent = 100 / (100 + this.character.DefensePoint*(1-ArmorPenetration/100f));
 
-        if (stateFighting == StateFighting.Block && ArmorPenetration < 100)
+        if (IsBlock == true && ArmorPenetration < 100)
             TakenDamagePercent /= 2;
 
         return TakenDamagePercent;
     }
 
 
+    public void OnlyTakenDamage(float DamageTaken,float Penetration)
+    {
+        float CurrentUsingGet = DamageTaken * this.CalculateDamage(Penetration);
+        BeingAttacked(CurrentUsingGet);
+    }
 
     public void BeingAttacked(float DamageTaken)
     {

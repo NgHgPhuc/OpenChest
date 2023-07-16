@@ -17,6 +17,7 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: 019ef7dfa0e544127b29ffd490268f6e, type: 3}
   Description: Losing yourself, lost 20% current HP to boost 60% Attack in 1 turn
   range: 0
-  DamagePercent: 0
-  DamagePlus: 0
   type: 1
+  CurrentSharp: 40
+  IsHave: 1
+  IsEquip: 0

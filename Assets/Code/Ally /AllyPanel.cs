@@ -11,11 +11,6 @@ public class AllyPanel : MonoBehaviour
     int Top = 0;
     int Bot = 2;
 
-    void Start()
-    {
-        
-    }
-
     void Attr()
     {
         if (AllyList.Count == 0)
@@ -57,10 +52,9 @@ public class AllyPanel : MonoBehaviour
     public void InShowZone()
     {
         RectTransform r = (RectTransform)AllyListTranform.parent;
-        float len = AllyListTranform.parent.position.y + r.rect.height/2;
+        RectTransform items = (RectTransform)hoizontals[Top].transform;
+        float len = AllyListTranform.parent.position.y + r.rect.height/2 + items.rect.height/2;
 
-        if (Top >= 9)
-            return;
         if (hoizontals[Top].transform.position.y > len)
         {
             hoizontals[Top].SetActive(false);

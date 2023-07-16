@@ -9,37 +9,48 @@ public class MockingBlade : BaseSkill
     {
         Attack currentUnitAttack = currentUnit.attack();
 
-        currentUnitAttack.DamageCause *= 2.5f;
+        currentUnitAttack.DamageCause *= 1f;
 
         foreach (FightingUnit targetUnit in ChosenUnit)
             if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
             {
                 Defense targetUnitDefense = targetUnit.defense();
-                float targetGetDamage = currentUnitAttack.DamageCause * targetUnitDefense.TakenDmgPercent;
+                targetUnitDefense.IsCounter = false;
 
-                if (targetUnitDefense.IsDogde)
-                {
-                    targetUnit.DogdeUI();
-                    continue;
-                }
+                TurnManager.Instance.AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
 
-                targetUnit.BeingAttacked(targetGetDamage);
-                currentUnit.LifeSteal(targetGetDamage);
-
-                if (targetUnit.stateFighting == FightingUnit.StateFighting.Death)
-                {
-                    continue;
-                }
-
-                //if (currentUnitAttack.IsStun)
-                if (true)
-                {
-                    Debug.Log("Stun");
-                    targetUnit.StunUI();
-                    continue;
-                }
+                float SlowRate = UnityEngine.Random.Range(0f, 100f);
+                if (SlowRate < 70)
+                    targetUnit.AddBuff(DecreaseDMG_Buff(targetUnit, 0.2f));
 
             }
 
+    }
+
+    public Buff DecreaseDMG_Buff(FightingUnit targetUnit, float percent)
+    {
+        Buff DecreaseAttack = new Buff();
+
+        DecreaseAttack.type = Buff.Type.IncreaseDamage;
+        DecreaseAttack.duration = 2;
+
+        DecreaseAttack.SetIcon();
+        DecreaseAttack.ValueChange = targetUnit.basicStatsCharacter.AttackDamage * percent;
+
+        DecreaseAttack.Activation = () =>
+        {
+            targetUnit.character.AttackDamage += DecreaseAttack.ValueChange;
+        };
+
+        DecreaseAttack.Deactivation = () =>
+        {
+            targetUnit.character.AttackDamage -= DecreaseAttack.ValueChange;
+        };
+
+        DecreaseAttack.Onactivation = () =>
+        {
+        };
+
+        return DecreaseAttack;
     }
 }

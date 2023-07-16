@@ -27,7 +27,15 @@ public class CharacterSlot : MonoBehaviour,IPointerClickHandler
         }
         this.character = character.Clone();
 
-        gameObject.SetActive(true);
+        SetAttr();
+
+        this.EquipmentImage.sprite = this.character.Icon;
+        this.EquipmentLevel.SetText("lv." + this.character.Level);
+        for (int i = 0; i < StarList.Count; i++)
+            StarList[i].GetComponent<Image>().color = (i < character.StarCount) ? Color.white : Color.black;
+    }
+    void SetAttr()
+    {
         if (EquipmentImage == null || EquipmentLevel == null || BackgroundSlot == null)
         {
             EquipmentImage = transform.Find("Equipment Image").GetComponent<Image>();
@@ -38,11 +46,6 @@ public class CharacterSlot : MonoBehaviour,IPointerClickHandler
             for (int i = 0; i < starPanel.childCount; i++)
                 StarList.Add(starPanel.GetChild(i).gameObject);
         }
-
-        this.EquipmentImage.sprite = this.character.Icon;
-        this.EquipmentLevel.SetText("lv." + this.character.Level);
-        for (int i = 0; i < StarList.Count; i++)
-            StarList[i].GetComponent<Image>().color = (i < character.StarCount) ? Color.white : Color.black;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -52,4 +55,5 @@ public class CharacterSlot : MonoBehaviour,IPointerClickHandler
 
         CharInfoPanel.Instance.ShowInfo(this.character);
     }
+
 }

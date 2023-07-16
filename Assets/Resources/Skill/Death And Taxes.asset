@@ -18,6 +18,7 @@ MonoBehaviour:
   Description: Attack on an enemy deal 250% Attack Damage and penetrate 50% Defense
     of them
   range: 1
-  DamagePercent: 0
-  DamagePlus: 0
   type: 0
+  CurrentSharp: 40
+  IsHave: 1
+  IsEquip: 0

@@ -9,37 +9,45 @@ public class Judgement : BaseSkill
     {
         Attack currentUnitAttack = currentUnit.attack();
 
-        currentUnitAttack.DamageCause *= 2.5f;
+        currentUnitAttack.DamageCause *= 1.5f;
 
         foreach (FightingUnit targetUnit in ChosenUnit)
             if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
             {
-                Defense targetUnitDefense = targetUnit.defense();
-                float targetGetDamage = currentUnitAttack.DamageCause * targetUnitDefense.TakenDmgPercent;
+                Defense targetUnitDefense = targetUnit.defense(100);
+                TurnManager.Instance.AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
 
-                if (targetUnitDefense.IsDogde)
-                {
-                    targetUnit.DogdeUI();
-                    continue;
-                }
+                if (targetUnit.IsBlock == true)
+                    targetUnit.EndShield();
 
-                targetUnit.BeingAttacked(targetGetDamage);
-                currentUnit.LifeSteal(targetGetDamage);
-
-                if (targetUnit.stateFighting == FightingUnit.StateFighting.Death)
-                {
-                    continue;
-                }
-
-                //if (currentUnitAttack.IsStun)
-                if (true)
-                {
-                    Debug.Log("Stun");
-                    targetUnit.StunUI();
-                    continue;
-                }
-
+                targetUnit.AddBuff(DecreaseDEF_Buff(targetUnit, 0.4f));
             }
+    }
 
+    public Buff DecreaseDEF_Buff(FightingUnit targetUnit, float percent)
+    {
+        Buff DecreaseDEF = new Buff();
+
+        DecreaseDEF.type = Buff.Type.IncreaseDef;
+        DecreaseDEF.duration = 1;
+
+        DecreaseDEF.SetIcon();
+        DecreaseDEF.ValueChange = targetUnit.basicStatsCharacter.DefensePoint * percent;
+
+        DecreaseDEF.Activation = () =>
+        {
+            targetUnit.character.DefensePoint += DecreaseDEF.ValueChange;
+        };
+
+        DecreaseDEF.Deactivation = () =>
+        {
+            targetUnit.character.DefensePoint -= DecreaseDEF.ValueChange;
+        };
+
+        DecreaseDEF.Onactivation = () =>
+        {
+        };
+
+        return DecreaseDEF;
     }
 }

@@ -15,8 +15,7 @@ MonoBehaviour:
   Name: Bola Strike
   Cooldown: 3
   Icon: {fileID: 21300000, guid: 1d22df4b3bcde4f30a7b635e8b1526ee, type: 3}
-  Description: 
+  Description: Attack all enemy deal 120% Attack Damage and have 40% to decrease
+    30% Speed
   range: 2
-  DamagePercent: 0
-  DamagePlus: 0
   type: 0

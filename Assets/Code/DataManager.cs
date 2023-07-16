@@ -15,6 +15,8 @@ public class DataManager : MonoBehaviour
     public Slider LoadingProgress;
     GetUserDataResult DataReceive;
 
+    public float LoadingTimes;
+
     int CurrentLoading = 0;
 
     string LoadingState;
@@ -94,31 +96,31 @@ public class DataManager : MonoBehaviour
         {
             ShowStateLoading("Loading Gold...");
             PlayerPrefs.SetString("Gold", DataReceive.Data["Gold"].Value);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(LoadingTimes);
 
             ShowStateLoading("Loading Diamond...");
             PlayerPrefs.SetString("Diamond", DataReceive.Data["Diamond"].Value);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(LoadingTimes);
 
             ShowStateLoading("Loading Level...");
             PlayerPrefs.SetString("Level", DataReceive.Data["Level"].Value);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(LoadingTimes);
 
             ShowStateLoading("Loading Current Exp...");
             PlayerPrefs.SetString("CurrentExp", DataReceive.Data["CurrentExp"].Value);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(LoadingTimes);
 
             ShowStateLoading("Loading Need Exp...");
             PlayerPrefs.SetString("NeedExp", DataReceive.Data["NeedExp"].Value);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(LoadingTimes);
 
             ShowStateLoading("Loading Chest Count...");
             PlayerPrefs.SetString("ChestCount", DataReceive.Data["ChestCount"].Value);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(LoadingTimes);
 
             ShowStateLoading("Loading Ticket...");
             PlayerPrefs.SetString("Ticket", DataReceive.Data["Ticket"].Value);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(LoadingTimes);
 
             PlayerPrefs.SetString("LoadingResourceState", "Done");
         }
@@ -145,39 +147,55 @@ public class DataManager : MonoBehaviour
 
             Equip(equipment.ExtractStringData(i, data));
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(LoadingTimes);
         }
 
 
         
-        List<AllySO> chars = new List<AllySO>(Resources.LoadAll<AllySO>("Character/"));  
+        List<AllySO> chars = new List<AllySO>(Resources.LoadAll<AllySO>("Character"));  
         foreach(AllySO aSO in chars)
         {
             ShowStateLoading("Loading Ally...");
-            Character c = new Character();
-            string data = "";
-            try
-            {
-                data = DataReceive.Data[aSO.character.Name].Value;
-            }
-            catch(Exception)
-            {
-                SaveData(aSO.character.Name, "20-100-5-10-0-1-" + aSO.character.Name + "-1-0-500-0-50-false-false-0-0-0-0-0-0");
-                data = "20-100-5-10-0-1-" + aSO.character.Name + "-1-0-500-0-50-false-false-0-0-0-0-0-0";
-            }
-            
-            c.ExtractStringData(data);
-            aSO.character = c.Clone();
 
-            yield return new WaitForSeconds(0.1f);
+            if(DataReceive.Data.ContainsKey(aSO.character.Name))
+            {
+                try
+                {
+                    Character c = new Character();
+                    string data = DataReceive.Data[aSO.character.Name].Value;
+                    c.ExtractStringData(data);
+                    aSO.character = c.Clone();
+                }
+                catch(Exception)
+                {
+                    string data = "20-100-5-10-"+aSO.character.tier+"-2-"+aSO.character.Name+"-1-0-500-0-50-True-False-0-0-0-0-0-0-1+0-2+0-3+0-4+0-5+0-6+0";
+                    Character c = new Character();
+                    c.ExtractStringData(data);
+                    aSO.character = c.Clone();
+                }
+            }
+
+            yield return new WaitForSeconds(LoadingTimes);
         }
 
-        AllyOwnManager.Instance.SetAllAly();
+        AllyOwnManager.Instance.SetAllAlly(chars);
 
         MissionManager.Instance.LoadNextMission();
 
+        List<BaseSkill> skills = new List<BaseSkill>(Resources.LoadAll<BaseSkill>("Skill/"));
+        foreach (BaseSkill s in skills)
+        {
+            ShowStateLoading("Loading Skill...");
+
+            if (DataReceive.Data.ContainsKey(s.Name))
+                s.ExtractString(DataReceive.Data[s.Name].Value);
+
+            yield return new WaitForSeconds(LoadingTimes);
+        }
+
         LoadingPanel.SetActive(false);
     }
+
     void Equip(Equipment equipment)
     {
         if (equipment == null)

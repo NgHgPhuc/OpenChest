@@ -17,25 +17,14 @@ public class BolaStrike : BaseSkill
             if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
             {
                 Defense targetUnitDefense = targetUnit.defense();
-                float targetGetDamage = currentUnitAttack.DamageCause * targetUnitDefense.TakenDmgPercent;
+                targetUnitDefense.IsCounter = false;
 
-                if (targetUnitDefense.IsDogde)
-                {
-                    targetUnit.DogdeUI();
-                    continue;
-                }
-
-                targetUnit.BeingAttacked(targetGetDamage);
-                currentUnit.LifeSteal(targetGetDamage);
+                TurnManager.Instance.AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
 
                 float SlowRate = UnityEngine.Random.Range(0f, 100f);
                 if (SlowRate < 40)
                     InitBuff(currentUnit, targetUnit);
-
             }
-
-
-
     }
 
     public void InitBuff(FightingUnit currentUnit, FightingUnit ChosenUnit)

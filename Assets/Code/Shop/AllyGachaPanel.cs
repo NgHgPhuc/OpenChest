@@ -44,7 +44,10 @@ public class AllyGachaPanel : MonoBehaviour
     void AcceptRandom()
     {
         if (!ResourceManager.Instance.CheckEnough_Diamond(times * 160))
+        {
+            InformManager.Instance.Initialize_InformObject("No Enough Diamond", "you dont have enough diamond!",null);
             return;
+        }
 
         List<Character> getCharList = new List<Character>();
         ResourceManager.Instance.ChangeDiamond(-times * 160);

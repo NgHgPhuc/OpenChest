@@ -15,18 +15,11 @@ public class DeathAndTaxes : BaseSkill
             if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
             {
                 Defense targetUnitDefense = targetUnit.defense(20);//Armor Petrenation 20%
-                float targetGetDamage = currentUnitAttack.DamageCause * targetUnitDefense.TakenDmgPercent;
+                targetUnitDefense.IsCounter = false;
 
-                if (targetUnitDefense.IsDogde)
-                {
-                    targetUnit.DogdeUI();
-                    continue;
-                }
+                TurnManager.Instance.AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
 
-                targetUnit.BeingAttacked(targetGetDamage);
-                currentUnit.LifeSteal(targetGetDamage);
-
-                if(targetUnit.CurrentHP < targetUnit.GetPercentMaxHP(10))
+                if (targetUnit.CurrentHP < targetUnit.GetPercentMaxHP(10))
                 {
                     targetUnit.BeingAttacked(999999);
                     currentUnit.Heal(currentUnit.GetPercentMaxHP(10));

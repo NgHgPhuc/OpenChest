@@ -6,14 +6,15 @@ using UnityEngine.SceneManagement;
 public class WardPanel : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject DungeonPanel;
     public GameObject OpenChestPanel;
-    public GameObject ShopPanel;
-    public GameObject AllyPanel;
+    public GameObject OpenChestButton;
+
     GameObject CurrentGameObject;
+    GameObject CurrentButton;
     void Start()
     {
         CurrentGameObject = OpenChestPanel;
+        CurrentButton = OpenChestButton;
     }
 
     // Update is called once per frame
@@ -22,33 +23,45 @@ public class WardPanel : MonoBehaviour
         
     }
 
-    public void DungeonWarp()
+    public void AnimationButtonChosen(GameObject button)
     {
-        SetCurrentGameObject(DungeonPanel);
+        if (CurrentButton == button)
+            return;
+
+        CurrentButton.GetComponent<Animator>().Play("Close");
+        CurrentButton = button;
+        CurrentButton.GetComponent<Animator>().Play("Open");
     }
 
-    public void OpenChestWarp()
-    {
-        SetCurrentGameObject(OpenChestPanel);
-    }
+    //public void DungeonWarp()
+    //{
+    //    SetCurrentGameObject(DungeonPanel);
+    //}
 
-    public void ShopWarp()
-    {
-        SetCurrentGameObject(ShopPanel);
-    }
+    //public void OpenChestWarp()
+    //{
+    //    SetCurrentGameObject(OpenChestPanel);
+    //}
 
-    public void AllyWarp()
-    {
-        SetCurrentGameObject(AllyPanel);
-    }
+    //public void ShopWarp()
+    //{
+    //    SetCurrentGameObject(ShopPanel);
+    //}
 
-    void SetCurrentGameObject(GameObject g)
+    //public void AllyWarp()
+    //{
+    //    SetCurrentGameObject(AllyPanel);
+    //}
+
+    public void SetCurrentGameObject(GameObject g)
     {
         if (CurrentGameObject == g)
             return;
 
         if (CurrentGameObject != null)
+        {
             CurrentGameObject.SetActive(false);
+        }
 
         CurrentGameObject = g;
         CurrentGameObject.SetActive(true);

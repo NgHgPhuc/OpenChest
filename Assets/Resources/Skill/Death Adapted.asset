@@ -15,11 +15,13 @@ MonoBehaviour:
   Name: Death Adapted
   Cooldown: 999
   Icon: {fileID: 21300000, guid: d2c12710b048b4fa09d0dbf5168f3519, type: 3}
-  Description: 'USING 1 TIMES IN EACH FIGHTING.\n If you have more than 50% hp, you
-    will increase max hp then 40% and if you have less, will get 30% atk and 30%
-    def.\nIf number of your team less than enemy, you will get 50% losing hp healing
-    and 20% atk, or not, your ally will increase 10% atk '
+  Description: 'USING 1 TIMES IN EACH FIGHTING.<br>If you have more than 50% hp,
+    you will increase max hp then 40% and if you have less, will get 30% atk and
+    30% def.<br>If number of your team less than enemy, you will get 50% losing hp
+    healing and 20% atk, or not, your ally will increase 10% atk '
   range: 0
-  DamagePercent: 0
-  DamagePlus: 0
-  type: 0
+  skillType: 1
+  userType: 0
+  CurrentSharp: 0
+  IsHave: 1
+  IsEquip: 0

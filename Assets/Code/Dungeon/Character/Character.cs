@@ -53,7 +53,7 @@ public class Character : BaseStats
 
     public bool IsInTeam;
 
-    public List<BaseSkill> skill;
+    public List<BaseSkill> skill = new List<BaseSkill>();
 
     public Color GetColor()
     {
@@ -171,7 +171,7 @@ public class Character : BaseStats
         this.HealthPoint = (float)Convert.ToDouble(dataList[1]);
         this.DefensePoint = (float)Convert.ToDouble(dataList[2]);
         this.Speed = (float)Convert.ToDouble(dataList[3]);
-        this.tier = (Tier)(Convert.ToInt16(dataList[4]));
+        //this.tier = (Tier)(Convert.ToInt16(dataList[4]));
         this.Level = Convert.ToInt16(dataList[5]);
         this.Name = dataList[6];
         this.StarCount = Convert.ToInt32(dataList[7]);

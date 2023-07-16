@@ -15,8 +15,9 @@ MonoBehaviour:
   Name: Savagery
   Cooldown: 2
   Icon: {fileID: 21300000, guid: 2f682660981c646ca9803c86ee863fb5, type: 3}
-  Description: Attack to an enemy deal 150% Damage
+  Description: Attack to an enemy deal 400% Damage
   range: 1
-  DamagePercent: 150
-  DamagePlus: 0
   type: 1
+  CurrentSharp: 20
+  IsHave: 1
+  IsEquip: 0

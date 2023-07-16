@@ -28,6 +28,11 @@ public class TeamManager : MonoBehaviour
 
     }
 
+    public void SetSkillOfPlayer()
+    {
+
+    }
+    //call in Stats Panel Manager
     public void SetStatsPlayer(List<StatsPanel> Stats, List<StatsPanel> Passives)
     {
         this.Player.AttackDamage = Stats[0].GetValue();

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199e77ca917bf458aabaf333427c5417, type: 3}
+  m_Name: Unbreakable
+  m_EditorClassIdentifier: 
+  Name: Unbreakable
+  Cooldown: 7
+  Icon: {fileID: 21300000, guid: 9ac6b70701cd84241af0fdb21ce60e1a, type: 3}
+  Description: Increase 40% Def and healing 10% Max Hp in 3 turn, apply ALLY effect
+    on all team, each ally being will only takes 60% damage and the using will take
+    the remaining
+  range: 0
+  type: 0
+  CurrentSharp: 0
+  IsHave: 1
+  IsEquip: 0

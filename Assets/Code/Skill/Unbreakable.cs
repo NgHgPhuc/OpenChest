@@ -5,41 +5,105 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Unbreakable", menuName = "Skill/Unbreakable")]
 public class Unbreakable : BaseSkill
 {
+    FightingUnit currentUsing;
     public override void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
     {
-        Attack currentUnitAttack = currentUnit.attack();
+        this.currentUsing = currentUnit;
+        currentUnit.AddBuff(IncreaseDEF_Buff(currentUnit, 0.4f));
+        currentUnit.AddBuff(Healing_Buff(currentUnit, 0.1f));
+        foreach (FightingUnit f in FightManager.Instance.PlayerTeam)
+            if (f != currentUnit)
+                f.AddBuff(Ally_Buff(f));
 
-        currentUnitAttack.DamageCause *= 2.5f;
+    }
 
-        foreach (FightingUnit targetUnit in ChosenUnit)
-            if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
-            {
-                Defense targetUnitDefense = targetUnit.defense();
-                float targetGetDamage = currentUnitAttack.DamageCause * targetUnitDefense.TakenDmgPercent;
+    public Buff IncreaseDEF_Buff(FightingUnit currentUnit, float percent)
+    {
+        Buff IncreaseDEF = new Buff();
 
-                if (targetUnitDefense.IsDogde)
-                {
-                    targetUnit.DogdeUI();
-                    continue;
-                }
+        IncreaseDEF.type = Buff.Type.IncreaseDef;
+        IncreaseDEF.duration = 3;
 
-                targetUnit.BeingAttacked(targetGetDamage);
-                currentUnit.LifeSteal(targetGetDamage);
+        IncreaseDEF.SetIcon();
+        IncreaseDEF.ValueChange = currentUnit.basicStatsCharacter.DefensePoint * percent;
 
-                if (targetUnit.stateFighting == FightingUnit.StateFighting.Death)
-                {
-                    continue;
-                }
+        IncreaseDEF.Activation = () =>
+        {
+            currentUnit.character.DefensePoint += IncreaseDEF.ValueChange;
+        };
 
-                //if (currentUnitAttack.IsStun)
-                if (true)
-                {
-                    Debug.Log("Stun");
-                    targetUnit.StunUI();
-                    continue;
-                }
+        IncreaseDEF.Deactivation = () =>
+        {
+            currentUnit.character.DefensePoint -= IncreaseDEF.ValueChange;
+        };
 
-            }
+        IncreaseDEF.Onactivation = () =>
+        {
+        };
+
+        return IncreaseDEF;
+    }
+
+    public Buff Healing_Buff(FightingUnit currentUnit, float percent)
+    {
+        Buff Healing = new Buff();
+
+        Healing.type = Buff.Type.Healing;
+        Healing.duration = 3;
+
+        Healing.SetIcon();
+
+        Healing.Activation = () =>
+        {
+        };
+
+        Healing.Deactivation = () =>
+        {
+
+        };
+
+        Healing.Onactivation = () =>
+        {
+            currentUnit.Heal(currentUnit.GetPercentMaxHP(percent*100));
+        };
+
+        return Healing;
+    }
+
+    public Buff Ally_Buff(FightingUnit currentUnit)
+    {
+        Buff AllyProtection = new Buff();
+
+        AllyProtection.type = Buff.Type.AllyProtection;
+        AllyProtection.duration = 2;
+
+        AllyProtection.SetIcon();
+
+        AllyProtection.Activation = () =>
+        {
+            currentUnit.Unit_BeAttacked += ShareDamage;
+        };
+
+        AllyProtection.Deactivation = () =>
+        {
+            currentUnit.Unit_BeAttacked -= ShareDamage;
+        };
+
+        AllyProtection.Onactivation = () =>
+        {
+        };
+
+        return AllyProtection;
+    }
+    public void ShareDamage(FightingUnit HaveNothing, FightingUnit HaveNothing2, Attack EnemyAttack, Defense HaveNothing3)
+    {
+        Debug.Log(EnemyAttack.DamageCause);
+        float DamageCause = EnemyAttack.DamageCause * 0.4f;
+        this.currentUsing.OnlyTakenDamage(DamageCause, 0);
+
+        EnemyAttack.DamageCause *= 0.6f;
+
+        Debug.Log(EnemyAttack.DamageCause);
 
     }
 }

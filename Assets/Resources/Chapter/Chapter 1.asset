@@ -129,6 +129,6 @@ MonoBehaviour:
     IsOwn: 0
     IsInTeam: 0
     skill:
-    - {fileID: 11400000, guid: 4ee68bb1c2bee4c388865348156d981f, type: 2}
-    - {fileID: 11400000, guid: 74a420f604f50433499e345fce94f624, type: 2}
+    - {fileID: 11400000, guid: 57c9afbc55fd74a19b199e441468e241, type: 2}
+    - {fileID: 11400000, guid: e40746839754e4d2992dcc348226e699, type: 2}
     - {fileID: 11400000, guid: f0d43dc82f9ac4dbab82fc597e7c4503, type: 2}

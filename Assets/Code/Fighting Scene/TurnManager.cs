@@ -45,9 +45,7 @@ public class TurnManager : MonoBehaviour
     public void AttackOneEnemy(FightingUnit currentUnit, FightingUnit targetUnit,Attack currentUnitAttack,Defense targetUnitDefense)
     {
         if(currentUnitAttack.IsHaveEffect == true)
-        this.currentUnit.Unit_Attack?.Invoke(currentUnit, targetUnit);
-
-        float targetGetDamage = currentUnitAttack.DamageCause * targetUnitDefense.TakenDmgPercent;
+        this.currentUnit.Unit_Attack?.Invoke(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
 
         if (targetUnitDefense.IsDogde)
         {
@@ -55,20 +53,24 @@ public class TurnManager : MonoBehaviour
             return;
         }
 
-        targetUnit.BeingAttacked(targetGetDamage);
         if (targetUnitDefense.IsHaveEffect == true)
-            targetUnit.Unit_BeAttacked?.Invoke(targetUnit, currentUnit);
+            targetUnit.Unit_BeAttacked?.Invoke(targetUnit, currentUnit, currentUnitAttack, targetUnitDefense);
+
+        float targetGetDamage = currentUnitAttack.DamageCause * targetUnitDefense.TakenDmgPercent;
+
+
+        targetUnit.BeingAttacked(targetGetDamage);
 
         currentUnit.LifeSteal(targetGetDamage);
 
         if (targetUnit.stateFighting == FightingUnit.StateFighting.Death)
             return;
 
-        if (currentUnitAttack.IsStun)
-        {
-            targetUnit.StunUI();
-            return;
-        }
+        //if (currentUnitAttack.IsStun)
+        //{
+        //    targetUnit.StunUI();
+        //    return;
+        //}
 
         if (targetUnitDefense.IsCounter)
         {
@@ -84,6 +86,11 @@ public class TurnManager : MonoBehaviour
         this.currentUnit = currentUnit;
         currentUnit.character.skill[skillCount].UsingSkill(currentUnit, ChosenUnit);
         EndCurrentTurn();
+    }
+
+    public void SkillTimes(IEnumerator coroutine)
+    {
+        StartCoroutine(coroutine);
     }
 
     void EndCurrentTurn()

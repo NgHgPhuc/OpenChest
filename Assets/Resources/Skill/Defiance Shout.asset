@@ -18,6 +18,7 @@ MonoBehaviour:
   Description: Deal 40% Attack Damage to all enemy, increase 30% Def and have 30%
     chance to taunt enemy
   range: 2
-  DamagePercent: 0
-  DamagePlus: 0
   type: 0
+  CurrentSharp: 20
+  IsHave: 1
+  IsEquip: 0

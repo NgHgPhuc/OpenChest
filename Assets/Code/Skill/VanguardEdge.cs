@@ -7,39 +7,37 @@ public class VanguardEdge : BaseSkill
 {
     public override void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
     {
-        Attack currentUnitAttack = currentUnit.attack();
+        currentUnit.AddBuff(ReflectDamage_Buff(currentUnit));
+    }
 
-        currentUnitAttack.DamageCause *= 2.5f;
+    public Buff ReflectDamage_Buff(FightingUnit currentUnit)
+    {
+        Buff ReflectDamage = new Buff();
 
-        foreach (FightingUnit targetUnit in ChosenUnit)
-            if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
-            {
-                Defense targetUnitDefense = targetUnit.defense();
-                float targetGetDamage = currentUnitAttack.DamageCause * targetUnitDefense.TakenDmgPercent;
+        ReflectDamage.type = Buff.Type.ReflectDamage;
+        ReflectDamage.duration = 3;
 
-                if (targetUnitDefense.IsDogde)
-                {
-                    targetUnit.DogdeUI();
-                    continue;
-                }
+        ReflectDamage.SetIcon();
 
-                targetUnit.BeingAttacked(targetGetDamage);
-                currentUnit.LifeSteal(targetGetDamage);
+        ReflectDamage.Activation = () =>
+        {
+            currentUnit.Unit_BeAttacked += ShareDamage;
+        };
 
-                if (targetUnit.stateFighting == FightingUnit.StateFighting.Death)
-                {
-                    continue;
-                }
+        ReflectDamage.Deactivation = () =>
+        {
+            currentUnit.Unit_BeAttacked -= ShareDamage;
+        };
 
-                //if (currentUnitAttack.IsStun)
-                if (true)
-                {
-                    Debug.Log("Stun");
-                    targetUnit.StunUI();
-                    continue;
-                }
+        ReflectDamage.Onactivation = () =>
+        {
+        };
 
-            }
-
+        return ReflectDamage;
+    }
+    public void ShareDamage(FightingUnit currentUnit, FightingUnit targetUnit, Attack currentUnitAttack, Defense targetUnitDefense)
+    {
+        float DamageCause = currentUnitAttack.DamageCause * 0.4f;
+        targetUnit.OnlyTakenDamage(DamageCause,0);
     }
 }

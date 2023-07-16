@@ -15,21 +15,9 @@ public class ConcussiveBlows : BaseSkill
             if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
             {
                 Defense targetUnitDefense = targetUnit.defense();
-                float targetGetDamage = currentUnitAttack.DamageCause * targetUnitDefense.TakenDmgPercent;
+                targetUnitDefense.IsCounter = false;
 
-                if (targetUnitDefense.IsDogde)
-                {
-                    targetUnit.DogdeUI();
-                    continue;
-                }
-
-                targetUnit.BeingAttacked(targetGetDamage);
-                currentUnit.LifeSteal(targetGetDamage);
-
-                if (targetUnit.stateFighting == FightingUnit.StateFighting.Death)
-                {
-                    continue;
-                }
+                TurnManager.Instance.AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
 
                 float StunRate = UnityEngine.Random.Range(0f, 100f);
                 if (StunRate < 30)

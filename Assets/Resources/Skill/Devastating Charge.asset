@@ -19,6 +19,7 @@ MonoBehaviour:
     effect (at least 3 turns) that dealing damage equal 10% Attack and 30% Speed
     when attack enemy.
   range: 3
-  DamagePercent: 0
-  DamagePlus: 0
   type: 0
+  CurrentSharp: 60
+  IsHave: 1
+  IsEquip: 0

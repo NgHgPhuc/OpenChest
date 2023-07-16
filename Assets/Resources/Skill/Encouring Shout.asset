@@ -18,6 +18,7 @@ MonoBehaviour:
   Description: Increase 20% Attack Damage, 20% Defense, 20% Speed, 20% Health in
     1 turn for all Ally
   range: 4
-  DamagePercent: 0
-  DamagePlus: 0
   type: 0
+  CurrentSharp: 40
+  IsHave: 0
+  IsEquip: 0

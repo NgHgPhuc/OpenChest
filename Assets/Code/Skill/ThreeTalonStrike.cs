@@ -7,39 +7,34 @@ public class ThreeTalonStrike : BaseSkill
 {
     public override void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
     {
+        IEnumerator c = AllAttackWaves(currentUnit, ChosenUnit);
+        TurnManager.Instance.SkillTimes(c);
+    }
+
+    public IEnumerator AllAttackWaves(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            AttackWaves(currentUnit, ChosenUnit);
+            yield return new WaitForSeconds(0.2f);
+        }
+        yield break;
+    }
+
+    void AttackWaves(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
+    {
         Attack currentUnitAttack = currentUnit.attack();
 
-        currentUnitAttack.DamageCause *= 2.5f;
+        currentUnitAttack.DamageCause *= 0.4f;
 
         foreach (FightingUnit targetUnit in ChosenUnit)
             if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
             {
                 Defense targetUnitDefense = targetUnit.defense();
-                float targetGetDamage = currentUnitAttack.DamageCause * targetUnitDefense.TakenDmgPercent;
+                targetUnitDefense.IsCounter = false;
 
-                if (targetUnitDefense.IsDogde)
-                {
-                    targetUnit.DogdeUI();
-                    continue;
-                }
-
-                targetUnit.BeingAttacked(targetGetDamage);
-                currentUnit.LifeSteal(targetGetDamage);
-
-                if (targetUnit.stateFighting == FightingUnit.StateFighting.Death)
-                {
-                    continue;
-                }
-
-                //if (currentUnitAttack.IsStun)
-                if (true)
-                {
-                    Debug.Log("Stun");
-                    targetUnit.StunUI();
-                    continue;
-                }
+                TurnManager.Instance.AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
 
             }
-
     }
 }

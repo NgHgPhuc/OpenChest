@@ -71,20 +71,27 @@ public class DevastatingCharge : BaseSkill
         return AttackDamageOnSpeed;
     }
 
-    void EffectAtkOnSpd(FightingUnit currentUnit,FightingUnit targetUnit)
+    void EffectAtkOnSpd(FightingUnit currentUnit,FightingUnit targetUnit,Attack HaveNothing,Defense HaveNothing2)
     {
-        Attack currentUnitAttack = new Attack();
-        currentUnitAttack.DamageCause = currentUnit.character.AttackDamage*0.1f + currentUnit.character.Speed*0.4f;
-        currentUnitAttack.IsStun = false;
-        currentUnitAttack.IsCrit = false;
-        currentUnitAttack.IsHaveEffect = false;
+        //Attack currentUnitAttack = new Attack();
+        //currentUnitAttack.DamageCause = currentUnit.character.AttackDamage*0.1f + currentUnit.character.Speed*0.4f;
+        //currentUnitAttack.IsStun = false;
+        //currentUnitAttack.IsCrit = false;
+        //currentUnitAttack.IsHaveEffect = false;
 
-        Defense targetUnitDefense = targetUnit.defense(100);
-        targetUnitDefense.IsCounter = false;
-        targetUnitDefense.IsDogde = false;
-        targetUnitDefense.IsHaveEffect = false;
+        //Defense targetUnitDefense = targetUnit.defense(100);
+        //targetUnitDefense.IsCounter = false;
+        //targetUnitDefense.IsDogde = false;
+        //targetUnitDefense.IsHaveEffect = false;
+
+        //if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
+        //    TurnManager.Instance.AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
+
+
+        float DamageCause = currentUnit.character.AttackDamage * 0.1f + currentUnit.character.Speed * 0.4f;
 
         if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
-            TurnManager.Instance.AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
+            targetUnit.OnlyTakenDamage(DamageCause, 100);
+
     }
 }

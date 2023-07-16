@@ -4,15 +4,24 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ActionButtonPanel : MonoBehaviour
 {
-    public GameObject CurrentChosenButtonEffect;
+    public GameObject chosenEffect;
+    Button CurrentChosenButton;
+    public List<Button> actionButton;
     void Start()
     {
+        foreach (Button b in actionButton)
+        {
+            b.onClick.AddListener(() =>
+            {
+                if (CurrentChosenButton != b)
+                {
+                    CurrentChosenButton = b;
+                    Transform child = b.gameObject.transform.Find("Icon Button");
+                    chosenEffect.transform.SetParent(child);
+                    chosenEffect.transform.position = child.position;
+                }
 
-    }
-
-    public void OnButtonEffectClick(Transform ImageButton)
-    {
-        CurrentChosenButtonEffect.SetActive(true);
-        CurrentChosenButtonEffect.transform.SetParent(ImageButton);
+            });
+        }
     }
 }

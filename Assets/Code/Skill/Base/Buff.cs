@@ -24,7 +24,9 @@ public class Buff
         Broken, //get true damage
         Taunt,
         AttackDamageOnSpeed,
-        IncreaseMaxHP
+        IncreaseMaxHP,
+        AllyProtection,
+        ReflectDamage
 
     }
     public Type type;

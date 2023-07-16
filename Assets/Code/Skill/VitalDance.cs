@@ -9,28 +9,41 @@ public class VitalDance : BaseSkill
     {
         Attack currentUnitAttack = currentUnit.attack();
 
-        currentUnitAttack.DamageCause *= 0.4f;
+        currentUnitAttack.DamageCause *= 1.8f;
 
         foreach (FightingUnit targetUnit in ChosenUnit)
             if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
             {
-                Defense targetUnitDefense = targetUnit.defense();
-                float targetGetDamage = currentUnitAttack.DamageCause * targetUnitDefense.TakenDmgPercent;
-
-                if (targetUnitDefense.IsDogde)
-                {
-                    targetUnit.DogdeUI();
-                    continue;
-                }
-
-                targetUnit.BeingAttacked(targetGetDamage);
-                currentUnit.LifeSteal(targetGetDamage);
-
-                if (targetUnit.stateFighting == FightingUnit.StateFighting.Death)
-                {
-                    continue;
-                }
-
+                Defense targetUnitDefense = targetUnit.defense(100);
+                TurnManager.Instance.AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
+                targetUnit.AddBuff(Broken_Debuff(targetUnit));
             }
+    }
+
+    public Buff Broken_Debuff(FightingUnit targetUnit)
+    {
+        Buff Broken = new Buff();
+
+        Broken.type = Buff.Type.Broken;
+        Broken.duration = 2;
+
+        Broken.SetIcon();
+        Broken.ValueChange = targetUnit.basicStatsCharacter.DefensePoint;
+
+        Broken.Activation = () =>
+        {
+            targetUnit.character.DefensePoint -= Broken.ValueChange;
+        };
+
+        Broken.Deactivation = () =>
+        {
+            targetUnit.character.DefensePoint += Broken.ValueChange;
+        };
+
+        Broken.Onactivation = () =>
+        {
+        };
+
+        return Broken;
     }
 }

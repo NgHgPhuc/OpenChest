@@ -33,6 +33,31 @@ public class ReceivePanel : MonoBehaviour
         //animator.Play("Receive");
     }
 
+    public void SetReceiveList_Skill(List<BaseSkill> skillList)
+    {
+        SetAttr();
+
+        gameObject.SetActive(true);
+
+        for (int i = 0; i < receiveObjectList.Count; i++)
+            if (i < skillList.Count)
+                receiveObjectList[i].SetReceiveSkill(skillList[i]);
+            else
+                receiveObjectList[i].NoneReceive();
+
+        if (animator == null)
+            animator = GetComponent<Animator>();
+
+        //animator.Play("Receive");
+    }
+
+    void SetAttr()
+    {
+        if (receiveObjectList.Count == 0)
+            for (int i = 0; i < ReceiveList.childCount; i++)
+                for (int j = 0; j < ReceiveList.GetChild(i).childCount; j++)
+                    receiveObjectList.Add(ReceiveList.GetChild(i).GetChild(j).GetComponent<ReceiveObject>());
+    }
     public void ClickBackground()
     {
         gameObject.SetActive(false);
