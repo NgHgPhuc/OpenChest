@@ -14,18 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character:
     AttackDamage: 20
-    HealthPoint: 150
-    DefensePoint: 10
+    HealthPoint: 100
+    DefensePoint: 5
     Speed: 10
     PowerPoint: 0
-    tier: 2
-    Level: 1
+    tier: 0
+    role: 1
+    Level: 3
     Icon: {fileID: 21300000, guid: 1d7f0f365bfbc4638b33a45f08b98364, type: 3}
     Name: Jotem
     StarCount: 1
-    CurrentExp: 10000
-    NeedExp: 200
-    CurrentSharp: 530
+    CurrentExp: 0
+    NeedExp: 500
+    CurrentSharp: 0
     NeedSharp: 50
     IsOwn: 1
     IsInTeam: 0
+    skill: []

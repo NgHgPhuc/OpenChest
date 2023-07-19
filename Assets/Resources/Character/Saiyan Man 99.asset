@@ -13,19 +13,21 @@ MonoBehaviour:
   m_Name: Saiyan Man 99
   m_EditorClassIdentifier: 
   character:
-    AttackDamage: 30
-    HealthPoint: 200
-    DefensePoint: 10
-    Speed: 15
+    AttackDamage: 20
+    HealthPoint: 100
+    DefensePoint: 5
+    Speed: 10
     PowerPoint: 0
-    tier: 2
+    tier: 0
+    role: 1
     Level: 1
     Icon: {fileID: 21300000, guid: bb0ec839b60334701bffacdf258b7590, type: 3}
     Name: Saiyan Man 99
     StarCount: 1
-    CurrentExp: 10000
-    NeedExp: 200
-    CurrentSharp: 620
+    CurrentExp: 0
+    NeedExp: 500
+    CurrentSharp: 0
     NeedSharp: 50
-    IsOwn: 1
+    IsOwn: 0
     IsInTeam: 0
+    skill: []

@@ -9,7 +9,7 @@ public class DeathAdapted : BaseSkill
     public override void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
     {
         //if user have more than 50% hp or not
-        if(currentUnit.CurrentHP > currentUnit.character.HealthPoint / 2)
+        if(currentUnit.CurrentHP > currentUnit.CharacterClone.HealthPoint / 2)
             currentUnit.IncreaseMaxHP(currentUnit.GetPercentMaxHP(40)); //increase 40% max hp and heal the increasing
         else
         {
@@ -28,7 +28,7 @@ public class DeathAdapted : BaseSkill
         }
         else
         {
-            float LosingHP = (currentUnit.character.HealthPoint - currentUnit.CurrentHP);
+            float LosingHP = (currentUnit.CharacterClone.HealthPoint - currentUnit.CurrentHP);
             currentUnit.Heal(0.5f * LosingHP);
             currentUnit.AddBuff(IncreaseDMG_Buff(currentUnit, 0.2f));
         }
@@ -47,12 +47,12 @@ public class DeathAdapted : BaseSkill
 
         IncreaseAttack.Activation = () =>
         {
-            currentUnit.character.AttackDamage += IncreaseAttack.ValueChange;
+            currentUnit.CharacterClone.AttackDamage += IncreaseAttack.ValueChange;
         };
 
         IncreaseAttack.Deactivation = () =>
         {
-            currentUnit.character.AttackDamage -= IncreaseAttack.ValueChange;
+            currentUnit.CharacterClone.AttackDamage -= IncreaseAttack.ValueChange;
         };
 
         IncreaseAttack.Onactivation = () =>
@@ -74,12 +74,12 @@ public class DeathAdapted : BaseSkill
 
         IncreaseDEF.Activation = () =>
         {
-            currentUnit.character.DefensePoint += IncreaseDEF.ValueChange;
+            currentUnit.CharacterClone.DefensePoint += IncreaseDEF.ValueChange;
         };
 
         IncreaseDEF.Deactivation = () =>
         {
-            currentUnit.character.DefensePoint -= IncreaseDEF.ValueChange;
+            currentUnit.CharacterClone.DefensePoint -= IncreaseDEF.ValueChange;
         };
 
         IncreaseDEF.Onactivation = () =>

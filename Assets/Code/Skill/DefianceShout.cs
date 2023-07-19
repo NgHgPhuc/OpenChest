@@ -66,12 +66,12 @@ public class DefianceShout: BaseSkill
 
         IncreaseDEF.Activation = () =>
         {
-            currentUnit.character.DefensePoint += IncreaseDEF.ValueChange;
+            currentUnit.CharacterClone.DefensePoint += IncreaseDEF.ValueChange;
         };
 
         IncreaseDEF.Deactivation = () =>
         {
-            currentUnit.character.DefensePoint -= IncreaseDEF.ValueChange;
+            currentUnit.CharacterClone.DefensePoint -= IncreaseDEF.ValueChange;
         };
 
         IncreaseDEF.Onactivation = () =>

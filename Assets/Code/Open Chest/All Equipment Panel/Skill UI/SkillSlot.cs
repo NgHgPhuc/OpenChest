@@ -14,7 +14,7 @@ public class SkillSlot : MonoBehaviour,IPointerClickHandler
     GameObject Border;
     GameObject LockIcon;
 
-    BaseSkill skill;
+    public BaseSkill skill;
 
     public bool IsSlotEquipment;
     public bool IsSlotInList;
@@ -52,6 +52,14 @@ public class SkillSlot : MonoBehaviour,IPointerClickHandler
 
         this.EquipmentImage.sprite = skill.Icon;
     }
+
+    public void EquipSkill(BaseSkill skill)
+    {
+        skill.IsEquip = true;
+        SetSkillInSlot(skill);
+        SetBorderActive();
+    }
+
     public void SetBorderActive()
     {
         Border.SetActive(this.skill.IsEquip);
@@ -59,6 +67,19 @@ public class SkillSlot : MonoBehaviour,IPointerClickHandler
     public BaseSkill getSkill()
     {
         return this.skill;
+    }
+
+    public void DontHaveSkillInSlot()
+    {
+        this.skill = null;
+        gameObject.SetActive(true);
+        SetAttr();
+        EquipmentImage.color = new Color(142f / 255, 142f / 255, 142f / 255);
+
+        LockIcon.SetActive(false);
+        Border.SetActive(false);
+
+        this.EquipmentImage.sprite = null;
     }
 
     public void OnPointerClick(PointerEventData eventData)

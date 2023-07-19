@@ -13,19 +13,21 @@ MonoBehaviour:
   m_Name: Steel Knight
   m_EditorClassIdentifier: 
   character:
-    AttackDamage: 30
-    HealthPoint: 200
-    DefensePoint: 10
-    Speed: 15
+    AttackDamage: 20
+    HealthPoint: 100
+    DefensePoint: 5
+    Speed: 10
     PowerPoint: 0
-    tier: 2
+    tier: 0
+    role: 1
     Level: 1
     Icon: {fileID: 21300000, guid: acfc9707003b542689398575010a3bfb, type: 3}
     Name: Steel Knight
     StarCount: 1
-    CurrentExp: 10000
-    NeedExp: 200
-    CurrentSharp: 680
+    CurrentExp: 0
+    NeedExp: 500
+    CurrentSharp: 0
     NeedSharp: 50
     IsOwn: 1
     IsInTeam: 0
+    skill: []

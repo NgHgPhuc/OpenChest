@@ -36,12 +36,12 @@ public class Judgement : BaseSkill
 
         DecreaseDEF.Activation = () =>
         {
-            targetUnit.character.DefensePoint += DecreaseDEF.ValueChange;
+            targetUnit.CharacterClone.DefensePoint += DecreaseDEF.ValueChange;
         };
 
         DecreaseDEF.Deactivation = () =>
         {
-            targetUnit.character.DefensePoint -= DecreaseDEF.ValueChange;
+            targetUnit.CharacterClone.DefensePoint -= DecreaseDEF.ValueChange;
         };
 
         DecreaseDEF.Onactivation = () =>

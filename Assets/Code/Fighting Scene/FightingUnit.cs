@@ -31,7 +31,8 @@ public class Defense
 
 public class FightingUnit : MonoBehaviour, IPointerClickHandler
 {
-    public Character character;
+    public Character Character;
+    public Character CharacterClone;
     public Character basicStatsCharacter;
 
     public enum StateData
@@ -144,29 +145,30 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
             IndexHealthBar = healthBar.transform.Find("Index").GetComponent<TextMeshProUGUI>();
         }
 
-        MaxHP = character.HealthPoint;
+        MaxHP = CharacterClone.HealthPoint;
         CurrentHP = MaxHP;
         UpdateHealthBar();
 
         if (CharacterIcon == null)
             CharacterIcon = transform.Find("Character Icon").GetComponent<Image>();
 
-        CharacterIcon.sprite = character.Icon;
+        CharacterIcon.sprite = CharacterClone.Icon;
 
         floatingObject = FightManager.Instance.floatingObject;
 
         try
         {
-            animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animator/" + character.Name + "/" + character.Name);
+            animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animator/" + CharacterClone.Name + "/" + CharacterClone.Name);
         }
         catch (Exception)
         {
 
         }
 
-        CoolDown = new List<int>(new int[this.character.skill.Count]);
+        CoolDown = new List<int>(new int[this.CharacterClone.skill.Count]);
 
-        basicStatsCharacter = character.Clone();
+        //CharacterClone = Character.Clone();
+        basicStatsCharacter = CharacterClone.Clone();
     }
 
     void UpdateHealthBar()
@@ -244,7 +246,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     {
         this.CharacterIcon.color = Color.red;
         EffectManager.Instance.InitializeEffect(EffectDict[EffectPos.InMiddle], EffectManager.EffectName.BeingAttack, 0.5f);
-        animator.Play("Hit " + character.Name);
+        animator.Play("Hit " + CharacterClone.Name);
     }
     public void CritUI()
     {
@@ -307,7 +309,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         IsInTurn = false;
         EndTurnUI();
 
-        animator.Play("Idle " + character.Name);
+        animator.Play("Idle " + CharacterClone.Name);
     }
 
     void EndTurn()
@@ -320,7 +322,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     public void Skill(List<FightingUnit> ChosenUnit,int skillCount)
     {
         TurnManager.Instance.UsingSkillDamage(this,ChosenUnit, skillCount);
-        this.CoolDown[skillCount] = this.character.skill[skillCount].Cooldown +1;
+        this.CoolDown[skillCount] = this.CharacterClone.skill[skillCount].Cooldown +1;
     }
 
 
@@ -351,20 +353,20 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         attack.Causer = this;
 
-        attack.DamageCause = this.character.AttackDamage;
+        attack.DamageCause = this.CharacterClone.AttackDamage;
 
         float CriticalRate = UnityEngine.Random.Range(0f, 100f);
-        if (CriticalRate < character.PassiveList[BaseStats.Passive.CriticalChance])
+        if (CriticalRate < CharacterClone.PassiveList[BaseStats.Passive.CriticalChance])
         {
-            attack.DamageCause *= (100 + character.PassiveList[BaseStats.Passive.CriticalDamage]) * 2 / 100;
+            attack.DamageCause *= (100 + CharacterClone.PassiveList[BaseStats.Passive.CriticalDamage]) * 2 / 100;
             attack.IsCrit = true;
         }
 
         float StunRate = UnityEngine.Random.Range(0f, 100f);
-        if (StunRate < this.character.PassiveList[BaseStats.Passive.Stun])
+        if (StunRate < this.CharacterClone.PassiveList[BaseStats.Passive.Stun])
             attack.IsStun = true;
 
-        animator.Play("Attack " + character.Name);
+        animator.Play("Attack " + CharacterClone.Name);
 
         return attack;
     }
@@ -372,7 +374,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     //LIFESTEAL - recover % damage cause
     public void LifeSteal(float DamageCause)
     {
-        float mount = DamageCause * this.character.PassiveList[BaseStats.Passive.LifeSteal] / 100;
+        float mount = DamageCause * this.CharacterClone.PassiveList[BaseStats.Passive.LifeSteal] / 100;
         if (mount == 0)
             return;
 
@@ -405,15 +407,15 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     }
     public void IncreaseMaxHP(float IncreaseMaxHP)
     {
-        this.character.HealthPoint += IncreaseMaxHP;
-        this.MaxHP = this.character.HealthPoint;
+        this.CharacterClone.HealthPoint += IncreaseMaxHP;
+        this.MaxHP = this.CharacterClone.HealthPoint;
         this.Heal(IncreaseMaxHP);
         UpdateHealthBar();
     }
     public void DecreaseMaxHP(float DecreaseMaxHP)
     {
-        this.character.HealthPoint -= DecreaseMaxHP;
-        this.MaxHP = this.character.HealthPoint;
+        this.CharacterClone.HealthPoint -= DecreaseMaxHP;
+        this.MaxHP = this.CharacterClone.HealthPoint;
         
         UpdateHealthBar();
     }
@@ -426,11 +428,11 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         defense.TakenDmgPercent = this.CalculateDamage(ArmorPenetration);
 
         float CounterRate = UnityEngine.Random.Range(0f, 100f);
-        if (CounterRate < character.PassiveList[BaseStats.Passive.CounterAttack])
+        if (CounterRate < CharacterClone.PassiveList[BaseStats.Passive.CounterAttack])
             defense.IsCounter = true;
 
         float DogdeRate = UnityEngine.Random.Range(0f, 100f);
-        if (DogdeRate < this.character.PassiveList[BaseStats.Passive.Dodge])
+        if (DogdeRate < this.CharacterClone.PassiveList[BaseStats.Passive.Dodge])
             defense.IsDogde = true;
 
         return defense;
@@ -439,7 +441,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     //CALCULATE RECEIVE DAMAGE
     public float CalculateDamage(float ArmorPenetration)
     {
-        float TakenDamagePercent = 100 / (100 + this.character.DefensePoint*(1-ArmorPenetration/100f));
+        float TakenDamagePercent = 100 / (100 + this.CharacterClone.DefensePoint*(1-ArmorPenetration/100f));
 
         if (IsBlock == true && ArmorPenetration < 100)
             TakenDamagePercent /= 2;

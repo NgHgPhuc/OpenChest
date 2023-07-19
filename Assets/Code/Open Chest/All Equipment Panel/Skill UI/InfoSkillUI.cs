@@ -8,7 +8,6 @@ public class InfoSkillUI : MonoBehaviour
 {
     public SkillSlot skillSlot;
     BaseSkill skill;
-    SkillSlot chosenSkillInList; // for sync
 
     public TextMeshProUGUI SkillName;
     public TextMeshProUGUI Cooldown;
@@ -29,23 +28,28 @@ public class InfoSkillUI : MonoBehaviour
 
     void Equip_ButtonFunc()
     {
-        this.skill.IsEquip = true;
+        ListSkillSingleton.Instance.EquipSkill();
         EquipButton.gameObject.SetActive(!this.skill.IsEquip);
         UnequipButton.gameObject.SetActive(this.skill.IsEquip);
         skillSlot.SetBorderActive();
-        chosenSkillInList.SetBorderActive();
     }
     void Unequip_ButtonFunc()
     {
+        if (!ListSkillSingleton.Instance.CheckIsSkillInSlot())
+        {
+            InformManager.Instance.Initialize_FloatingInform("This skill in another slot, cant Unequip from this slot");
+            return;
+        }
+
         this.skill.IsEquip = false;
         EquipButton.gameObject.SetActive(!this.skill.IsEquip);
         UnequipButton.gameObject.SetActive(this.skill.IsEquip);
         skillSlot.SetBorderActive();
-        chosenSkillInList.SetBorderActive();
+        ListSkillSingleton.Instance.UnequipSkill();
     }
     void Unlock_ButtonFunc()
     {
-        //go to shop
+        WardPanel.Instance.ShopWarp();
     }
     void Upgrade_ButtonFunc()
     {
@@ -60,19 +64,19 @@ public class InfoSkillUI : MonoBehaviour
     public void ShowInfomationSkill(SkillSlot skillSlot)
     {
         if(skillSlot.getSkill() == null)
-        {
-            SetInfoWhenNull(skillSlot);
+        {          
+            SetInfoWhenNull();
             return;
         }
 
-        if (this.skillSlot.getSkill() == skillSlot.getSkill())
+        if (this.skill == skillSlot.getSkill())
             return;
 
         SetInfoOfSkill(skillSlot);
 
     }
 
-    public void SetInfoWhenNull(SkillSlot skillSlot)
+    public void SetInfoWhenNull()
     {
         this.skillSlot.SetSkillInSlot(null);
         SkillName.gameObject.SetActive(false);
@@ -91,9 +95,9 @@ public class InfoSkillUI : MonoBehaviour
         Cooldown.gameObject.SetActive(true);
         Description.gameObject.SetActive(true);
 
-        this.skillSlot.SetSkillInSlot(skillSlot.getSkill());
+        //this.skillSlot = skillSlot;
         this.skill = skillSlot.getSkill();
-        this.chosenSkillInList = skillSlot;
+        this.skillSlot.SetSkillInSlot(this.skill);
 
         SkillName.SetText(skill.Name);
         Cooldown.SetText("CD: " + skill.Cooldown + " Turns");
@@ -105,11 +109,15 @@ public class InfoSkillUI : MonoBehaviour
         UnlockButton.gameObject.SetActive(!skill.IsHave);
     }
 
+    public void TurnOff()
+    {
+        skill = null;
+    }
 
     public void SetInfo(SkillSlot skillSlot)
     {
         if (skillSlot.getSkill() == null)
-            SetInfoWhenNull(skillSlot);
+            SetInfoWhenNull();
         else
             SetInfoOfSkill(skillSlot);
     }

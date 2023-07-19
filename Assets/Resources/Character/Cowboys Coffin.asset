@@ -13,19 +13,21 @@ MonoBehaviour:
   m_Name: Cowboys Coffin
   m_EditorClassIdentifier: 
   character:
-    AttackDamage: 27529.984
-    HealthPoint: 206474.89
-    DefensePoint: 13764.992
-    Speed: 50.625
+    AttackDamage: 20
+    HealthPoint: 100
+    DefensePoint: 5
+    Speed: 10
     PowerPoint: 0
-    tier: 1
-    Level: 14
+    tier: 0
+    role: 1
+    Level: 1
     Icon: {fileID: 21300000, guid: a11d20fa0c7ef4f7ba8f356d3a4a4067, type: 3}
     Name: Cowboys Coffin
-    StarCount: 5
-    CurrentExp: 300.67383
-    NeedExp: 2139.8652
-    CurrentSharp: 820
+    StarCount: 1
+    CurrentExp: 0
+    NeedExp: 500
+    CurrentSharp: 0
     NeedSharp: 50
     IsOwn: 1
     IsInTeam: 0
+    skill: []

@@ -17,12 +17,13 @@ MonoBehaviour:
   IsDone: 1
   StarCount: 3
   EnemyTeam:
-  - AttackDamage: 50
-    HealthPoint: 300
+  - AttackDamage: 1
+    HealthPoint: 1
     DefensePoint: 10
     Speed: 10
     PowerPoint: 0
     tier: 0
+    role: 0
     Level: 5
     Icon: {fileID: 21300000, guid: 94252b2bb7a2f4fd0a04cbf49ceb825c, type: 3}
     Name: Bee
@@ -33,14 +34,14 @@ MonoBehaviour:
     NeedSharp: 0
     IsOwn: 0
     IsInTeam: 0
-    skill:
-    - {fileID: 0}
-  - AttackDamage: 30
-    HealthPoint: 200
+    skill: []
+  - AttackDamage: 1
+    HealthPoint: 1
     DefensePoint: 10
     Speed: 8
     PowerPoint: 0
     tier: 0
+    role: 0
     Level: 1
     Icon: {fileID: 21300000, guid: 2b5edd196eacb41ab9317eb17cfb869f, type: 3}
     Name: Egg
@@ -53,12 +54,13 @@ MonoBehaviour:
     IsInTeam: 0
     skill:
     - {fileID: 0}
-  - AttackDamage: 100
-    HealthPoint: 400
+  - AttackDamage: 1
+    HealthPoint: 1
     DefensePoint: 20
     Speed: 15
     PowerPoint: 0
     tier: 0
+    role: 0
     Level: 1
     Icon: {fileID: 21300000, guid: 2b5edd196eacb41ab9317eb17cfb869f, type: 3}
     Name: Egg
@@ -81,12 +83,13 @@ MonoBehaviour:
     Speed: 5
     PowerPoint: 5
     tier: 0
+    role: 0
     Level: 5
-    Icon: {fileID: 21300000, guid: d25d6665f19b44c15ad9bd34c7f85f1b, type: 3}
+    Icon: {fileID: 21300000, guid: 6f674015f9d484c2eb621dbe2856f0a2, type: 3}
     Name: Froggo
     StarCount: 5
     CurrentExp: 5
-    NeedExp: 5
+    NeedExp: 100
     CurrentSharp: 5
     NeedSharp: 5
     IsOwn: 0
@@ -99,12 +102,13 @@ MonoBehaviour:
     Speed: 10
     PowerPoint: 0
     tier: 0
+    role: 0
     Level: 0
-    Icon: {fileID: 0}
-    Name: 
+    Icon: {fileID: 21300000, guid: 69a1cf45e17ce42778da917f63ba9dd9, type: 3}
+    Name: Bigguy
     StarCount: 0
     CurrentExp: 0
-    NeedExp: 0
+    NeedExp: 100
     CurrentSharp: 0
     NeedSharp: 0
     IsOwn: 0
@@ -113,22 +117,22 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 1739d4140968546fda7c6411fa65294c, type: 2}
     - {fileID: 11400000, guid: e122a65450fd745d4ac7d8eb8a00e562, type: 2}
   - AttackDamage: 100
-    HealthPoint: 400
-    DefensePoint: 88
-    Speed: 55
+    HealthPoint: 500
+    DefensePoint: 50
+    Speed: 40
     PowerPoint: 0
     tier: 0
+    role: 0
     Level: 0
     Icon: {fileID: 21300000, guid: 41d892d181dea45d98f75142587db8c8, type: 3}
-    Name: 
+    Name: Player
     StarCount: 0
     CurrentExp: 0
-    NeedExp: 0
+    NeedExp: 100
     CurrentSharp: 0
     NeedSharp: 0
     IsOwn: 0
     IsInTeam: 0
     skill:
-    - {fileID: 11400000, guid: 57c9afbc55fd74a19b199e441468e241, type: 2}
-    - {fileID: 11400000, guid: e40746839754e4d2992dcc348226e699, type: 2}
-    - {fileID: 11400000, guid: f0d43dc82f9ac4dbab82fc597e7c4503, type: 2}
+    - {fileID: 11400000, guid: d94ede167f8834f60bca501be728ac5e, type: 2}
+    - {fileID: 11400000, guid: e122a65450fd745d4ac7d8eb8a00e562, type: 2}

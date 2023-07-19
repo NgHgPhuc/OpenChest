@@ -13,19 +13,21 @@ MonoBehaviour:
   m_Name: Cowboys Cactus
   m_EditorClassIdentifier: 
   character:
-    AttackDamage: 540442.56
-    HealthPoint: 4053319.5
-    DefensePoint: 270221.28
-    Speed: 113.90625
+    AttackDamage: 540442.6
+    HealthPoint: 4053320
+    DefensePoint: 270221.3
+    Speed: 113.9063
     PowerPoint: 0
     tier: 1
+    role: 0
     Level: 14
     Icon: {fileID: 21300000, guid: 828deb19eaa0b47f58572e22b6ef353e, type: 3}
     Name: Cowboys Cactus
     StarCount: 7
-    CurrentExp: 300.67383
-    NeedExp: 2139.8652
-    CurrentSharp: 760
+    CurrentExp: 300.6738
+    NeedExp: 2139.865
+    CurrentSharp: 780
     NeedSharp: 50
     IsOwn: 1
     IsInTeam: 0
+    skill: []

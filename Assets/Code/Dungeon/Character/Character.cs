@@ -25,6 +25,16 @@ public class Character : BaseStats
         { Tier.Legendary, new Color(255f / 255, 199f / 255, 69f / 255)},
     };
 
+    public enum Role
+    {
+        Assassin,
+        Fighter,
+        Mage,
+        Support,
+        Tanker
+    }
+    public Role role;
+
     //override
     public new Dictionary<BaseStats.Passive, float> PassiveList = new Dictionary<BaseStats.Passive, float>()
     {
@@ -155,12 +165,7 @@ public class Character : BaseStats
                     + PassiveList[BaseStats.Passive.LifeSteal] + "-" + PassiveList[BaseStats.Passive.CounterAttack] + "-"
                     + PassiveList[BaseStats.Passive.CriticalChance] + "-" + PassiveList[BaseStats.Passive.CriticalDamage];
 
-        string Passive = "";
-        foreach (KeyValuePair<Passive, float> kvp in PassiveList)
-            Passive += "-" + (int)kvp.Key + "+" + kvp.Value;
-
-        return Stat + Passive;
-
+        return Stat;
     }
 
     public Character ExtractStringData(string DataReceive)
@@ -173,7 +178,7 @@ public class Character : BaseStats
         this.Speed = (float)Convert.ToDouble(dataList[3]);
         //this.tier = (Tier)(Convert.ToInt16(dataList[4]));
         this.Level = Convert.ToInt16(dataList[5]);
-        this.Name = dataList[6];
+        //this.Name = dataList[6];
         this.StarCount = Convert.ToInt32(dataList[7]);
         this.CurrentExp = (float)Convert.ToDouble(dataList[8]);
         this.NeedExp = (float)Convert.ToDouble(dataList[9]);
@@ -182,15 +187,8 @@ public class Character : BaseStats
         this.IsOwn = Convert.ToBoolean(dataList[12]);
         this.IsInTeam = Convert.ToBoolean(dataList[13]);
 
-        string LinkImage = "Character/" + Name;
-        Texture2D texture = Resources.Load<Texture2D>(LinkImage);
-        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-        this.Icon = sprite;
-
-
         for (int j = 1; j < 7; j++)
             PassiveList[(BaseStats.Passive)j] = (float)Convert.ToDouble(dataList[13 + j]);
-
 
         return this;
     }

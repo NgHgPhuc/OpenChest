@@ -46,7 +46,7 @@ public class ProrityPanel : MonoBehaviour
             if (i < c)
             {
                 PriorityList[i].gameObject.SetActive(true);
-                PriorityList[i].Find("Icon").GetComponent<Image>().sprite = fightingUnitList[i].character.Icon;
+                PriorityList[i].Find("Icon").GetComponent<Image>().sprite = fightingUnitList[i].CharacterClone.Icon;
                 if (fightingUnitList[i].stateFighting == FightingUnit.StateFighting.Death)
                     PriorityList[i].Find("Icon").GetComponent<Image>().color = Color.gray;
             }

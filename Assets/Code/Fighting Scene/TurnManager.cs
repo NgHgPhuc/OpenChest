@@ -45,7 +45,7 @@ public class TurnManager : MonoBehaviour
     public void AttackOneEnemy(FightingUnit currentUnit, FightingUnit targetUnit,Attack currentUnitAttack,Defense targetUnitDefense)
     {
         if(currentUnitAttack.IsHaveEffect == true)
-        this.currentUnit.Unit_Attack?.Invoke(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
+            currentUnit.Unit_Attack?.Invoke(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
 
         if (targetUnitDefense.IsDogde)
         {
@@ -84,7 +84,7 @@ public class TurnManager : MonoBehaviour
     public void UsingSkillDamage(FightingUnit currentUnit, List<FightingUnit> ChosenUnit,int skillCount)
     {
         this.currentUnit = currentUnit;
-        currentUnit.character.skill[skillCount].UsingSkill(currentUnit, ChosenUnit);
+        currentUnit.CharacterClone.skill[skillCount].UsingSkill(currentUnit, ChosenUnit);
         EndCurrentTurn();
     }
 

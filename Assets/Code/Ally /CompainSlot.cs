@@ -8,7 +8,6 @@ using UnityEngine.EventSystems;
 
 public class CompainSlot : MonoBehaviour
 {
-    Image BackgroundSlot;
     Image EquipmentImage;
     TextMeshProUGUI EquipmentLevel;
     List<GameObject> StarList = new List<GameObject>();
@@ -29,11 +28,10 @@ public class CompainSlot : MonoBehaviour
         this.character = character.Clone();
 
         gameObject.SetActive(true);
-        if (EquipmentImage == null || EquipmentLevel == null || BackgroundSlot == null)
+        if (EquipmentImage == null || EquipmentLevel == null)
         {
             EquipmentImage = transform.Find("Equipment Image").GetComponent<Image>();
             EquipmentLevel = transform.Find("Equipment Level").GetComponent<TextMeshProUGUI>();
-            BackgroundSlot = transform.Find("Background Slot").GetComponent<Image>();
 
             Transform starPanel = transform.Find("Star Panel");
             for (int i = 0; i < starPanel.childCount; i++)

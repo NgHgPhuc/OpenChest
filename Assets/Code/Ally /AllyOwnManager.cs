@@ -24,20 +24,15 @@ public class AllyOwnManager : MonoBehaviour
         //ListAllySO = new List<AllySO>(Resources.LoadAll<AllySO>("Character"));
         this.ListAllySO = ListAllySO;
         foreach (AllySO a in ListAllySO)
+        {
             OwnAlly[a.character.Name] = a.character;
+            if (a.character.IsInTeam)
+                TeamManager.Instance.SetCompainAlly(a.character);
+        }
     }
 
     public Dictionary<string,Character> GetAllAlly()
     {
         return OwnAlly;
     }
-
-    public void SetAllyInTeam()
-    {
-        foreach (AllySO a in ListAllySO)
-            if (a.character.IsInTeam)
-                TeamManager.Instance.SetCompainAlly(a.character);
-    }
-
-
 }

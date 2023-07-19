@@ -19,12 +19,12 @@ public class DarknessBlade : BaseSkill
 
         IncreaseDamaged.Activation = () =>
         {
-            currentUnit.character.AttackDamage += IncreaseDamaged.ValueChange;
+            currentUnit.CharacterClone.AttackDamage += IncreaseDamaged.ValueChange;
         };
 
         IncreaseDamaged.Deactivation = () =>
         {
-            currentUnit.character.AttackDamage -= IncreaseDamaged.ValueChange;
+            currentUnit.CharacterClone.AttackDamage -= IncreaseDamaged.ValueChange;
         };
 
         IncreaseDamaged.Onactivation = () =>

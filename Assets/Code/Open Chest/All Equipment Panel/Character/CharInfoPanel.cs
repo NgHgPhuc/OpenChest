@@ -68,7 +68,8 @@ public class CharInfoPanel : MonoBehaviour
             return;
 
         Name.SetText(character.Name);
-        Quality.SetText("--Error404--");
+        Quality.SetText(character.tier.ToString());
+        Quality.color = character.GetColor();
         Power.SetText(character.calPowerPoint().ToString());
         CharacterIcon.sprite = character.Icon;
 

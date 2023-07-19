@@ -28,11 +28,11 @@ public class CompainPanel : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        Ally1Slot.SetCharacterInSlot(TeamManager.Instance.GetAlly1());
-        Ally1 = Ally1Slot.character;
+        Ally1 = TeamManager.Instance.GetAlly1();
+        Ally1Slot.SetCharacterInSlot(Ally1);
 
-        Ally2Slot.SetCharacterInSlot(TeamManager.Instance.GetAlly2());
-        Ally2 = Ally2Slot.character;
+        Ally2 = TeamManager.Instance.GetAlly2();
+        Ally2Slot.SetCharacterInSlot(Ally2);
 
         Ally3 = detailAllyPanel.characterData;
 
@@ -71,7 +71,8 @@ public class CompainPanel : MonoBehaviour
     {
         if (Change == "1")
             TeamManager.Instance.SetStatsAlly1(Ally3);
-        else
+
+        if (Change == "2")
             TeamManager.Instance.SetStatsAlly2(Ally3);
 
 
@@ -85,6 +86,7 @@ public class CompainPanel : MonoBehaviour
             CompainText.SetText("Uncompain");
             CompainIcon.gameObject.SetActive(true);
         }
+        Ally3 = null;
         gameObject.SetActive(false);
     }
 

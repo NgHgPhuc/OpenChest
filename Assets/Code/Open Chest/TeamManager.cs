@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Linq;
 
 public class TeamManager : MonoBehaviour
 {
+    public List<SkillSlot> skillSlotList;
+    Dictionary<SkillSlot, BaseSkill> playerSkillDict = new Dictionary<SkillSlot, BaseSkill>();
     public Character Player;
     Character Ally1;
     Character Ally2;
@@ -25,13 +29,39 @@ public class TeamManager : MonoBehaviour
     }
     void Start()
     {
-
     }
 
-    public void SetSkillOfPlayer()
+    public void SetSkill()
     {
-
+        foreach (SkillSlot ss in skillSlotList)
+            playerSkillDict.Add(ss, ss.getSkill());
     }
+    public void LoadSkillData(List<string> skillsNameData)
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            BaseSkill bS = Resources.Load<BaseSkill>("Skill/" + skillsNameData[i]);
+            if (bS == null)
+                skillSlotList[i].DontHaveSkillInSlot();
+            else
+                skillSlotList[i].EquipSkill(bS);
+        }
+
+        SetSkill();
+    }
+
+    //skill of player
+    public void EquipSkillOfPlayer(SkillSlot currentSkillSlotChosen)
+    {
+        playerSkillDict[currentSkillSlotChosen] = currentSkillSlotChosen.getSkill();
+        DataManager.Instance.SaveData(currentSkillSlotChosen.name, currentSkillSlotChosen.getSkill().Name);
+    }
+    public void UnequipSkillOfPlayer(SkillSlot currentSkillSlotChosen)
+    {
+        playerSkillDict[currentSkillSlotChosen] = null;
+        DataManager.Instance.SaveData(currentSkillSlotChosen.name, "");
+    }
+
     //call in Stats Panel Manager
     public void SetStatsPlayer(List<StatsPanel> Stats, List<StatsPanel> Passives)
     {
@@ -81,13 +111,14 @@ public class TeamManager : MonoBehaviour
 
         this.Ally1 = character;
         this.Ally1.IsInTeam = true;
+        DataManager.Instance.SaveData(character.Name, character.ToStringData());
         AllySlot1.SetCharacterInSlot(this.Ally1);
     }
     public void RemoveAlly1()
     {
         this.Ally1.IsInTeam = false;
         this.Ally1 = null;
-        AllySlot1.SetCharacterInSlot(this.Ally1);
+        AllySlot1.DontHaveCharacterInSlot();
     }
 
     public void SetStatsAlly2(Character character)
@@ -97,29 +128,37 @@ public class TeamManager : MonoBehaviour
 
         this.Ally2 = character;
         this.Ally2.IsInTeam = true;
+        DataManager.Instance.SaveData(character.Name, character.ToStringData());
         AllySlot2.SetCharacterInSlot(this.Ally2);
     }
     public void RemoveAlly2()
     {
         this.Ally2.IsInTeam = false;
         this.Ally2 = null;
-        AllySlot2.SetCharacterInSlot(null);
+        AllySlot2.DontHaveCharacterInSlot();
     }
 
     public List<Character> MyTeam()
     {
-        List<Character> character = new List<Character>();
+        List<Character> characters = new List<Character>();
         Ally1 = AllySlot1.character;
         Ally2 = AllySlot2.character;
 
         if (Ally1 != null)
-            character.Add(Ally1);
+            characters.Add(Ally1);
 
         if (Ally2 != null)
-            character.Add(Ally2);
+            characters.Add(Ally2);
 
-        character.Add(Player);
-        return character;
+        if (Player.skill.Count == 0)
+            for (int i = 0; i < 3; i++)
+                Player.skill.Add(playerSkillDict.ElementAt(i).Value);
+        else
+            for (int i = 0; i< 3; i++)
+                Player.skill[i] = playerSkillDict.ElementAt(i).Value;
+
+        characters.Add(Player);
+        return characters;
     }
 
     public Character GetAlly1()

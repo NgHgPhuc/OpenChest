@@ -17,8 +17,9 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: 6b4a2a4d01a3845b8bba6d5fc6b5917b, type: 3}
   Description: Attack one enemy deal 200% Attack damage with 100% petenation, destroy
     shield if using, and decrease 40% Defense
-  range: 3
-  type: 0
+  range: 1
+  skillType: 1
+  userType: 0
   CurrentSharp: 60
   IsHave: 1
   IsEquip: 0

@@ -623,7 +623,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0cf5064b4f35246e79fccc0abf1da80f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a212c2f1ada1c4b39ac8efe2a1435e10, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1338,6 +1338,7 @@ MonoBehaviour:
     Speed: 0
     PowerPoint: 0
     tier: 0
+    role: 0
     Level: 0
     Icon: {fileID: 0}
     Name: 
@@ -1348,6 +1349,7 @@ MonoBehaviour:
     NeedSharp: 0
     IsOwn: 0
     IsInTeam: 0
+    skill: []
   index: 0
 --- !u!225 &4675598448559339223
 CanvasGroup:

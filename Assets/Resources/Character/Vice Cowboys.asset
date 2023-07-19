@@ -13,19 +13,21 @@ MonoBehaviour:
   m_Name: Vice Cowboys
   m_EditorClassIdentifier: 
   character:
-    AttackDamage: 30
-    HealthPoint: 200
-    DefensePoint: 10
-    Speed: 15
+    AttackDamage: 20
+    HealthPoint: 100
+    DefensePoint: 5
+    Speed: 10
     PowerPoint: 0
-    tier: 2
+    tier: 0
+    role: 0
     Level: 1
     Icon: {fileID: 21300000, guid: d53b2ef35217a494480b007d146ad73c, type: 3}
     Name: Vice Cowboys
     StarCount: 1
-    CurrentExp: 10000
-    NeedExp: 200
-    CurrentSharp: 650
+    CurrentExp: 0
+    NeedExp: 500
+    CurrentSharp: 0
     NeedSharp: 50
     IsOwn: 1
     IsInTeam: 0
+    skill: []

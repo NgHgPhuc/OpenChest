@@ -32,12 +32,12 @@ public class VitalDance : BaseSkill
 
         Broken.Activation = () =>
         {
-            targetUnit.character.DefensePoint -= Broken.ValueChange;
+            targetUnit.CharacterClone.DefensePoint -= Broken.ValueChange;
         };
 
         Broken.Deactivation = () =>
         {
-            targetUnit.character.DefensePoint += Broken.ValueChange;
+            targetUnit.CharacterClone.DefensePoint += Broken.ValueChange;
         };
 
         Broken.Onactivation = () =>

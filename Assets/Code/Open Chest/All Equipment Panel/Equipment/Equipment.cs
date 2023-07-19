@@ -106,9 +106,8 @@ public class Equipment : BaseStats
             PassiveList[p0] = p1;
         }
 
-        if (this.Level != 0)
-            return this;
-
-        return null;
+        if (this.Level == 0)
+            return null;
+        else return this;
     }
 }

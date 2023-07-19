@@ -11,12 +11,14 @@ public class ChapterPanelUI : MonoBehaviour
     Chapter chapter;
 
     TextMeshProUGUI ChapterName;
-    EnemyTeamPanel enemyTeamPanel;
+
+    public Transform InformationChapterPanel;
     RewardPanelUI rewardPanelUI;
-    EnemyTeamPanel myTeamPanel;
     Image DoneIcon;
 
-    CanvasGroup canvasGroup;
+    public Transform FormationPanel;
+    EnemyTeamPanel myTeamPanel;
+    EnemyTeamPanel enemyTeamPanel;
 
     public RewardPanelUI GetClearItem;
 
@@ -34,12 +36,12 @@ public class ChapterPanelUI : MonoBehaviour
     void SetAttr()
     {
         ChapterName = transform.Find("Chapter Name Panel").GetChild(0).GetComponent<TextMeshProUGUI>();
-        enemyTeamPanel = transform.Find("Enemy Team Panel").GetComponent<EnemyTeamPanel>();
-        rewardPanelUI = transform.Find("Reward Panel").GetComponent<RewardPanelUI>();
-        myTeamPanel = transform.Find("My Team Panel").GetComponent<EnemyTeamPanel>();
-        DoneIcon = transform.Find("Done Icon").GetComponent<Image>();
 
-        canvasGroup = GetComponent<CanvasGroup>();
+        rewardPanelUI = InformationChapterPanel.Find("Reward Panel").GetComponent<RewardPanelUI>();
+        DoneIcon = InformationChapterPanel.Find("Done Icon").GetComponent<Image>();
+
+        enemyTeamPanel = FormationPanel.Find("Enemy Team Panel").GetComponent<EnemyTeamPanel>();
+        myTeamPanel = FormationPanel.Find("My Team Panel").GetComponent<EnemyTeamPanel>();
     }
     public void SetChapterInfomation(Chapter chapter)
     {
@@ -93,5 +95,16 @@ public class ChapterPanelUI : MonoBehaviour
         GetClearItem.SetReward(chapter.reward);
         foreach (Reward r in chapter.reward)
             r.Earning();
+    }
+
+    public void TurnTo_InfomationPanel()
+    {
+        InformationChapterPanel.gameObject.SetActive(true);
+        FormationPanel.gameObject.SetActive(false);
+    }
+    public void TurnTo_FormationPanel()
+    {
+        InformationChapterPanel.gameObject.SetActive(false);
+        FormationPanel.gameObject.SetActive(true);
     }
 }

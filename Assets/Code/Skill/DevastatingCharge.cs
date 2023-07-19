@@ -25,20 +25,20 @@ public class DevastatingCharge : BaseSkill
 
         IncreaseSpeed.Activation = () =>
         {
-            currentUnit.character.Speed += IncreaseSpeed.ValueChange;
+            currentUnit.CharacterClone.Speed += IncreaseSpeed.ValueChange;
             FightManager.Instance.SortSpeed();
         };
 
         IncreaseSpeed.Deactivation = () =>
         {
-            currentUnit.character.Speed -= IncreaseSpeed.ValueChange;
+            currentUnit.CharacterClone.Speed -= IncreaseSpeed.ValueChange;
             FightManager.Instance.SortSpeed();
         };
 
         IncreaseSpeed.Onactivation = () =>
         {
             IncreaseSpeed.ValueChange += currentUnit.basicStatsCharacter.Speed * percent;
-            currentUnit.character.Speed += IncreaseSpeed.ValueChange;
+            currentUnit.CharacterClone.Speed += IncreaseSpeed.ValueChange;
             FightManager.Instance.SortSpeed();
         };
 
@@ -88,7 +88,7 @@ public class DevastatingCharge : BaseSkill
         //    TurnManager.Instance.AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
 
 
-        float DamageCause = currentUnit.character.AttackDamage * 0.1f + currentUnit.character.Speed * 0.4f;
+        float DamageCause = currentUnit.CharacterClone.AttackDamage * 0.1f + currentUnit.CharacterClone.Speed * 0.4f;
 
         if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
             targetUnit.OnlyTakenDamage(DamageCause, 100);

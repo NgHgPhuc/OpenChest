@@ -13,19 +13,21 @@ MonoBehaviour:
   m_Name: Big Nose Pirate
   m_EditorClassIdentifier: 
   character:
-    AttackDamage: 0
-    HealthPoint: 0
-    DefensePoint: 0
-    Speed: 24939.422
+    AttackDamage: 20
+    HealthPoint: 100
+    DefensePoint: 5
+    Speed: 10
     PowerPoint: 0
-    tier: 0
-    Level: 9
+    tier: 2
+    role: 0
+    Level: 2
     Icon: {fileID: 21300000, guid: b34653df6002d4d68830c1b4e5b18efc, type: 3}
     Name: Big Nose Pirate
-    StarCount: 22
-    CurrentExp: 1750.4541
-    NeedExp: 2149.9092
-    CurrentSharp: 560
+    StarCount: 1
+    CurrentExp: 0
+    NeedExp: 500
+    CurrentSharp: 0
     NeedSharp: 50
     IsOwn: 1
-    IsInTeam: 0
+    IsInTeam: 1
+    skill: []

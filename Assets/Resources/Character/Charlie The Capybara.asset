@@ -19,13 +19,15 @@ MonoBehaviour:
     Speed: 5
     PowerPoint: 0
     tier: 0
+    role: 2
     Level: 17
     Icon: {fileID: 21300000, guid: 46f68f6df0c08470f8224790fc3c18ef, type: 3}
     Name: Charlie The Capybara
     StarCount: 1
-    CurrentExp: 1255.7812
-    NeedExp: 1848.8438
-    CurrentSharp: 1610
+    CurrentExp: 1255.781
+    NeedExp: 1848.844
+    CurrentSharp: 1630
     NeedSharp: 50
     IsOwn: 1
     IsInTeam: 0
+    skill: []

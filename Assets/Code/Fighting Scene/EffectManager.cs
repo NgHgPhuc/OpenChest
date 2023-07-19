@@ -46,12 +46,17 @@ public class EffectManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < EffectList.Count; i++)
-            effect.Add((EffectName)i, EffectList[i]);
+    }
+    void SetAttr()
+    {
+        if (effect.Count <= 0)
+            for (int i = 0; i < EffectList.Count; i++)
+                effect.Add((EffectName)i, EffectList[i]);
     }
 
     public void InitializeEffect(Transform Place,EffectName efName,float LivingTime)
     {
+        SetAttr();
         GameObject g = effect[efName];
         Destroy(Instantiate(g, Place.position, Place.rotation, Place),LivingTime);
     }

@@ -13,19 +13,21 @@ MonoBehaviour:
   m_Name: Cute Mushroom
   m_EditorClassIdentifier: 
   character:
-    AttackDamage: 5
+    AttackDamage: 20
     HealthPoint: 100
     DefensePoint: 5
-    Speed: 5
+    Speed: 10
     PowerPoint: 0
-    tier: 0
-    Level: 17
+    tier: 1
+    role: 3
+    Level: 1
     Icon: {fileID: 21300000, guid: b76414af95cbb40eaa8757576a959f4b, type: 3}
     Name: Cute Mushroom
     StarCount: 1
-    CurrentExp: 1255.7812
-    NeedExp: 1848.8438
-    CurrentSharp: 1670
+    CurrentExp: 0
+    NeedExp: 500
+    CurrentSharp: 0
     NeedSharp: 50
     IsOwn: 1
     IsInTeam: 0
+    skill: []

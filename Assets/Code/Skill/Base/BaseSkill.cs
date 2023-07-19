@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 
 //use in fight unit - return a skill
+[Serializable]
 public abstract class BaseSkill : ScriptableObject
 {
     public string Name;

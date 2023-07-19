@@ -13,19 +13,21 @@ MonoBehaviour:
   m_Name: Fire Vagabond
   m_EditorClassIdentifier: 
   character:
-    AttackDamage: 30
-    HealthPoint: 200
-    DefensePoint: 10
-    Speed: 15
+    AttackDamage: 20
+    HealthPoint: 100
+    DefensePoint: 5
+    Speed: 10
     PowerPoint: 0
-    tier: 3
-    Level: 1
+    tier: 0
+    role: 0
+    Level: 3
     Icon: {fileID: 21300000, guid: 70d07cb17afd4427dbcf744e83be71c2, type: 3}
     Name: Fire Vagabond
     StarCount: 1
-    CurrentExp: 10000
-    NeedExp: 200
-    CurrentSharp: 580
+    CurrentExp: 0
+    NeedExp: 500
+    CurrentSharp: 0
     NeedSharp: 50
-    IsOwn: 1
+    IsOwn: 0
     IsInTeam: 0
+    skill: []

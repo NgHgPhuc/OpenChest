@@ -9,6 +9,6 @@ public class AstralInfusion : BaseSkill
     {
         foreach (FightingUnit targetUnit in ChosenUnit)
             if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
-                targetUnit.Heal(currentUnit.character.AttackDamage * 0.5f);
+                targetUnit.Heal(currentUnit.CharacterClone.AttackDamage * 0.5f);
     }
 }

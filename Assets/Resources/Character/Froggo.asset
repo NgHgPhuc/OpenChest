@@ -13,19 +13,21 @@ MonoBehaviour:
   m_Name: Froggo
   m_EditorClassIdentifier: 
   character:
-    AttackDamage: 5
+    AttackDamage: 20
     HealthPoint: 100
     DefensePoint: 5
-    Speed: 5
+    Speed: 10
     PowerPoint: 0
     tier: 0
+    role: 3
     Level: 1
     Icon: {fileID: 21300000, guid: b76be0caaeeab43c8bbc606f248a489f, type: 3}
     Name: Froggo
     StarCount: 1
-    CurrentExp: 10000
-    NeedExp: 100
-    CurrentSharp: 1730
+    CurrentExp: 0
+    NeedExp: 500
+    CurrentSharp: 0
     NeedSharp: 50
     IsOwn: 1
     IsInTeam: 0
+    skill: []

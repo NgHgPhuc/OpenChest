@@ -40,13 +40,13 @@ public class BolaStrike : BaseSkill
 
         Slowing.Activation = () =>
         {
-            ChosenUnit.character.Speed -= Slowing.ValueChange;
+            ChosenUnit.CharacterClone.Speed -= Slowing.ValueChange;
             FightManager.Instance.SortSpeed();
         };
 
         Slowing.Deactivation = () =>
         {
-            ChosenUnit.character.Speed += Slowing.ValueChange;
+            ChosenUnit.CharacterClone.Speed += Slowing.ValueChange;
             FightManager.Instance.SortSpeed();
         };
 

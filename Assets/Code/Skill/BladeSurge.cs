@@ -12,7 +12,7 @@ public class BladeSurge : BaseSkill
 
         currentUnitAttack.DamageCause *= 1.5f;
 
-        float LosingHP = (currentUnit.character.HealthPoint - currentUnit.CurrentHP);
+        float LosingHP = (currentUnit.CharacterClone.HealthPoint - currentUnit.CurrentHP);
         currentUnit.Heal(0.2f * LosingHP);
 
         foreach (FightingUnit targetUnit in ChosenUnit)

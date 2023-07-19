@@ -39,12 +39,12 @@ public class MockingBlade : BaseSkill
 
         DecreaseAttack.Activation = () =>
         {
-            targetUnit.character.AttackDamage += DecreaseAttack.ValueChange;
+            targetUnit.CharacterClone.AttackDamage += DecreaseAttack.ValueChange;
         };
 
         DecreaseAttack.Deactivation = () =>
         {
-            targetUnit.character.AttackDamage -= DecreaseAttack.ValueChange;
+            targetUnit.CharacterClone.AttackDamage -= DecreaseAttack.ValueChange;
         };
 
         DecreaseAttack.Onactivation = () =>

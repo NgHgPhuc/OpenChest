@@ -110,6 +110,8 @@ public class DetailAllyPanel : MonoBehaviour
         InformManager.Instance.Initialize_FloatingInform("Transcend your ally successfully!");
     }
 
+
+
     public void SetDetail(Character character,int index)
     {
         if (character == null)
@@ -125,7 +127,6 @@ public class DetailAllyPanel : MonoBehaviour
         Set_SkillPanel();
         Set_TranscendPanel();
         Set_IsCompain();
-
     }
 
     void Set_InfomationPanel()
@@ -237,14 +238,14 @@ public class DetailAllyPanel : MonoBehaviour
         UnlockButton.SetActive(false);
         CompainButtonText.transform.parent.gameObject.SetActive(true);
 
-        if (this.characterData.IsInTeam)
+        if (!this.characterData.IsInTeam)
         {
-            CompainIcon.gameObject.SetActive(true);
+            CompainIcon.gameObject.SetActive(false);
             CompainButtonText.SetText("Compain");
         }
         else
         {
-            CompainIcon.gameObject.SetActive(false);
+            CompainIcon.gameObject.SetActive(true);
             CompainButtonText.SetText("Uncompain");
         }
     }

@@ -23,12 +23,12 @@ public class TheLastLighting : BaseSkill
 
                 IncreaseDamaged.Activation = () =>
                 {
-                    targetUnit.character.AttackDamage += IncreaseDamaged.ValueChange;
+                    targetUnit.CharacterClone.AttackDamage += IncreaseDamaged.ValueChange;
                 };
 
                 IncreaseDamaged.Deactivation = () =>
                 {
-                    targetUnit.character.AttackDamage -= IncreaseDamaged.ValueChange;
+                    targetUnit.CharacterClone.AttackDamage -= IncreaseDamaged.ValueChange;
                 };
 
                 IncreaseDamaged.Onactivation = () =>

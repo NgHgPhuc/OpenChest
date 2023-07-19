@@ -7,10 +7,27 @@ public class WardPanel : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject OpenChestPanel;
+    public GameObject DungeonPanel;
+    public GameObject ShopPanel;
+    public GameObject AllyPanel;
     public GameObject OpenChestButton;
 
     GameObject CurrentGameObject;
     GameObject CurrentButton;
+
+    public static WardPanel Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     void Start()
     {
         CurrentGameObject = OpenChestPanel;
@@ -33,25 +50,25 @@ public class WardPanel : MonoBehaviour
         CurrentButton.GetComponent<Animator>().Play("Open");
     }
 
-    //public void DungeonWarp()
-    //{
-    //    SetCurrentGameObject(DungeonPanel);
-    //}
+    public void DungeonWarp()
+    {
+        SetCurrentGameObject(DungeonPanel);
+    }
 
-    //public void OpenChestWarp()
-    //{
-    //    SetCurrentGameObject(OpenChestPanel);
-    //}
+    public void OpenChestWarp()
+    {
+        SetCurrentGameObject(OpenChestPanel);
+    }
 
-    //public void ShopWarp()
-    //{
-    //    SetCurrentGameObject(ShopPanel);
-    //}
+    public void ShopWarp()
+    {
+        SetCurrentGameObject(ShopPanel);
+    }
 
-    //public void AllyWarp()
-    //{
-    //    SetCurrentGameObject(AllyPanel);
-    //}
+    public void AllyWarp()
+    {
+        SetCurrentGameObject(AllyPanel);
+    }
 
     public void SetCurrentGameObject(GameObject g)
     {

@@ -28,12 +28,12 @@ public class EncouringShout : BaseSkill
 
         IncreaseAttack.Activation = () =>
         {
-            currentUnit.character.AttackDamage += IncreaseAttack.ValueChange;
+            currentUnit.CharacterClone.AttackDamage += IncreaseAttack.ValueChange;
         };
 
         IncreaseAttack.Deactivation = () =>
         {
-            currentUnit.character.AttackDamage -= IncreaseAttack.ValueChange;
+            currentUnit.CharacterClone.AttackDamage -= IncreaseAttack.ValueChange;
         };
 
         IncreaseAttack.Onactivation = () =>
@@ -55,12 +55,12 @@ public class EncouringShout : BaseSkill
 
         IncreaseDEF.Activation = () =>
         {
-            currentUnit.character.DefensePoint += IncreaseDEF.ValueChange;
+            currentUnit.CharacterClone.DefensePoint += IncreaseDEF.ValueChange;
         };
 
         IncreaseDEF.Deactivation = () =>
         {
-            currentUnit.character.DefensePoint -= IncreaseDEF.ValueChange;
+            currentUnit.CharacterClone.DefensePoint -= IncreaseDEF.ValueChange;
         };
 
         IncreaseDEF.Onactivation = () =>
@@ -82,12 +82,12 @@ public class EncouringShout : BaseSkill
 
         IncreaseSPD.Activation = () =>
         {
-            currentUnit.character.Speed += IncreaseSPD.ValueChange;
+            currentUnit.CharacterClone.Speed += IncreaseSPD.ValueChange;
         };
 
         IncreaseSPD.Deactivation = () =>
         {
-            currentUnit.character.Speed -= IncreaseSPD.ValueChange;
+            currentUnit.CharacterClone.Speed -= IncreaseSPD.ValueChange;
         };
 
         IncreaseSPD.Onactivation = () =>

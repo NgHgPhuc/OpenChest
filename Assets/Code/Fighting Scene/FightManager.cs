@@ -50,8 +50,10 @@ public class FightManager : MonoBehaviour
             Instance = this;
         }
 
-        string currentChapterName = PlayerPrefs.GetString("Current Chapter Name");
-        CurrentChapter = Resources.Load<Chapter>("Chapter/"+ "Chapter 1");
+        //string currentChapterName = PlayerPrefs.GetString("Current Chapter Name");
+        //CurrentChapter = Resources.Load<Chapter>("Chapter/" + currentChapterName);
+
+        CurrentChapter = Resources.Load<Chapter>("Chapter/" + "Chapter 1");
         PlayerPrefs.DeleteKey("Current Chapter Name");
 
         for (int i = 0; i < 3; i++)
@@ -59,7 +61,7 @@ public class FightManager : MonoBehaviour
             if (i < CurrentChapter.MyTeam.Count)
             {
                 PlayerTeam[i].gameObject.SetActive(true);
-                PlayerTeam[i].character = CurrentChapter.MyTeam[i].Clone();
+                PlayerTeam[i].CharacterClone = CurrentChapter.MyTeam[i].Clone();
                 PlayerTeam[i].stateData = FightingUnit.StateData.HaveChamp;
                 PlayerTeam[i].team = FightingUnit.Team.Player;
                 PlayerTeam[i].position = (FightingUnit.Position)i;
@@ -72,7 +74,7 @@ public class FightManager : MonoBehaviour
             if (i < CurrentChapter.EnemyTeam.Count)
             {
                 EnemyTeam[i].gameObject.SetActive(true);
-                EnemyTeam[i].character = CurrentChapter.EnemyTeam[i].Clone();
+                EnemyTeam[i].CharacterClone = CurrentChapter.EnemyTeam[i].Clone();
                 EnemyTeam[i].stateData = FightingUnit.StateData.HaveChamp;
                 EnemyTeam[i].team = FightingUnit.Team.Enemy;
                 EnemyTeam[i].position = (FightingUnit.Position)i;
@@ -102,7 +104,7 @@ public class FightManager : MonoBehaviour
 
     public void SortSpeed()
     {
-        All.Sort((FightingUnit x, FightingUnit y) => y.character.Speed.CompareTo(x.character.Speed));
+        All.Sort((FightingUnit x, FightingUnit y) => y.CharacterClone.Speed.CompareTo(x.CharacterClone.Speed));
         ProrityPanel.Instance.Initialize(All);
     }
 
@@ -117,8 +119,8 @@ public class FightManager : MonoBehaviour
         ActionPanel.SetActive(true);
 
         for(int i = 0; i < 3; i++)
-            if(i < All[currentTurn].character.skill.Count)
-                SkillButtonList[i].SetSkill(All[currentTurn].character.skill[i], All[currentTurn].CoolDown[i]);
+            if(i < All[currentTurn].CharacterClone.skill.Count)
+                SkillButtonList[i].SetSkill(All[currentTurn].CharacterClone.skill[i], All[currentTurn].CoolDown[i]);
             else
                 SkillButtonList[i].SetSkill(null, 0);
 
@@ -129,7 +131,7 @@ public class FightManager : MonoBehaviour
         if (All[currentTurn].CoolDown[skillIndex] > 0)
             return;
 
-        switch (All[currentTurn].character.skill[skillIndex].range)
+        switch (All[currentTurn].CharacterClone.skill[skillIndex].range)
         {
             case BaseSkill.Range.OnEnemy:
                 TargetEnemy(EnemyTeam);
@@ -282,7 +284,7 @@ public class FightManager : MonoBehaviour
         UntargetAllEnemy();
         UntargetAllAlly();
 
-        switch (All[currentTurn].character.skill[skillIndex].range)
+        switch (All[currentTurn].CharacterClone.skill[skillIndex].range)
         {
             case BaseSkill.Range.OnEnemy: 
                 All[currentTurn].Skill(new List<FightingUnit>() { ChosenTarget }, skillIndex);
@@ -384,18 +386,26 @@ public class FightManager : MonoBehaviour
         if (unit.team == FightingUnit.Team.Enemy)
         {
             EnemyCount--;
+            print(EnemyCount);
+            EnemyTeam = EnemyTeam.Where(x => x.stateFighting == FightingUnit.StateFighting.Alive).ToList();
             if (EnemyCount == 0)
+            {
                 Invoke("victoryPanel", 1f);
+                return;
+            }
+            return;
         }
         if (unit.team == FightingUnit.Team.Player)
         {
             PlayerCount--;
-            PlayerTeam = PlayerTeam.Where(x => x.stateFighting == FightingUnit.StateFighting.Death).ToList();
+            print(PlayerCount);
+            PlayerTeam = PlayerTeam.Where(x => x.stateFighting == FightingUnit.StateFighting.Alive).ToList();
             if (PlayerCount == 0)
             {
                 Invoke("failPanel", 1f);
                 return;
             }
+            return;
         }
 
     }

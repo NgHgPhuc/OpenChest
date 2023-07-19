@@ -151,37 +151,32 @@ public class DataManager : MonoBehaviour
         }
 
 
-        
+        //load Ally Data
         List<AllySO> chars = new List<AllySO>(Resources.LoadAll<AllySO>("Character"));  
         foreach(AllySO aSO in chars)
         {
             ShowStateLoading("Loading Ally...");
 
-            if(DataReceive.Data.ContainsKey(aSO.character.Name))
+            string AllyName = aSO.character.Name;
+            if (DataReceive.Data.ContainsKey(AllyName))
             {
-                try
-                {
-                    Character c = new Character();
-                    string data = DataReceive.Data[aSO.character.Name].Value;
-                    c.ExtractStringData(data);
-                    aSO.character = c.Clone();
-                }
-                catch(Exception)
-                {
-                    string data = "20-100-5-10-"+aSO.character.tier+"-2-"+aSO.character.Name+"-1-0-500-0-50-True-False-0-0-0-0-0-0-1+0-2+0-3+0-4+0-5+0-6+0";
-                    Character c = new Character();
-                    c.ExtractStringData(data);
-                    aSO.character = c.Clone();
-                }
+                string data = DataReceive.Data[AllyName].Value;
+                aSO.character.ExtractStringData(DataReceive.Data[AllyName].Value);
             }
+            else
+                SaveData(AllyName, aSO.character.ToStringData());
 
             yield return new WaitForSeconds(LoadingTimes);
         }
 
+
+        //Set Ally to use in future
         AllyOwnManager.Instance.SetAllAlly(chars);
 
+        //load mission
         MissionManager.Instance.LoadNextMission();
 
+        //load all skill
         List<BaseSkill> skills = new List<BaseSkill>(Resources.LoadAll<BaseSkill>("Skill/"));
         foreach (BaseSkill s in skills)
         {
@@ -192,6 +187,18 @@ public class DataManager : MonoBehaviour
 
             yield return new WaitForSeconds(LoadingTimes);
         }
+
+
+        //load equip skill
+        List<string> skillsNameData = new List<string>();
+        for(int i = 1; i<=3; i++)
+        {
+            if (DataReceive.Data.ContainsKey("Skill " + i + " Slot"))
+                skillsNameData.Add(DataReceive.Data["Skill " + i + " Slot"].Value);
+            else
+                SaveData("Skill " + i + " Slot", "");
+        }
+        TeamManager.Instance.LoadSkillData(skillsNameData);
 
         LoadingPanel.SetActive(false);
     }

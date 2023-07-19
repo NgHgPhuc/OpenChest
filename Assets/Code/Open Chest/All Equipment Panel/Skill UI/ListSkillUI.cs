@@ -7,7 +7,7 @@ public class ListSkillUI : MonoBehaviour
 {
     public Transform Contain;
     List<SkillSlot> listSkill = new List<SkillSlot>();
-
+    public Dictionary<string, SkillSlot> skillDict = new Dictionary<string, SkillSlot>();
     void SetAttr()
     {
         if(listSkill.Count <= 0)
@@ -19,12 +19,17 @@ public class ListSkillUI : MonoBehaviour
             }
     }
 
-    public void SetListSkillUI(Dictionary<string,BaseSkill> skillDict)
+    public void SetListSkillUI(List<BaseSkill> skills)
     {
         SetAttr();
+
         for (int i = 0; i < listSkill.Count; i++)
-            if(i < skillDict.Count)
-                listSkill[i].SetSkillInSlot(skillDict.ElementAt(i).Value);
+            if(i < skills.Count)
+            {
+                this.listSkill[i].SetSkillInSlot(skills[i]);
+                if(!this.skillDict.ContainsKey(skills[i].Name))
+                    this.skillDict.Add(skills[i].Name, this.listSkill[i]);
+            }
             else
                 listSkill[i].SetSkillInSlot(null);
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ListSkillSingleton : MonoBehaviour
 {
-    Dictionary<string, BaseSkill> skills = new Dictionary<string, BaseSkill>();
+    //Dictionary<string, BaseSkill> skills = new Dictionary<string, BaseSkill>();
     public GameObject BlurBackground;
     public GameObject listSkillObject;
 
@@ -13,6 +13,10 @@ public class ListSkillSingleton : MonoBehaviour
     public InfoSkillUI infoSkillUI;
 
     bool IsOpen = false;
+
+    SkillSlot skillSlotOfEquipment;
+    SkillSlot skillSlotOfList;
+    SkillSlot skillSlotChosen; // if skillSlotOfEquipment have skill so it is skill slot chosen in list skill show
 
     public static ListSkillSingleton Instance { get; private set; }
     private void Awake()
@@ -31,24 +35,25 @@ public class ListSkillSingleton : MonoBehaviour
 
     public void GetAllSkill()
     {
-        if (skills.Count > 0)
-            return;
+        //if (skills.Count > 0)
+        //    return;
 
-        List<BaseSkill> skillList = new List<BaseSkill>(Resources.LoadAll<BaseSkill>("Skill"));
-        foreach (BaseSkill s in skillList)
-            skills.Add(s.Name, s);
+        //List<BaseSkill> skillList = new List<BaseSkill>(Resources.LoadAll<BaseSkill>("Skill"));
+        //foreach (BaseSkill s in skillList)
+        //    skills.Add(s.Name, s);
 
     }
 
     public void ShowAllSkill()
     {
-        listSkillUI.SetListSkillUI(skills);
+        List<BaseSkill> s = new List<BaseSkill>(Resources.LoadAll<BaseSkill>("Skill"));
+        listSkillUI.SetListSkillUI(s);
     }
 
-    public BaseSkill getSkill(string name)
-    {
-        return skills[name];
-    }
+    //public BaseSkill getSkill(string name)
+    //{
+    //    return skills[name];
+    //}
 
     public void OpenPanel()
     {
@@ -65,7 +70,56 @@ public class ListSkillSingleton : MonoBehaviour
 
     public void ShowInfoOfSkill(SkillSlot skillSlot)
     {
+        if (skillSlot.IsSlotEquipment)
+        {
+            this.skillSlotOfEquipment = skillSlot;
+            if (this.skillSlotOfEquipment.getSkill() != null)
+            {
+                this.skillSlotChosen = listSkillUI.skillDict[this.skillSlotOfEquipment.getSkill().Name];
+                this.skillSlotOfList = listSkillUI.skillDict[this.skillSlotOfEquipment.getSkill().Name];
+            }
+        }
+
+        if (skillSlot.IsSlotInList)
+            this.skillSlotOfList = skillSlot;
+
         infoSkillUI.ShowInfomationSkill(skillSlot);
+    }
+    public void EquipSkill()
+    {
+        if(this.skillSlotChosen != null)
+        {
+            this.skillSlotChosen.getSkill().IsEquip = false;
+            this.skillSlotChosen.SetBorderActive();
+        }
+
+        if(this.skillSlotOfList != null)
+            this.skillSlotOfEquipment.EquipSkill(this.skillSlotOfList.getSkill());
+        else
+            this.skillSlotOfEquipment.EquipSkill(this.skillSlotChosen.getSkill());
+
+        this.skillSlotChosen = listSkillUI.skillDict[this.skillSlotOfEquipment.getSkill().Name];
+
+        if(this.skillSlotOfList != null)
+        this.skillSlotOfList.SetBorderActive();
+
+        TeamManager.Instance.EquipSkillOfPlayer(this.skillSlotOfEquipment);
+    }
+    public void UnequipSkill()
+    {
+        this.skillSlotOfEquipment.DontHaveSkillInSlot();
+        if(this.skillSlotOfList != null)
+            this.skillSlotOfList.SetBorderActive();
+    }
+    public bool CheckIsSkillInSlot()
+    {
+        if (this.skillSlotOfList == null)
+            return true;
+
+        if (this.skillSlotOfList.getSkill() == this.skillSlotOfEquipment.getSkill())
+            return true;
+
+        return false;
     }
 
     public void ClickBlurBG()
@@ -73,5 +127,11 @@ public class ListSkillSingleton : MonoBehaviour
         BlurBackground.SetActive(false);
         listSkillObject.gameObject.SetActive(false);
         IsOpen = false;
+        this.skillSlotChosen = null;
+        this.skillSlotOfList = null;
+
+        this.infoSkillUI.TurnOff();
     }
+
+
 }
