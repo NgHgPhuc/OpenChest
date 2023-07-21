@@ -78,6 +78,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
     public bool IsTarget;
     public List<int> CoolDown;
+
     //UI
     Slider healthBar;
     TextMeshProUGUI IndexHealthBar;
@@ -86,8 +87,6 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     Image CharacterIcon;
     Image TargetSignal;
     Image InTurnSignal;
-    Transform FloatingPoint;
-    FloatingObject floatingObject;
     Transform EffectPanel;
     Dictionary<EffectPos, Transform> EffectDict = new Dictionary<EffectPos, Transform>();
     BuffOfUnit buffOfUnit;
@@ -111,9 +110,6 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
             TargetSignal = transform.Find("Target Signal").GetComponent<Image>();
         TargetSignal.gameObject.SetActive(false);
 
-        if (FloatingPoint == null)
-            FloatingPoint = transform.Find("Floating Point");
-
         if (Shield == null)
             Shield = transform.Find("Shield Effect").gameObject;
 
@@ -129,6 +125,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         if (effectIcon == null)
             effectIcon = transform.Find("Effect Icon").GetComponent<EffectIcon>();
+
+        ShowBuff();
 
         if (InTurnSignal == null)
             InTurnSignal = transform.Find("In Turn Signal").GetComponent<Image>();
@@ -153,8 +151,6 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
             CharacterIcon = transform.Find("Character Icon").GetComponent<Image>();
 
         CharacterIcon.sprite = CharacterClone.Icon;
-
-        floatingObject = FightManager.Instance.floatingObject;
 
         try
         {
@@ -183,9 +179,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
     public void Floating(string msg, Color color)
     {
-
-        FloatingObject fo = Instantiate(floatingObject, FloatingPoint.position, transform.rotation, transform);
-        fo.Iniatialize(msg, color);
+        int Times = msg.Split("\n").Length;
+        EffectManager.Instance.FloatingText(msg, color, this.transform,Times);
     }
 
 
@@ -250,7 +245,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     }
     public void CritUI()
     {
-        Floating("Crit", Color.grey);
+        Floating("Critical", Color.red);
     }
 
     public void CounterUI()
@@ -321,7 +316,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     //SKILL
     public void Skill(List<FightingUnit> ChosenUnit,int skillCount)
     {
-        TurnManager.Instance.UsingSkillDamage(this,ChosenUnit, skillCount);
+        TurnManager.Instance.UsingSkill(this,ChosenUnit, skillCount);
+        Floating(this.CharacterClone.skill[skillCount].Name, Color.white);
         this.CoolDown[skillCount] = this.CharacterClone.skill[skillCount].Cooldown +1;
     }
 
@@ -366,7 +362,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         if (StunRate < this.CharacterClone.PassiveList[BaseStats.Passive.Stun])
             attack.IsStun = true;
 
-        animator.Play("Attack " + CharacterClone.Name);
+        //animator.Play("Attack " + CharacterClone.Name);
 
         return attack;
     }
@@ -385,7 +381,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     {
         CurrentHP += mount;
 
-        Floating(Math.Ceiling(mount).ToString(), Color.green);
+        string msg = "Healing" + "\n" + Math.Ceiling(mount).ToString();
+        Floating(msg, Color.green);
         UpdateHealthBar();
         HealUI();
     }
@@ -462,7 +459,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         Floating(Math.Ceiling(DamageTaken).ToString(), Color.red);
 
-        if (CurrentHP <= 0)
+        if (CurrentHP <= 0 && this.stateFighting == StateFighting.Alive)
         {
             Death();
             return;

@@ -8,7 +8,7 @@ using System.Linq;
 
 public class DetailAllyPanel : MonoBehaviour
 {
-    public Character characterData;
+    public Character character;
     public int index;
 
     [Header("Infomation Panel")]
@@ -17,7 +17,8 @@ public class DetailAllyPanel : MonoBehaviour
     public TextMeshProUGUI Name;
 
     [Header("Character Panel")]
-    public Image character;
+    public Image characterAvatar;
+    public Animator characterAnimator;
 
     [Header("Stats Panel")]
     public Transform statsPanel;
@@ -49,7 +50,7 @@ public class DetailAllyPanel : MonoBehaviour
 
     [Header("Unlock")]
     public GameObject UnlockButton;
-
+    
     void Start()
     {
         
@@ -58,7 +59,6 @@ public class DetailAllyPanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void ExitButton()
@@ -73,11 +73,11 @@ public class DetailAllyPanel : MonoBehaviour
     }
     void LevelUp()
     {
-        characterData.LevelUp();
+        character.LevelUp();
         Set_LevelUpPanel();
         Set_StatsPanel();
 
-        DataManager.Instance.SaveData(characterData.Name, characterData.ToStringData());
+        DataManager.Instance.SaveData(character.Name, character.ToStringData());
 
         InformManager.Instance.Initialize_FloatingInform("Upgrade your ally's level successfully!");
     }
@@ -89,7 +89,7 @@ public class DetailAllyPanel : MonoBehaviour
 
     public void TranscendButton()
     {
-        if(characterData.StarCount >= 5)
+        if(character.StarCount >= 5)
         {
             InformManager.Instance.Initialize_FloatingInform("Your ally is full 5 Star!");
             return;
@@ -100,12 +100,12 @@ public class DetailAllyPanel : MonoBehaviour
     }
     void Transcend()
     {
-        characterData.Transcend();
+        character.Transcend();
         Set_TranscendPanel();
         Set_StatsPanel();
         Set_InfomationPanel();
 
-        DataManager.Instance.SaveData(characterData.Name, characterData.ToStringData());
+        DataManager.Instance.SaveData(character.Name, character.ToStringData());
 
         InformManager.Instance.Initialize_FloatingInform("Transcend your ally successfully!");
     }
@@ -117,7 +117,7 @@ public class DetailAllyPanel : MonoBehaviour
         if (character == null)
             return;
 
-        this.characterData = character;
+        this.character = character;
         this.index = index;
 
         Set_InfomationPanel();
@@ -131,25 +131,25 @@ public class DetailAllyPanel : MonoBehaviour
 
     void Set_InfomationPanel()
     {
-        if (character == null)
+        if (characterAvatar == null)
             return;
 
         for (int i = 0; i < StarList.childCount; i++)
-            if (i < this.characterData.StarCount)
+            if (i < this.character.StarCount)
                 StarList.GetChild(i).GetComponent<Image>().color = Color.white;
             else
                 StarList.GetChild(i).GetComponent<Image>().color = Color.black;
 
-        string tier = characterData.tier.ToString();
+        string tier = character.tier.ToString();
         Quality.SetText("[" + tier + "]");
-        Quality.color = characterData.GetColor();
+        Quality.color = character.GetColor();
 
-        Name.SetText(this.characterData.Name);
+        Name.SetText(this.character.Name);
 
-        if ((int)characterData.tier >= 2)
+        if ((int)character.tier >= 2)
         {
             TierEffect.SetActive(true);
-            TierEffect_Image.color = characterData.GetColor();
+            TierEffect_Image.color = character.GetColor();
         }
         else
             TierEffect.SetActive(false);
@@ -157,13 +157,14 @@ public class DetailAllyPanel : MonoBehaviour
 
     void Set_CharacterPanel()
     {
-        if (this.character == null)
+        if (this.characterAvatar == null)
             return;
 
-        this.character.sprite = this.characterData.Icon;
-        if (this.characterData.IsOwn == false)
-            this.character.color = new Color(120f / 255, 120f / 255, 120f / 255);
-        else this.character.color = Color.white;
+        this.characterAvatar.sprite = this.character.Icon;
+        if (this.character.IsOwn == false)
+            this.characterAvatar.color = new Color(120f / 255, 120f / 255, 120f / 255);
+        else this.characterAvatar.color = Color.white;
+        this.characterAnimator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animator/" + this.character.Name +"/"+ this.character.Name);
     }
 
     void Set_StatsPanel()
@@ -175,34 +176,34 @@ public class DetailAllyPanel : MonoBehaviour
                 else
                     AllPassivePanel.Add(statsPanel.GetChild(i).GetComponent<SlotStatsPanel>());
 
-        if (character == null)
+        if (characterAvatar == null)
             return;
 
-        AllStatsPanel[0].SetValue_NotIncremental(this.characterData.AttackDamage);
-        AllStatsPanel[1].SetValue_NotIncremental(this.characterData.HealthPoint);
-        AllStatsPanel[2].SetValue_NotIncremental(this.characterData.DefensePoint);
-        AllStatsPanel[3].SetValue_NotIncremental(this.characterData.Speed);
+        AllStatsPanel[0].SetValue_NotIncremental(this.character.AttackDamage);
+        AllStatsPanel[1].SetValue_NotIncremental(this.character.HealthPoint);
+        AllStatsPanel[2].SetValue_NotIncremental(this.character.DefensePoint);
+        AllStatsPanel[3].SetValue_NotIncremental(this.character.Speed);
 
-        foreach (KeyValuePair<BaseStats.Passive, float> kvp in this.characterData.PassiveList)
+        foreach (KeyValuePair<BaseStats.Passive, float> kvp in this.character.PassiveList)
             AllPassivePanel[(int)kvp.Key - 1].SetValue_NotIncremental(kvp.Value, 1);
 
     }
 
     void Set_LevelUpPanel()
     {
-        if (character == null)
+        if (characterAvatar == null)
             return;
 
-        ExpBar.maxValue = this.characterData.NeedExp;
-        ExpBar.value = this.characterData.CurrentExp;
+        ExpBar.maxValue = this.character.NeedExp;
+        ExpBar.value = this.character.CurrentExp;
 
-        ExpProgessText.SetText(Math.Ceiling(this.characterData.CurrentExp) + "/" + Math.Ceiling(this.characterData.NeedExp));
-        Level.SetText(this.characterData.Level.ToString());
+        ExpProgessText.SetText(Math.Ceiling(this.character.CurrentExp) + "/" + Math.Ceiling(this.character.NeedExp));
+        Level.SetText(this.character.Level.ToString());
     }
 
     void Set_SkillPanel()
     {
-        if (character == null)
+        if (characterAvatar == null)
             return;
 
         Sprite sIcon = SkillIcon.sprite;
@@ -217,16 +218,16 @@ public class DetailAllyPanel : MonoBehaviour
 
     void Set_TranscendPanel()
     {
-        if (character == null)
+        if (characterAvatar == null)
             return;
 
-        ProgressSharp.SetText(this.characterData.CurrentSharp + "/" + this.characterData.NeedSharp);
-        characterIcon.sprite = this.characterData.Icon;
+        ProgressSharp.SetText(this.character.CurrentSharp + "/" + this.character.NeedSharp);
+        characterIcon.sprite = this.character.Icon;
     }
 
     void Set_IsCompain()
     {
-        if (this.characterData.IsOwn == false)
+        if (this.character.IsOwn == false)
         {
             CompainIcon.gameObject.SetActive(false);
             CompainButtonText.transform.parent.gameObject.SetActive(false);//button off
@@ -238,7 +239,7 @@ public class DetailAllyPanel : MonoBehaviour
         UnlockButton.SetActive(false);
         CompainButtonText.transform.parent.gameObject.SetActive(true);
 
-        if (!this.characterData.IsInTeam)
+        if (!this.character.IsInTeam)
         {
             CompainIcon.gameObject.SetActive(false);
             CompainButtonText.SetText("Compain");

@@ -25,12 +25,12 @@ public class AllyReward : MonoBehaviour
 
     public void Initialize(FightingUnit ally,float rewardExp = 40)
     {
-        //if(ally.CharacterClone != null)
-        //{
-        //    gameObject.SetActive(false);
-        //    return;
-        //}
-        print(this.rewardExpValue);
+        if (ally.CharacterClone != null)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
         gameObject.SetActive(true);
         this.character = ally.CharacterClone;
 

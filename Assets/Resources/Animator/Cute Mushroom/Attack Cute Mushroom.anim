@@ -124,6 +124,8 @@ AnimationClip:
       value: {fileID: 705322327, guid: f2286c442d8b04368934afa69fbfbe34, type: 3}
     - time: 0.6166667
       value: {fileID: 819504463, guid: f2286c442d8b04368934afa69fbfbe34, type: 3}
+    - time: 0.6333333
+      value: {fileID: 819504463, guid: f2286c442d8b04368934afa69fbfbe34, type: 3}
     attribute: m_Sprite
     path: 
     classID: 114
@@ -176,12 +178,13 @@ AnimationClip:
     - {fileID: 953856351, guid: f2286c442d8b04368934afa69fbfbe34, type: 3}
     - {fileID: 705322327, guid: f2286c442d8b04368934afa69fbfbe34, type: 3}
     - {fileID: 819504463, guid: f2286c442d8b04368934afa69fbfbe34, type: 3}
+    - {fileID: 819504463, guid: f2286c442d8b04368934afa69fbfbe34, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.6333333
+    m_StopTime: 0.65
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -370,4 +373,39 @@ AnimationClip:
     script: {fileID: 0}
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.26666668
+    functionName: UnitAttackInAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 4
+    messageOptions: 0
+  - time: 0.36666667
+    functionName: UnitAttackInAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 4
+    messageOptions: 0
+  - time: 0.5
+    functionName: UnitAttackInAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 4
+    messageOptions: 0
+  - time: 0.6166667
+    functionName: UnitAttackInAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 4
+    messageOptions: 0
+  - time: 0.6333333
+    functionName: EndAttackInAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

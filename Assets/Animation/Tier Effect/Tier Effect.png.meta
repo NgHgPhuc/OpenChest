@@ -128,13 +128,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_0
+      name: Tier Effect_0
       rect:
         serializedVersion: 2
-        x: 100
-        y: 500
-        width: 100
-        height: 100
+        x: 126
+        y: 522
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,20 +142,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ae222cf940204aebaed06514c3da8b6
-      internalID: 1638420488
+      spriteID: 93e275cebab3a40e79cdfcf7f01e7f8c
+      internalID: 304781794
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_1
+      name: Tier Effect_1
       rect:
         serializedVersion: 2
-        x: 200
-        y: 500
-        width: 100
-        height: 100
+        x: 226
+        y: 522
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,20 +163,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dad2dec2dbf9740ee8867865e4db16c5
-      internalID: 1682117548
+      spriteID: 35608e413bb3d430282d65df2e282eb3
+      internalID: 1641413084
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_2
+      name: Tier Effect_2
       rect:
         serializedVersion: 2
-        x: 300
-        y: 500
-        width: 100
-        height: 100
+        x: 326
+        y: 522
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,20 +184,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc1fb24704db04251ab7083362b954db
-      internalID: 495060648
+      spriteID: ab2e4fb192fc1460da180ef249c2c2eb
+      internalID: 778881950
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_3
+      name: Tier Effect_3
       rect:
         serializedVersion: 2
-        x: 400
-        y: 500
-        width: 100
-        height: 100
+        x: 426
+        y: 522
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -205,20 +205,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 509e1cab713534c1db99ad437af496d9
-      internalID: -1674441952
+      spriteID: c0f00c487e2844021b79603503dee11d
+      internalID: -1559013754
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_4
+      name: Tier Effect_4
       rect:
         serializedVersion: 2
-        x: 500
-        y: 500
-        width: 100
-        height: 100
+        x: 526
+        y: 522
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,20 +226,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e15cc95ca64c4732858551f87ff7fc9
-      internalID: 1767204838
+      spriteID: 9ccbefe9c1ea54d3793d0f40c713da66
+      internalID: 161727718
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_5
+      name: Tier Effect_5
       rect:
         serializedVersion: 2
-        x: 0
-        y: 400
-        width: 100
-        height: 100
+        x: 26
+        y: 422
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -247,20 +247,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e90d44a6db7aa4958b5a199b3719b5aa
-      internalID: 2056078696
+      spriteID: 3b419bd240bbe436cbc54da5f91a842e
+      internalID: 1588650192
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_6
+      name: Tier Effect_6
       rect:
         serializedVersion: 2
-        x: 100
-        y: 400
-        width: 100
-        height: 100
+        x: 126
+        y: 422
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -268,20 +268,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8a2a2f22b335747edb8c154b7c992859
-      internalID: 1341687525
+      spriteID: 97b731755e77d47ecbad959976294914
+      internalID: 2115794603
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_7
+      name: Tier Effect_7
       rect:
         serializedVersion: 2
-        x: 200
-        y: 400
-        width: 100
-        height: 100
+        x: 226
+        y: 422
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -289,20 +289,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b835acaa758db4dc6b687aacd39ca466
-      internalID: -792964149
+      spriteID: 99844074025f1408bb060fc87bb052ec
+      internalID: -1768120347
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_8
+      name: Tier Effect_8
       rect:
         serializedVersion: 2
-        x: 300
-        y: 400
-        width: 100
-        height: 100
+        x: 326
+        y: 422
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -310,20 +310,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a390f9dd008f9408dbc0d087bbd7439d
-      internalID: 1342314928
+      spriteID: be65d31fbe0b5409ab549e2430d6ecb5
+      internalID: -1084327499
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_9
+      name: Tier Effect_9
       rect:
         serializedVersion: 2
-        x: 400
-        y: 400
-        width: 100
-        height: 100
+        x: 426
+        y: 421
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -331,20 +331,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd6d501ddaaab457ca00762e9e6ae536
-      internalID: -240942012
+      spriteID: 745e32761abc6491dbd57bfa28dfd34d
+      internalID: -613938303
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_10
+      name: Tier Effect_10
       rect:
         serializedVersion: 2
-        x: 500
-        y: 400
-        width: 100
-        height: 100
+        x: 526
+        y: 422
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -352,20 +352,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 974f7afee2d634404b6fb2aa941fbd0e
-      internalID: 803714870
+      spriteID: 102bd04903276422daa35b21f40626d5
+      internalID: -1584846997
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_11
+      name: Tier Effect_11
       rect:
         serializedVersion: 2
-        x: 0
-        y: 300
-        width: 100
-        height: 100
+        x: 26
+        y: 322
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -373,20 +373,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0cd22128bfd0846bba2d27aa2357ab37
-      internalID: -755777034
+      spriteID: cc9fdf2e13d1142cf83f416db5811843
+      internalID: 1146226069
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_12
+      name: Tier Effect_12
       rect:
         serializedVersion: 2
-        x: 100
-        y: 300
-        width: 100
-        height: 100
+        x: 126
+        y: 322
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -394,20 +394,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 373e0c1c7115543729ff67fd178b4b65
-      internalID: -964054565
+      spriteID: 5a5848fd2378f41adbb0d0931d344b19
+      internalID: 1541564627
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_13
+      name: Tier Effect_13
       rect:
         serializedVersion: 2
-        x: 200
-        y: 300
-        width: 100
-        height: 100
+        x: 226
+        y: 322
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -415,20 +415,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f939ff4964d6249a89d8c8a527176754
-      internalID: -1337646137
+      spriteID: c28ceb0d4484a4ac39e6b0d77938936b
+      internalID: 1378661400
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_14
+      name: Tier Effect_14
       rect:
         serializedVersion: 2
-        x: 300
-        y: 300
-        width: 100
-        height: 100
+        x: 326
+        y: 322
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -436,20 +436,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ccad247f937c495f97644bb628f3159
-      internalID: 1857315450
+      spriteID: c72db0616512c4b2ca3b67b0919bfa33
+      internalID: -1759787777
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_15
+      name: Tier Effect_15
       rect:
         serializedVersion: 2
-        x: 400
-        y: 300
-        width: 100
-        height: 100
+        x: 426
+        y: 322
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -457,20 +457,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 07f85ff21a56643a491a24be0e94fc88
-      internalID: 347402325
+      spriteID: 89889b87f341e407e8acc73b02c91fa6
+      internalID: 250881137
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_16
+      name: Tier Effect_16
       rect:
         serializedVersion: 2
-        x: 500
-        y: 300
-        width: 100
-        height: 100
+        x: 526
+        y: 322
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -478,20 +478,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 251b7f50e832345ef9faf5fe1634911f
-      internalID: -592518226
+      spriteID: 8ced01bfcbe24488c9a4692c32bed429
+      internalID: -164377317
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_17
+      name: Tier Effect_17
       rect:
         serializedVersion: 2
-        x: 0
-        y: 200
-        width: 100
-        height: 100
+        x: 26
+        y: 222
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -499,20 +499,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f6df34c9300944873b54e21117221776
-      internalID: 1771756038
+      spriteID: b893f278cb909473b92959e8ce4a9af7
+      internalID: 1087596528
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_18
+      name: Tier Effect_18
       rect:
         serializedVersion: 2
-        x: 100
-        y: 200
-        width: 100
-        height: 100
+        x: 126
+        y: 222
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -520,20 +520,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3c663665b4ef3455fb5d1f7fc34ac00f
-      internalID: -149004773
+      spriteID: f4c7c03dc042841da8438af6e5a37f51
+      internalID: 513786475
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_19
+      name: Tier Effect_19
       rect:
         serializedVersion: 2
-        x: 200
-        y: 200
-        width: 100
-        height: 100
+        x: 226
+        y: 222
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -541,20 +541,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 95f2dc2fe8b2347719bea8f7f6b03e33
-      internalID: 1486843881
+      spriteID: 836315b7e06bf467781bdc00f2aebced
+      internalID: -541080534
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_20
+      name: Tier Effect_20
       rect:
         serializedVersion: 2
-        x: 300
-        y: 200
-        width: 100
-        height: 100
+        x: 326
+        y: 222
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -562,20 +562,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f088c3ddc52294c64ab3e39aef9fb7b1
-      internalID: 1442987061
+      spriteID: 9e0144d69ca87497c93fd8a3ad2ce3c7
+      internalID: 980659818
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_21
+      name: Tier Effect_21
       rect:
         serializedVersion: 2
-        x: 400
-        y: 200
-        width: 100
-        height: 100
+        x: 426
+        y: 222
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -583,20 +583,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f24a0f29cd3cf49039192948c99a66e3
-      internalID: -1580909764
+      spriteID: fe8024a04916944f89cb72649b326698
+      internalID: 1473916046
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_22
+      name: Tier Effect_22
       rect:
         serializedVersion: 2
-        x: 500
-        y: 200
-        width: 100
-        height: 100
+        x: 526
+        y: 222
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -604,20 +604,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9291d7e5047ef4a4695c1974e177186d
-      internalID: 1993789317
+      spriteID: 412708ff402de4495aca9533a680df89
+      internalID: 402472587
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_23
+      name: Tier Effect_23
       rect:
         serializedVersion: 2
-        x: 0
-        y: 100
-        width: 100
-        height: 100
+        x: 26
+        y: 122
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -625,20 +625,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7e3d217d23a9445be83b2ac76111f96d
-      internalID: -1833907031
+      spriteID: d96893571ccf4427cb11a3f72e299313
+      internalID: 726388342
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_24
+      name: Tier Effect_24
       rect:
         serializedVersion: 2
-        x: 100
-        y: 100
-        width: 100
-        height: 100
+        x: 126
+        y: 122
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -646,20 +646,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d44f5dc687bd446aac35fb585e3ba27
-      internalID: 934129429
+      spriteID: 760bd2952603648d3925e350d7218ad4
+      internalID: -1420087965
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_25
+      name: Tier Effect_25
       rect:
         serializedVersion: 2
-        x: 200
-        y: 100
-        width: 100
-        height: 100
+        x: 226
+        y: 122
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -667,20 +667,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 641bc8817b4c744808835f6782969fc1
-      internalID: -1597554423
+      spriteID: 70e55bd63ed03420b977f22883e4983a
+      internalID: 2013278687
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_26
+      name: Tier Effect_26
       rect:
         serializedVersion: 2
-        x: 300
-        y: 100
-        width: 100
-        height: 100
+        x: 326
+        y: 122
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -688,20 +688,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f648a681328b6415c9c19eaea4d722bb
-      internalID: -410584922
+      spriteID: fbf3c698727ea4301ad084fcc4c40523
+      internalID: 1660985773
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_27
+      name: Tier Effect_27
       rect:
         serializedVersion: 2
-        x: 400
-        y: 100
-        width: 100
-        height: 100
+        x: 426
+        y: 122
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -709,20 +709,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 884f96394eab745cd9eb41354dcad98f
-      internalID: 1035140441
+      spriteID: 3ef15fba27c1c410886d293f4cd66732
+      internalID: -875473439
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_28
+      name: Tier Effect_28
       rect:
         serializedVersion: 2
-        x: 500
-        y: 100
-        width: 100
-        height: 100
+        x: 526
+        y: 122
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -730,20 +730,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6b6574439d4434bda8b4fdd61db07354
-      internalID: 872643756
+      spriteID: 8fabe3096448649c38cd3b0508276a97
+      internalID: 972243201
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_weaponhit_spritesheet_29
+      name: Tier Effect_29
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 100
-        height: 100
+        x: 26
+        y: 22
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -751,8 +751,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 538b60a97a1a64beaa584b35011eda97
-      internalID: 1810561972
+      spriteID: e8cbef61a1d8d4eeba8767d51be49da2
+      internalID: 1565306266
       vertices: []
       indices: 
       edges: []
@@ -768,36 +768,36 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      10_weaponhit_spritesheet_5: 2056078696
-      10_weaponhit_spritesheet_16: -592518226
-      10_weaponhit_spritesheet_1: 1682117548
-      10_weaponhit_spritesheet_2: 495060648
-      10_weaponhit_spritesheet_12: -964054565
-      10_weaponhit_spritesheet_17: 1771756038
-      10_weaponhit_spritesheet_14: 1857315450
-      10_weaponhit_spritesheet_24: 934129429
-      10_weaponhit_spritesheet_6: 1341687525
-      10_weaponhit_spritesheet_4: 1767204838
-      10_weaponhit_spritesheet_10: 803714870
-      10_weaponhit_spritesheet_3: -1674441952
-      10_weaponhit_spritesheet_11: -755777034
-      10_weaponhit_spritesheet_23: -1833907031
-      10_weaponhit_spritesheet_26: -410584922
-      10_weaponhit_spritesheet_9: -240942012
-      10_weaponhit_spritesheet_27: 1035140441
-      10_weaponhit_spritesheet_20: 1442987061
-      10_weaponhit_spritesheet_28: 872643756
-      10_weaponhit_spritesheet_13: -1337646137
-      10_weaponhit_spritesheet_0: 1638420488
-      10_weaponhit_spritesheet_29: 1810561972
-      10_weaponhit_spritesheet_8: 1342314928
-      10_weaponhit_spritesheet_25: -1597554423
-      10_weaponhit_spritesheet_22: 1993789317
-      10_weaponhit_spritesheet_7: -792964149
-      10_weaponhit_spritesheet_18: -149004773
-      10_weaponhit_spritesheet_19: 1486843881
-      10_weaponhit_spritesheet_15: 347402325
-      10_weaponhit_spritesheet_21: -1580909764
+      Tier Effect_4: 161727718
+      Tier Effect_8: -1084327499
+      Tier Effect_22: 402472587
+      Tier Effect_25: 2013278687
+      Tier Effect_11: 1146226069
+      Tier Effect_7: -1768120347
+      Tier Effect_26: 1660985773
+      Tier Effect_3: -1559013754
+      Tier Effect_24: -1420087965
+      Tier Effect_13: 1378661400
+      Tier Effect_19: -541080534
+      Tier Effect_12: 1541564627
+      Tier Effect_1: 1641413084
+      Tier Effect_28: 972243201
+      Tier Effect_21: 1473916046
+      Tier Effect_23: 726388342
+      Tier Effect_17: 1087596528
+      Tier Effect_18: 513786475
+      Tier Effect_27: -875473439
+      Tier Effect_15: 250881137
+      Tier Effect_14: -1759787777
+      Tier Effect_6: 2115794603
+      Tier Effect_29: 1565306266
+      Tier Effect_0: 304781794
+      Tier Effect_9: -613938303
+      Tier Effect_2: 778881950
+      Tier Effect_16: -164377317
+      Tier Effect_5: 1588650192
+      Tier Effect_10: -1584846997
+      Tier Effect_20: 980659818
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

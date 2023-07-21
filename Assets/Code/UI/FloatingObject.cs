@@ -30,4 +30,15 @@ public class FloatingObject : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public void SetSize(float Width,float Height)
+    {
+        RectTransform r = (RectTransform)this.transform;
+        r.sizeDelta = new Vector2(Width, Height);
+    }
+    public Vector3 GetNextPos()
+    {
+        RectTransform r = (RectTransform)this.transform;
+        return new Vector3(r.rect.center.x, r.rect.center.y, 1);
+    }
 }

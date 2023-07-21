@@ -39,7 +39,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.9166667
+        time: 0.5833333
         value: 366
         inSlope: 0
         outSlope: 0
@@ -72,19 +72,19 @@ AnimationClip:
       value: {fileID: -499698879, guid: d30caf7789a2c47658c6ae161ff04bef, type: 3}
     - time: 0.35
       value: {fileID: 1746277772, guid: d30caf7789a2c47658c6ae161ff04bef, type: 3}
-    - time: 0.41666666
+    - time: 0.38333333
       value: {fileID: -334616456, guid: d30caf7789a2c47658c6ae161ff04bef, type: 3}
-    - time: 0.5
+    - time: 0.41666666
       value: {fileID: 337535656, guid: d30caf7789a2c47658c6ae161ff04bef, type: 3}
-    - time: 0.5833333
+    - time: 0.45
       value: {fileID: 1582276047, guid: d30caf7789a2c47658c6ae161ff04bef, type: 3}
-    - time: 0.6666667
+    - time: 0.48333332
       value: {fileID: -1305530760, guid: d30caf7789a2c47658c6ae161ff04bef, type: 3}
-    - time: 0.75
+    - time: 0.51666665
       value: {fileID: 1374268586, guid: d30caf7789a2c47658c6ae161ff04bef, type: 3}
-    - time: 0.8333333
+    - time: 0.55
       value: {fileID: 521738163, guid: d30caf7789a2c47658c6ae161ff04bef, type: 3}
-    - time: 0.9166667
+    - time: 0.5833333
       value: {fileID: -1315064366, guid: d30caf7789a2c47658c6ae161ff04bef, type: 3}
     attribute: m_Sprite
     path: 
@@ -132,7 +132,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.93333334
+    m_StopTime: 0.59999996
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -170,7 +170,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.9166667
+        time: 0.5833333
         value: 366
         inSlope: 0
         outSlope: 0
@@ -188,4 +188,18 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.55
+    functionName: UnitAttackInAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 1
+    messageOptions: 0
+  - time: 0.5833333
+    functionName: EndAttackInAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

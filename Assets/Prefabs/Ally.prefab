@@ -1899,7 +1899,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8291679155318218403}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2021,6 +2021,7 @@ GameObject:
   - component: {fileID: 8291679155297290687}
   - component: {fileID: 8291679155297290686}
   - component: {fileID: 8291679155297290685}
+  - component: {fileID: 2511112534789659500}
   m_Layer: 5
   m_Name: Character Icon
   m_TagString: Untagged
@@ -2106,42 +2107,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1 &8291679155308644570
-GameObject:
+--- !u!114 &2511112534789659500
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8291679155308644571}
-  m_Layer: 5
-  m_Name: Floating Point
-  m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &8291679155308644571
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8291679155308644570}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8291679155318218403}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 220.63004}
-  m_SizeDelta: {x: 300, y: 173.26}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_GameObject: {fileID: 8291679155297290683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1508696ec987f43ab890e5628a3b4add, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8291679155318218402
 GameObject:
   m_ObjectHideFlags: 0
@@ -2178,7 +2155,6 @@ RectTransform:
   - {fileID: 8291679155297290684}
   - {fileID: 8291679155635899994}
   - {fileID: 8291679155745793232}
-  - {fileID: 8291679155308644571}
   - {fileID: 8291679156091051110}
   - {fileID: 8291679156338793920}
   - {fileID: 8291679154575087015}
@@ -2240,13 +2216,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef665dec6e3b54be8b6ab9f73bbf732a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character:
+  Character:
     AttackDamage: 0
     HealthPoint: 0
     DefensePoint: 0
     Speed: 0
     PowerPoint: 0
     tier: 0
+    role: 0
     Level: 0
     Icon: {fileID: 0}
     Name: 
@@ -2257,8 +2234,26 @@ MonoBehaviour:
     NeedSharp: 0
     IsOwn: 0
     IsInTeam: 0
-    skill:
-    - {fileID: 0}
+    skill: []
+  CharacterClone:
+    AttackDamage: 0
+    HealthPoint: 0
+    DefensePoint: 0
+    Speed: 0
+    PowerPoint: 0
+    tier: 0
+    role: 0
+    Level: 0
+    Icon: {fileID: 0}
+    Name: 
+    StarCount: 0
+    CurrentExp: 0
+    NeedExp: 0
+    CurrentSharp: 0
+    NeedSharp: 0
+    IsOwn: 0
+    IsInTeam: 0
+    skill: []
   basicStatsCharacter:
     AttackDamage: 0
     HealthPoint: 0
@@ -2266,6 +2261,7 @@ MonoBehaviour:
     Speed: 0
     PowerPoint: 0
     tier: 0
+    role: 0
     Level: 0
     Icon: {fileID: 0}
     Name: 
@@ -2281,7 +2277,9 @@ MonoBehaviour:
   position: 0
   team: 0
   stateFighting: 0
-  effectFighting: 0
+  IsStuning: 0
+  IsTaunted: 0
+  IsBlock: 0
   Range: 0
   IsInTurn: 0
   animator: {fileID: 8291679155297290685}
@@ -2752,7 +2750,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8291679155318218403}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3063,7 +3061,7 @@ RectTransform:
   - {fileID: 8291679155692665072}
   - {fileID: 8291679154901169855}
   m_Father: {fileID: 8291679155318218403}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

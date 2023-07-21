@@ -34,7 +34,7 @@ public class CompainPanel : MonoBehaviour
         Ally2 = TeamManager.Instance.GetAlly2();
         Ally2Slot.SetCharacterInSlot(Ally2);
 
-        Ally3 = detailAllyPanel.characterData;
+        Ally3 = detailAllyPanel.character;
 
         Change = "";
     }
@@ -42,9 +42,9 @@ public class CompainPanel : MonoBehaviour
 
     public void CompainButton()
     {
-        if (detailAllyPanel.characterData.IsInTeam)
+        if (detailAllyPanel.character.IsInTeam)
         {
-            Ally3 = detailAllyPanel.characterData;
+            Ally3 = detailAllyPanel.character;
             TeamManager.Instance.RemoveCompainAlly(Ally3);
             CompainText.SetText("Compain");
             CompainIcon.gameObject.SetActive(false);
@@ -52,7 +52,7 @@ public class CompainPanel : MonoBehaviour
         }
 
         //if true - just have set ally in empty slot
-        if (TeamManager.Instance.SetCompainAlly(detailAllyPanel.characterData))
+        if (TeamManager.Instance.SetCompainAlly(detailAllyPanel.character))
         {
             CompainText.SetText("Uncompain");
             CompainIcon.gameObject.SetActive(true);

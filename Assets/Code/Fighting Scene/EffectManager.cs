@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
+using System.Linq;
 
 public enum EffectPos
 {
@@ -30,6 +32,9 @@ public class EffectManager : MonoBehaviour
 
     public List<GameObject> EffectList;
     Dictionary<EffectName, GameObject> effect = new Dictionary<EffectName, GameObject>();
+
+    public FloatingObject floatingObject;
+    public Transform ShowPanel;
 
     public static EffectManager Instance;
     private void Awake()
@@ -66,4 +71,22 @@ public class EffectManager : MonoBehaviour
         GameObject g = effect[efName];
         Instantiate(g, Place.position, Place.rotation, Place);
     }
+
+    public void FloatingText(string msg,Color color,Transform pos, int Times)
+    {
+        FloatingObject fO = Instantiate(floatingObject, pos.position, pos.rotation, ShowPanel);
+        fO.Iniatialize(msg, color);
+        RectTransform size = (RectTransform)pos;
+        fO.SetSize(size.rect.width, Times * size.rect.width / 4);
+    }
+
+    //FloatingObject initializeFloatingObject(string msg, Color color, Transform pos,int Times)
+    //{
+    //    FloatingObject fO = Instantiate(floatingObject, pos.position, pos.rotation, ShowPanel);
+    //    fO.Iniatialize(msg, color);
+    //    RectTransform size = (RectTransform)pos;
+    //    fO.SetSize(size.rect.width, Times * size.rect.width / 4);
+
+    //    return fO;
+    //}
 }

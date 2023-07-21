@@ -25,8 +25,6 @@ public class FightManager : MonoBehaviour
 
     string PlayerAction;
 
-    public FloatingObject floatingObject;
-
     int EnemyCount;
     public GameObject VictoryPanelObject;
 

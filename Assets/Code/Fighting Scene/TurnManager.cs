@@ -8,6 +8,7 @@ public class TurnManager : MonoBehaviour
     public List<FightingUnit> EnemyTeam = new List<FightingUnit>();
 
     FightingUnit currentUnit;
+    FightingUnit targetUnit;
 
     public static TurnManager Instance { get; private set; }
     private void Awake()
@@ -30,21 +31,44 @@ public class TurnManager : MonoBehaviour
     }
 
 
+    //public void Attack(FightingUnit currentUnit, FightingUnit targetUnit)
+    //{
+    //    this.currentUnit = currentUnit;
+
+    //    Attack currentUnitAttack = currentUnit.attack();
+    //    Defense targetUnitDefense = targetUnit.defense();
+
+    //    AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
+
+    //    EndCurrentTurn();
+    //}
     public void Attack(FightingUnit currentUnit, FightingUnit targetUnit)
     {
         this.currentUnit = currentUnit;
+        this.targetUnit = targetUnit;
 
+        if (this.currentUnit.animator.runtimeAnimatorController == null)
+        {
+            Attack currentUnitAttack = currentUnit.attack();
+            Defense targetUnitDefense = targetUnit.defense();
+            AttackOneEnemy(this.currentUnit, this.targetUnit, currentUnitAttack, targetUnitDefense);
+            EndCurrentTurn();
+        }
+        else
+            this.currentUnit.animator.Play("Attack " + this.currentUnit.CharacterClone.Name);
+    }
+
+    public void AttackInAnimation(int Times = 1)
+    {
         Attack currentUnitAttack = currentUnit.attack();
+        currentUnitAttack.DamageCause /= Times;
         Defense targetUnitDefense = targetUnit.defense();
-
-        AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
-
-        EndCurrentTurn();
+        AttackOneEnemy(this.currentUnit, this.targetUnit, currentUnitAttack, targetUnitDefense);
     }
 
     public void AttackOneEnemy(FightingUnit currentUnit, FightingUnit targetUnit,Attack currentUnitAttack,Defense targetUnitDefense)
     {
-        if(currentUnitAttack.IsHaveEffect == true)
+        if (currentUnitAttack.IsHaveEffect == true)
             currentUnit.Unit_Attack?.Invoke(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
 
         if (targetUnitDefense.IsDogde)
@@ -57,7 +81,6 @@ public class TurnManager : MonoBehaviour
             targetUnit.Unit_BeAttacked?.Invoke(targetUnit, currentUnit, currentUnitAttack, targetUnitDefense);
 
         float targetGetDamage = currentUnitAttack.DamageCause * targetUnitDefense.TakenDmgPercent;
-
 
         targetUnit.BeingAttacked(targetGetDamage);
 
@@ -81,7 +104,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public void UsingSkillDamage(FightingUnit currentUnit, List<FightingUnit> ChosenUnit,int skillCount)
+    public void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit,int skillCount)
     {
         this.currentUnit = currentUnit;
         currentUnit.CharacterClone.skill[skillCount].UsingSkill(currentUnit, ChosenUnit);
@@ -93,7 +116,7 @@ public class TurnManager : MonoBehaviour
         StartCoroutine(coroutine);
     }
 
-    void EndCurrentTurn()
+    public void EndCurrentTurn()
     {
         Invoke("EndTurnUI", 1f);
     }
