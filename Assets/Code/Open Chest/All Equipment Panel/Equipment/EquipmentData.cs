@@ -6,13 +6,13 @@ using UnityEngine.EventSystems;
 
 public class EquipmentData : MonoBehaviour, IPointerClickHandler
 {
-    public Equipment equipment { get; private set; }
-    Equipment slot;
+    public Equipment equipment { get; private set; } //add stats plus and passive plus - using for every after add
+    Equipment slot;//haven't add stats plus and passive plus yet, raw equipment
 
     EquipmentSlot equipmentSlot;
 
-    public float StatsPlus;
-    public float PassivePlus;
+    public float StatsPlus { get; private set; }
+    public float PassivePlus { get; private set; }
 
     void Start()
     {
@@ -28,7 +28,8 @@ public class EquipmentData : MonoBehaviour, IPointerClickHandler
 
     public void SetEquipmentData(Equipment equipment)
     {
-        StatsPanelManager.Instance.Unequip(slot);
+        if(slot != null)
+            StatsPanelManager.Instance.Unequip(slot);
 
         this.equipment = equipment;
         SetSlotData(equipment);
@@ -37,11 +38,6 @@ public class EquipmentData : MonoBehaviour, IPointerClickHandler
 
         StatsPanelManager.Instance.Equip(slot);
 
-    }
-
-    public Equipment GetEquipmentData()
-    {
-        return this.equipment;
     }
 
     public void SetSlotData(Equipment equipment)

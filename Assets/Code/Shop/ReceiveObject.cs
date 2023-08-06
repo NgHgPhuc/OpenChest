@@ -32,7 +32,7 @@ public class ReceiveObject : MonoBehaviour
             SharpIcon.gameObject.SetActive(false);
             characterSlot.gameObject.SetActive(true);
             Name.gameObject.SetActive(true);
-            characterSlot.SetCharacterInSlot(character);
+            characterSlot.GatchaCharacter(character);
             this.Name.SetText(character.Name);
         }
         else
@@ -73,7 +73,7 @@ public class ReceiveObject : MonoBehaviour
 
         if (skill.IsHave == true)
         {
-            characterSlot.gameObject.SetActive(false);
+            skillSlot.gameObject.SetActive(false);
             SharpIcon.gameObject.SetActive(true);
             Name.gameObject.SetActive(true);
             SharpIcon.sprite = skill.Icon;
@@ -85,7 +85,7 @@ public class ReceiveObject : MonoBehaviour
         else
         {
             SharpIcon.gameObject.SetActive(false);
-            characterSlot.gameObject.SetActive(true);
+            skillSlot.gameObject.SetActive(true);
             Name.gameObject.SetActive(true);
             skillSlot.SetSkillInSlot(skill);
             this.Name.SetText(skill.Name);

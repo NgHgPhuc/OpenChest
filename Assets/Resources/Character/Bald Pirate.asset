@@ -18,16 +18,22 @@ MonoBehaviour:
     DefensePoint: 5
     Speed: 10
     PowerPoint: 0
-    tier: 0
-    role: 1
+    tier: 1
+    role: 0
     Level: 1
-    Icon: {fileID: 21300000, guid: 1c7b45d60060648acbaeb5c23457556c, type: 3}
+    Avatar: {fileID: 21300000, guid: b5afb4a0fecf74532842eefcd2f1ca06, type: 3}
+    Icon: {fileID: 21300000, guid: f3fb4cfd7a40a4eaba39e55b081666ae, type: 3}
     Name: Bald Pirate
-    StarCount: 1
+    currentStarCount: 1
+    maxStarCount: 5
+    DescriptionTranscendLevel:
+    - +10% All Stat
+    - +10% All Stat
     CurrentExp: 0
     NeedExp: 500
     CurrentSharp: 0
     NeedSharp: 50
-    IsOwn: 0
-    IsInTeam: 0
+    IsOwn: 1
+    IsInTeam: 1
+    PositionInTeam: 3
     skill: []

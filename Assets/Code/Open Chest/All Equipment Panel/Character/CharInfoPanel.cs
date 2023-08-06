@@ -23,8 +23,8 @@ public class CharInfoPanel : MonoBehaviour
 
     public static CharInfoPanel Instance { get; private set; }
 
-    List<StatsPanel> AllStatsPanel;
-    List<StatsPanel> AllPassivePanel;
+    List<SlotStatsPanel> AllStatsPanel;
+    List<SlotStatsPanel> AllPassivePanel;
 
     private void Awake()
     {
@@ -39,15 +39,15 @@ public class CharInfoPanel : MonoBehaviour
     }
     void Start()
     {
-        AllStatsPanel = new List<StatsPanel>();
-        AllPassivePanel = new List<StatsPanel>();
+        AllStatsPanel = new List<SlotStatsPanel>();
+        AllPassivePanel = new List<SlotStatsPanel>();
 
         for (int i = 0; i < StatsPanel.childCount; i++)
         {
             if (i < 4)
-                AllStatsPanel.Add(StatsPanel.GetChild(i).GetComponent<StatsPanel>());
+                AllStatsPanel.Add(StatsPanel.GetChild(i).GetComponent<SlotStatsPanel>());
             else
-                AllPassivePanel.Add(StatsPanel.GetChild(i).GetComponent<StatsPanel>());
+                AllPassivePanel.Add(StatsPanel.GetChild(i).GetComponent<SlotStatsPanel>());
 
         }
 
@@ -74,7 +74,7 @@ public class CharInfoPanel : MonoBehaviour
         CharacterIcon.sprite = character.Icon;
 
         for (int i = 0; i < starPanel.childCount; i++)
-            starPanel.GetChild(i).GetComponent<Image>().color = (i < character.StarCount) ? Color.white : Color.black;
+            starPanel.GetChild(i).GetComponent<Image>().color = (i < character.currentStarCount) ? Color.white : Color.black;
 
         AllStatsPanel[0].SetStatsValue(character.AttackDamage);
         AllStatsPanel[1].SetStatsValue(character.HealthPoint);

@@ -21,13 +21,17 @@ MonoBehaviour:
     tier: 0
     role: 3
     Level: 1
+    Avatar: {fileID: 21300000, guid: 0de01c427e5dc4415ab272db7932c9e7, type: 3}
     Icon: {fileID: 21300000, guid: 46455f60b59fd488fb11e97ff81c585f, type: 3}
     Name: The Quacker
-    StarCount: 1
+    currentStarCount: 1
+    maxStarCount: 5
+    DescriptionTranscendLevel: []
     CurrentExp: 0
     NeedExp: 500
-    CurrentSharp: 10
+    CurrentSharp: 90
     NeedSharp: 50
-    IsOwn: 1
+    IsOwn: 0
     IsInTeam: 0
+    PositionInTeam: 0
     skill: []

@@ -7,7 +7,6 @@ using static Equipment;
 
 public class ChestManager : MonoBehaviour
 {
-    public int PlayerLevel;
     public int CurrentLevel;
     public int MaxLevel;
 
@@ -15,8 +14,11 @@ public class ChestManager : MonoBehaviour
 
     public static ChestManager Instance { get; private set; }
 
-    LevelProbRandom CurrentLevelProb;
-    LevelProbRandom NextLevelProb;
+    public LevelProbRandom CurrentLevelProb { get; private set; }
+    public LevelProbRandom NextLevelProb { get; private set; }
+
+    public ProbPanel probPanel;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -32,7 +34,7 @@ public class ChestManager : MonoBehaviour
     void Start()
     {
         CurrentLevelProb = FindCurrentLevel();
-        NextLevelProb = FindCurrentLevel();
+        NextLevelProb = FindNextLevel();
     }
 
     // Update is called once per frame
@@ -44,7 +46,7 @@ public class ChestManager : MonoBehaviour
     public Equipment RandomEquipment()
     {
         Equipment equipment = new Equipment();
-        equipment.Level = PlayerLevel;
+        equipment.Level = DataManager.Instance.temporaryData.GetValue_Int(Item.Type.PlayerLevel);
 
         equipment.type = RandomType();
 
@@ -112,6 +114,7 @@ public class ChestManager : MonoBehaviour
 
     int RandomAttackDamage(int Quality)
     {
+        int PlayerLevel = DataManager.Instance.temporaryData.GetValue_Int(Item.Type.PlayerLevel);
         int First = UnityEngine.Random.Range(4 * PlayerLevel, 8 * PlayerLevel);
         int Second = UnityEngine.Random.Range(1, 5) * CurrentLevel;
         int Third = (int)(First * Quality / 7f);
@@ -119,6 +122,7 @@ public class ChestManager : MonoBehaviour
     }
     int RandomHealthDamage(int Quality)
     {
+        int PlayerLevel = DataManager.Instance.temporaryData.GetValue_Int(Item.Type.PlayerLevel);
         int First = UnityEngine.Random.Range(15 * PlayerLevel, 25 * PlayerLevel);
         int Second = UnityEngine.Random.Range(1, 5) * CurrentLevel;
         int Third = (int)(First * Quality / 7f);
@@ -126,6 +130,7 @@ public class ChestManager : MonoBehaviour
     }
     int RandomDefenseDamage(int Quality)
     {
+        int PlayerLevel = DataManager.Instance.temporaryData.GetValue_Int(Item.Type.PlayerLevel);
         int First = UnityEngine.Random.Range(1 * PlayerLevel, 5 * PlayerLevel);
         int Second = UnityEngine.Random.Range(1, 5) * CurrentLevel;
         int Third = (int)(First * Quality / 7f);
@@ -133,6 +138,7 @@ public class ChestManager : MonoBehaviour
     }
     int RandomSpeedDamage(int Quality)
     {
+        int PlayerLevel = DataManager.Instance.temporaryData.GetValue_Int(Item.Type.PlayerLevel);
         int First = UnityEngine.Random.Range(1 * PlayerLevel, 3 * PlayerLevel);
         int Second = UnityEngine.Random.Range(1, 5) * CurrentLevel;
         int Third = (int)(First * Quality / 7f);
@@ -148,28 +154,41 @@ public class ChestManager : MonoBehaviour
 
     public LevelProbRandom FindCurrentLevel()
     {
-        string LinkData = "Equipment/" + "ScriptableObject/Level " + CurrentLevel;
+        string LinkData = "Chest Level/Level " + CurrentLevel;
         return Resources.Load<LevelProbRandom>(LinkData);
     }
     public LevelProbRandom FindNextLevel()
     {
         int NextLevel = CurrentLevel + 1;
         if (NextLevel > MaxLevel) NextLevel = MaxLevel;
-        string LinkData = "Equipment/" + "ScriptableObject/Level " + NextLevel;
+        string LinkData = "Chest Level/Level " + NextLevel;
         return Resources.Load<LevelProbRandom>(LinkData);
     }
 
     public void UpgradeChest()
     {
-        if (!ResourceManager.Instance.CheckEnought_Gold(-CurrentLevelProb.Cost))
+        if (DataManager.Instance.temporaryData.GetValue_Float(Item.Type.Gold) < NextLevelProb.Cost)
+        {
+            string msg_ = "You dont have enough gold!";
+            InformManager.Instance.Initialize_FloatingInform(msg_);
             return;
+        }
 
         if (CurrentLevel >= MaxLevel)
+        {
+            string msg_ = "Max Level, can upgrade more!";
+            InformManager.Instance.Initialize_FloatingInform(msg_);
             return;
+        }
 
-        ResourceManager.Instance.ChangeGold(CurrentLevelProb.Cost);
+
+        float Mount = CurrentLevelProb.Cost;
+        ResourceManager.Instance.ChangeGold(Mount, TemporaryData.ChangeType.USING);
         CurrentLevel += 1;
         CurrentLevelProb = FindCurrentLevel();
         NextLevelProb = FindNextLevel();
+
+        string msg = "Congratulation, Upgrade Success";
+        InformManager.Instance.Initialize_FloatingInform(msg);
     }
 }

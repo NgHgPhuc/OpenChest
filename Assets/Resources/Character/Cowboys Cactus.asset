@@ -21,13 +21,17 @@ MonoBehaviour:
     tier: 1
     role: 0
     Level: 14
+    Avatar: {fileID: 21300000, guid: 5d180b65b9ada47c180fe5c4f96bc70c, type: 3}
     Icon: {fileID: 21300000, guid: 828deb19eaa0b47f58572e22b6ef353e, type: 3}
     Name: Cowboys Cactus
-    StarCount: 7
+    currentStarCount: 7
+    maxStarCount: 5
+    DescriptionTranscendLevel: []
     CurrentExp: 300.6738
     NeedExp: 2139.865
-    CurrentSharp: 780
+    CurrentSharp: 1000
     NeedSharp: 50
-    IsOwn: 1
+    IsOwn: 0
     IsInTeam: 0
+    PositionInTeam: 0
     skill: []

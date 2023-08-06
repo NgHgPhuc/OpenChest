@@ -21,13 +21,17 @@ MonoBehaviour:
     tier: 2
     role: 1
     Level: 2
+    Avatar: {fileID: 21300000, guid: 806d99eb60e2c47fbaa70565a91e2060, type: 3}
     Icon: {fileID: 21300000, guid: 4eed66446e31c49e6a9001ac01f14012, type: 3}
     Name: Blubber Cucumber
-    StarCount: 1
+    currentStarCount: 1
+    maxStarCount: 5
+    DescriptionTranscendLevel: []
     CurrentExp: 0
     NeedExp: 500
-    CurrentSharp: 0
+    CurrentSharp: 150
     NeedSharp: 50
-    IsOwn: 1
+    IsOwn: 0
     IsInTeam: 0
+    PositionInTeam: 0
     skill: []

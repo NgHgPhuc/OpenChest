@@ -103,7 +103,7 @@ public class ListSkillSingleton : MonoBehaviour
         if(this.skillSlotOfList != null)
         this.skillSlotOfList.SetBorderActive();
 
-        TeamManager.Instance.EquipSkillOfPlayer(this.skillSlotOfEquipment);
+        PlayerManager.Instance.EquipSkillOfPlayer(this.skillSlotOfEquipment);
     }
     public void UnequipSkill()
     {

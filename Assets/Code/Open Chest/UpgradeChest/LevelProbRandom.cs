@@ -5,7 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Level", menuName = "ScriptableObjects/LevelProbRandom", order = 1)]
 public class LevelProbRandom : ScriptableObject
 {
-    public List<float> RandomRate = new List<float>();
+    public List<float> RandomRate;
+    public List<int> DamageChestRange;
+    public List<int> ChestHpRange;
 
     public float Cost;
 

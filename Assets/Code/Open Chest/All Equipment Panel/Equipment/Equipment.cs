@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
+[System.Serializable]
 public class Equipment : BaseStats
 {
     public enum Type
@@ -21,8 +22,6 @@ public class Equipment : BaseStats
         Pants,
         Belt,
         Shoes,
-        Ring,
-
     }
     public Type type;
 
@@ -85,6 +84,10 @@ public class Equipment : BaseStats
         this.quality = (Equipment.Quality)Convert.ToInt16(dataList[4]);
         this.Level = Convert.ToInt16(dataList[5]);
 
+
+        if (this.Level == 0)
+            return null;
+
         string LinkImage = "Equipment/" + this.type + "/" + this.quality;
         try
         {
@@ -106,8 +109,6 @@ public class Equipment : BaseStats
             PassiveList[p0] = p1;
         }
 
-        if (this.Level == 0)
-            return null;
-        else return this;
+        return this;
     }
 }

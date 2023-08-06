@@ -21,13 +21,17 @@ MonoBehaviour:
     tier: 0
     role: 2
     Level: 17
+    Avatar: {fileID: 21300000, guid: 1db50fa004c674aaba2251a6f1703168, type: 3}
     Icon: {fileID: 21300000, guid: 46f68f6df0c08470f8224790fc3c18ef, type: 3}
     Name: Charlie The Capybara
-    StarCount: 1
+    currentStarCount: 1
+    maxStarCount: 5
+    DescriptionTranscendLevel: []
     CurrentExp: 1255.781
     NeedExp: 1848.844
-    CurrentSharp: 1630
+    CurrentSharp: 1700
     NeedSharp: 50
-    IsOwn: 1
+    IsOwn: 0
     IsInTeam: 0
+    PositionInTeam: 0
     skill: []

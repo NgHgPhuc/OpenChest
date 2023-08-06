@@ -9,7 +9,7 @@ public class InformManager : MonoBehaviour
     public GameObject Background;
     public Animator animator;
 
-    public GameObject floatingObject;
+    public InformFloating floatingObject;
     public Transform floatingPos;
 
     public static InformManager Instance { get; private set; }
@@ -53,8 +53,7 @@ public class InformManager : MonoBehaviour
 
     public void Initialize_FloatingInform(string mes)
     {
-        GameObject i = Instantiate(floatingObject, floatingPos.position, floatingPos.rotation, transform);
-        InformFloating informFloating = i.GetComponentInChildren<InformFloating>();
-        informFloating.Initialize_InformFloating(mes);
+        InformFloating i = Instantiate(floatingObject, floatingPos.position, floatingPos.rotation, floatingPos);
+        i.Initialize_InformFloating(mes);
     }
 }

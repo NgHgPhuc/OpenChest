@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using System.Globalization;
 
 public class ProbPanel : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class ProbPanel : MonoBehaviour
     public Transform LevelPanel;
     public TextMeshProUGUI CostText;
 
+    public GameObject Parent;
+
+    List<TextMeshProUGUI> ShowValueList = new List<TextMeshProUGUI>();
     void Start()
     {
         UpgradeButton.onClick.AddListener(UpgradeFunc);
@@ -24,10 +28,16 @@ public class ProbPanel : MonoBehaviour
 
     }
 
-    void ShowValueOfChild(Transform child,float currentProb,float nextProb)
+    void ShowValueOfChild(int i,string currentProb,string nextProb)
     {
-        child.Find("Current Level Prob Value").GetComponent<TextMeshProUGUI>().SetText(currentProb + "%");
-        child.Find("Next Level Prob Value").GetComponent<TextMeshProUGUI>().SetText(nextProb + "%");
+        if(ShowValueList.Count / 2 < i + 1)
+        {
+            ShowValueList.Add(transform.GetChild(i).Find("Current Level Prob Value").GetComponent<TextMeshProUGUI>());
+            ShowValueList.Add(transform.GetChild(i).Find("Next Level Prob Value").GetComponent<TextMeshProUGUI>());
+        }
+
+        ShowValueList[i * 2].SetText(currentProb + "%");
+        ShowValueList[i * 2 + 1].SetText(nextProb + "%");
     }
 
     void SetValue(LevelProbRandom currentLevelProb, LevelProbRandom nextLevelProb)
@@ -35,14 +45,24 @@ public class ProbPanel : MonoBehaviour
         int c = currentLevelProb.RandomRate.Count;
         for (int i = 0; i < c; i++)
         {
-            ShowValueOfChild(transform.GetChild(i), currentLevelProb.RandomRate[i], nextLevelProb.RandomRate[i]);
+            string currentProb = currentLevelProb.RandomRate[i].ToString(CultureInfo.InvariantCulture);
+            string nextProb = nextLevelProb.RandomRate[i].ToString(CultureInfo.InvariantCulture);
+            ShowValueOfChild(i, currentProb, nextProb);
         }
+
+        string CurrentDamageRange = currentLevelProb.DamageChestRange[0].ToString() + " ~ " + currentLevelProb.DamageChestRange[1].ToString();
+        string NextDamageRange = nextLevelProb.DamageChestRange[0].ToString() + " ~ " + nextLevelProb.DamageChestRange[1].ToString();
+        ShowValueOfChild(c, CurrentDamageRange, NextDamageRange);
+
+        string CurrentHpRange = currentLevelProb.ChestHpRange[0].ToString() + " ~ " + currentLevelProb.ChestHpRange[1].ToString();
+        string NextHpRange = nextLevelProb.ChestHpRange[0].ToString() + " ~ " + nextLevelProb.ChestHpRange[1].ToString();
+        ShowValueOfChild(c + 1, CurrentDamageRange, NextDamageRange);
     }
 
     void ShowProb()
     {
-        LevelProbRandom currentLevelProb = ChestManager.Instance.FindCurrentLevel();
-        LevelProbRandom nextLevelProb = ChestManager.Instance.FindNextLevel();
+        LevelProbRandom currentLevelProb = ChestManager.Instance.CurrentLevelProb;
+        LevelProbRandom nextLevelProb = ChestManager.Instance.NextLevelProb;
         SetValue(currentLevelProb, nextLevelProb);
 
         int currentLevel = ChestManager.Instance.CurrentLevel;
@@ -60,6 +80,6 @@ public class ProbPanel : MonoBehaviour
 
     public void ClosePanel()
     {
-        transform.parent.parent.gameObject.SetActive(false);
+        Parent.SetActive(false);
     }
 }

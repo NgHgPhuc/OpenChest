@@ -12,3 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e0a371c4176545e59937bee11678822, type: 3}
   m_Name: TemporaryData
   m_EditorClassIdentifier: 
+  slotInventories:
+  - item: {fileID: 11400000, guid: aa5cdf6be70574d82a4f35c58aeb8ea5, type: 2}
+    Mount: 0
+  - item: {fileID: 11400000, guid: a3e8f797a3221458a83908c3de20c8a4, type: 2}
+    Mount: 0
+  - item: {fileID: 11400000, guid: 72c3735bd104c4ea2bcc2a196041f7ea, type: 2}
+    Mount: 100
+  - item: {fileID: 11400000, guid: 2b87a41866cd544598d00978cbe11f74, type: 2}
+    Mount: 49.550003
+  - item: {fileID: 11400000, guid: d946d76166f7f4b268bdfd22673db63a, type: 2}
+    Mount: 0
+  - item: {fileID: 11400000, guid: 9aad28022bfb04524b5e90bd9e2a1348, type: 2}
+    Mount: 119.100006
+  - item: {fileID: 11400000, guid: bd5b0663a98c64ffbb31060327873798, type: 2}
+    Mount: 0
+  - item: {fileID: 11400000, guid: b06ef11cd84e2401499dea78adea75b2, type: 2}
+    Mount: 0
+  - item: {fileID: 11400000, guid: 43d4a0884cc8640bc8d469536f5ddf7a, type: 2}
+    Mount: 100
+  - item: {fileID: 11400000, guid: 57e3e69a4c0a346ccbc6b7fab5695448, type: 2}
+    Mount: 0
+  - item: {fileID: 11400000, guid: 743462d91a120421ea01a8544ba8f10b, type: 2}
+    Mount: 0
+  - item: {fileID: 11400000, guid: 2b101f3bc1df340a39db199a36724bf5, type: 2}
+    Mount: 0
+  - item: {fileID: 11400000, guid: 992afb03fbd7e4006b241a4be692a1af, type: 2}
+    Mount: 0

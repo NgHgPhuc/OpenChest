@@ -26,7 +26,7 @@ public class CharacterUI : MonoBehaviour
             SetAttr();
 
         gameObject.SetActive(true);
-        CharacterIcon.sprite = character.Icon;
+        CharacterIcon.sprite = character.Avatar;
         Level.SetText("lv."+character.Level);
     }
 

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 using static Equipment;
@@ -36,11 +35,15 @@ public class SkillGachaPanel : MonoBehaviour
 
     void AcceptRandom()
     {
-        if (!ResourceManager.Instance.CheckEnough_Diamond(times * 160))
+        float DiamondHave = DataManager.Instance.temporaryData.GetValue_Float(Item.Type.Diamond);
+        if (DiamondHave < times * 160)
+        {
+            InformManager.Instance.Initialize_InformObject("No Enough Diamond", "you dont have enough diamond!", null);
             return;
+        }
 
         List<BaseSkill> getSkillList = new List<BaseSkill>();
-        ResourceManager.Instance.ChangeDiamond(-times * 160);
+        ResourceManager.Instance.ChangeDiamond(times * 160, TemporaryData.ChangeType.USING);
         for (int i = 0; i < times; i++)
         {
             int r = UnityEngine.Random.Range(0, RateInfomation.Count);

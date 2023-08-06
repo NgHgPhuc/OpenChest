@@ -21,13 +21,17 @@ MonoBehaviour:
     tier: 0
     role: 1
     Level: 3
+    Avatar: {fileID: 21300000, guid: 9e85017a0c6d74f2d95ba8de1d6c7997, type: 3}
     Icon: {fileID: 21300000, guid: 24e2df5dd25f94f7caf2fea56378f744, type: 3}
     Name: Ice Viking
-    StarCount: 1
+    currentStarCount: 1
+    maxStarCount: 5
+    DescriptionTranscendLevel: []
     CurrentExp: 0
     NeedExp: 500
-    CurrentSharp: 0
+    CurrentSharp: 90
     NeedSharp: 50
     IsOwn: 0
     IsInTeam: 0
+    PositionInTeam: 0
     skill: []

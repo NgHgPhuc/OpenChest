@@ -18,4 +18,8 @@ MonoBehaviour:
   Description: Attack all enemy deal 120% Attack Damage and have 40% to decrease
     30% Speed
   range: 2
-  type: 0
+  skillType: 1
+  userType: 0
+  CurrentSharp: 0
+  IsHave: 0
+  IsEquip: 0

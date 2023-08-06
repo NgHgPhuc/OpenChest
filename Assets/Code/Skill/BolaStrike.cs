@@ -19,6 +19,13 @@ public class BolaStrike : BaseSkill
                 Defense targetUnitDefense = targetUnit.defense();
                 targetUnitDefense.IsCounter = false;
 
+                Transform FromPos = currentUnit.GetIconImage().transform;
+                Transform ToPos = targetUnit.GetIconImage().transform;
+                float width = currentUnit.GetIconImage().rectTransform.rect.width;
+                float height = currentUnit.GetIconImage().rectTransform.rect.height / 2;
+                Debug.Log("Inside Skill:" + FromPos.position + "->" + ToPos.position);
+                EffectManager.Instance.InitializeShooting(FromPos, ToPos, EffectManager.EffectName.BolaStrikes, 3f, width, height);
+
                 TurnManager.Instance.AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
 
                 float SlowRate = UnityEngine.Random.Range(0f, 100f);

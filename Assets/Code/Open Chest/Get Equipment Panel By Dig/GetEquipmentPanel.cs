@@ -62,11 +62,12 @@ public class GetEquipmentPanel : MonoBehaviour
         if (this.NewEquipment == null)
             return;
 
-        ResourceManager.Instance.ChangeGold(NewEquipment.PowerPoint);
-        ResourceManager.Instance.GainExp(NewEquipment.PowerPoint / 2);
+        float Mount = NewEquipment.PowerPoint;
+        ResourceManager.Instance.ChangeGold(Mount, TemporaryData.ChangeType.ADDING);
+        ResourceManager.Instance.ChangeExp(Mount/2, TemporaryData.ChangeType.ADDING);
         this.NewEquipment = null;
         this.OldEquipment = null;
-        gameObject.SetActive(false);
+        Close();
     }
 
     public void EquipFunc()
@@ -76,7 +77,7 @@ public class GetEquipmentPanel : MonoBehaviour
         if(this.OldEquipment == null)
         {
             this.NewEquipment = null;
-            gameObject.SetActive(false);
+            Close();
             return;
         }
         Swap_OldAndNew();
@@ -92,5 +93,11 @@ public class GetEquipmentPanel : MonoBehaviour
         s = this.NewEquipment;
         this.NewEquipment = this.OldEquipment;
         this.OldEquipment = s;
+    }
+
+    public void Close()
+    {
+        gameObject.SetActive(false);
+        OpenChestPanel.Instance.InitializeChest();
     }
 }

@@ -17,7 +17,7 @@ public class MapObject : MonoBehaviour, IPointerClickHandler
     {
         this.chapter = Resources.Load<Chapter>("Chapter/Chapter " + Index);
         ChapterName.SetText(this.chapter.Name);
-        starListPanel.SetStarCount(this.chapter.StarCount);
+        starListPanel.SetStarCount(this.chapter.StarCount,3,3);
     }
 
     public void OnPointerClick(PointerEventData eventData)

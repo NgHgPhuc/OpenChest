@@ -36,11 +36,6 @@ public class VictoryPanel : MonoBehaviour
         nextChapter.IsOpen = true;
     }
 
-    void GetReward(Reward reward)
-    {
-
-    }
-
     public void ExitButton()
     {
         SceneManager.LoadScene("Open Chest");

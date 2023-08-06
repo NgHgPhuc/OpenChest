@@ -21,12 +21,12 @@ public class TicketClearPanel : MonoBehaviour
             Instance = this;
         }
 
-        TicketShow.SetText(ResourceManager.Instance.Ticket.ToString());
+        TicketShow.SetText(DataManager.Instance.temporaryData.GetValue_String(Item.Type.Ticket));
     }
 
     public void UsingTicket(int Mount)
     {
-        ResourceManager.Instance.UsingTicket(Mount);
+        DataManager.Instance.temporaryData.ChangeValue(Item.Type.Ticket,Mount,TemporaryData.ChangeType.USING);
 
         FloatingObject f = Instantiate(floatingObject, TicketShow.transform.position, TicketShow.transform.rotation, transform);
         if (Mount < 0)
@@ -34,11 +34,11 @@ public class TicketClearPanel : MonoBehaviour
         else
             f.Iniatialize("+" + Mount, Color.green, "Floating On");
 
-        TicketShow.SetText(ResourceManager.Instance.Ticket.ToString());
+        TicketShow.SetText(DataManager.Instance.temporaryData.GetValue_String(Item.Type.Ticket));
     }
 
     public bool IsEnoughTicket(int Mount)
     {
-        return ResourceManager.Instance.Ticket > Mount;
+        return DataManager.Instance.temporaryData.GetValue_Float(Item.Type.Ticket) > Mount;
     }
 }

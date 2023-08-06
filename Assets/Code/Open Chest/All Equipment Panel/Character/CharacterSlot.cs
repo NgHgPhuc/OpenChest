@@ -11,8 +11,9 @@ public class CharacterSlot : MonoBehaviour,IPointerClickHandler
     Image BackgroundSlot;
     Image EquipmentImage;
     Image AddIcon;
+    Image LockIcon;
     TextMeshProUGUI EquipmentLevel;
-    List<GameObject> StarList = new List<GameObject>();
+    StarListPanel StarList;
     public Character character;
 
     void Start()
@@ -24,6 +25,37 @@ public class CharacterSlot : MonoBehaviour,IPointerClickHandler
     {
         if (character == null)
         {
+            DontHaveCharacterInSlot();
+            return;
+        }
+        this.character = character.Clone();
+
+        SetAttr();
+
+        this.EquipmentImage.sprite = this.character.Avatar;
+        this.EquipmentLevel.SetText(this.character.Name);
+        this.StarList.SetStarCount(this.character.currentStarCount, this.character.maxStarCount, 5);
+        if (AddIcon != null)
+            this.AddIcon.gameObject.SetActive(false);
+    }
+
+    public void DontHaveCharacterInSlot()
+    {
+        SetAttr();
+
+        this.character = null;
+        gameObject.SetActive(true);
+        this.EquipmentImage.sprite = null;
+        this.EquipmentLevel.SetText("");
+        if (AddIcon != null)
+            this.AddIcon.gameObject.SetActive(true);
+        StarList.SetStarCount(0, 0, 5);
+    }
+
+    public void GatchaCharacter(Character character)
+    {
+        if (character == null)
+        {
             gameObject.SetActive(false);
             return;
         }
@@ -31,44 +63,44 @@ public class CharacterSlot : MonoBehaviour,IPointerClickHandler
         gameObject.SetActive(true);
 
         SetAttr();
-        this.EquipmentImage.sprite = this.character.Icon;
-        this.EquipmentLevel.SetText("lv." + this.character.Level);
-        for (int i = 0; i < StarList.Count; i++)
-        {
-            StarList[i].SetActive(true);
-            StarList[i].GetComponent<Image>().color = (i < character.StarCount) ? Color.white : Color.black;
-        }
-        this.AddIcon.gameObject.SetActive(false);
-    }
-    public void DontHaveCharacterInSlot()
-    {
-        this.character = null;
-        gameObject.SetActive(true);
-        this.EquipmentImage.sprite = null;
-        this.EquipmentLevel.SetText("");
-        this.AddIcon.gameObject.SetActive(true);
-        for (int i = 0; i < StarList.Count; i++)
-            StarList[i].SetActive(false);
+
+        this.EquipmentImage.sprite = this.character.Avatar;
+        this.EquipmentLevel.SetText(this.character.Name);
+        this.StarList.SetStarCount(this.character.currentStarCount, this.character.maxStarCount, 5);
+        if (AddIcon != null)
+            this.AddIcon.gameObject.SetActive(false);
     }
 
+    public void HaventOpenSlotYet()//level not enough
+    {
+
+    }
     void SetAttr()
     {
-        if (EquipmentImage == null || EquipmentLevel == null || BackgroundSlot == null)
-        {
+        if (EquipmentImage == null)
             EquipmentImage = transform.Find("Equipment Image").GetComponent<Image>();
-            EquipmentLevel = transform.Find("Equipment Level").GetComponent<TextMeshProUGUI>();
-            BackgroundSlot = transform.Find("Background Slot").GetComponent<Image>();
-            AddIcon = transform.Find("Add Icon").GetComponent<Image>();
 
-            Transform starPanel = transform.Find("Star Panel");
-            for (int i = 0; i < starPanel.childCount; i++)
-                StarList.Add(starPanel.GetChild(i).gameObject);
-        }
+        if (EquipmentLevel == null)
+            EquipmentLevel = transform.Find("Equipment Level").GetComponent<TextMeshProUGUI>();
+
+        if (BackgroundSlot == null)
+            BackgroundSlot = transform.Find("Background Slot").GetComponent<Image>();
+
+        if (AddIcon == null)
+            if(transform.Find("Add Icon") != null)
+                AddIcon = transform.Find("Add Icon").GetComponent<Image>();
+
+        if(LockIcon == null)
+            if (transform.Find("Lock Icon") != null)
+                LockIcon = transform.Find("Lock Icon").GetComponent<Image>();
+
+        if (StarList == null)
+            StarList = transform.Find("Star Panel").GetComponent<StarListPanel>();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (this.character.Icon == null)
+        if (this.character == null)
         {
             WardPanel.Instance.AllyWarp();
             return;

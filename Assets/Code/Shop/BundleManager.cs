@@ -13,20 +13,21 @@ public class BundleManager : MonoBehaviour
 
 
 
-    public void BuyGold_by_Diamond(float valueDiamond, float GetGold)
-    {
-        string paragraph = "Are you sure buying " + GetGold + " with " + valueDiamond + " ?\n If you confirm, both of us are happy happy happyyy!";
-        InformManager.Instance.Initialize_QuestionObject("Buy gold", paragraph, () =>
-        {
-            if (ResourceManager.Instance.CheckEnough_Diamond(valueDiamond))
-            {
-                InformManager.Instance.Initialize_FloatingInform("You dont enough diamond");
-                return;
-            }
+    //public void BuyGold_by_Diamond(float valueDiamond, float GetGold)
+    //{
+    //    string paragraph = "Are you sure buying " + GetGold + " with " + valueDiamond + " ?\n If you confirm, both of us are happy happy happyyy!";
+    //    InformManager.Instance.Initialize_QuestionObject("Buy gold", paragraph, () =>
+    //    {
+    //        if (ResourceManager.Instance.temporaryData.GetValue_Float(Item.Type.Diamond) > valueDiamond)
+    //            if (ResourceManager.Instance.temporaryData.GetValue_Float(Item.Type.Diamond) > valueDiamond)
+    //        { 
+    //            InformManager.Instance.Initialize_FloatingInform("You dont enough diamond");
+    //            return;
+    //        }
 
-            InformManager.Instance.Initialize_FloatingInform("Buying successfully");
-            ResourceManager.Instance.ChangeDiamond(-valueDiamond);
-            ResourceManager.Instance.ChangeGold(GetGold);
-        });
-    }
+    //        InformManager.Instance.Initialize_FloatingInform("Buying successfully");
+    //        ResourceManager.Instance.temporaryData.ChangeValue(Item.Type.Diamond,valueDiamond,TemporaryData.ChangeType.USING);
+    //        ResourceManager.Instance.temporaryData.ChangeValue(Item.Type.Gold, GetGold, TemporaryData.ChangeType.ADDING);
+    //    });
+    //}
 }

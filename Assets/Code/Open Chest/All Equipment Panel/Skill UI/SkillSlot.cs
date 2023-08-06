@@ -13,6 +13,7 @@ public class SkillSlot : MonoBehaviour,IPointerClickHandler
     TextMeshProUGUI EquipmentLevel;
     GameObject Border;
     GameObject LockIcon;
+    GameObject AddIcon;
 
     public BaseSkill skill;
 
@@ -21,14 +22,25 @@ public class SkillSlot : MonoBehaviour,IPointerClickHandler
 
     void SetAttr()
     {
-        if (EquipmentImage == null || EquipmentLevel == null || BackgroundSlot == null || Border == null || LockIcon == null)
-        {
+        if (EquipmentImage == null)
             EquipmentImage = transform.Find("Equipment Image").GetComponent<Image>();
+
+        if (EquipmentLevel == null)
             EquipmentLevel = transform.Find("Equipment Level").GetComponent<TextMeshProUGUI>();
+
+        if (BackgroundSlot == null)
             BackgroundSlot = transform.Find("Background Slot").GetComponent<Image>();
+
+        if (AddIcon == null)
+            if (transform.Find("Add Icon") != null)
+                AddIcon = transform.Find("Add Icon").gameObject;
+
+        if (LockIcon == null)
+            if (transform.Find("Lock Icon") != null)
+                LockIcon = transform.Find("Lock Icon").gameObject;
+
+        if (Border == null)
             Border = transform.Find("Border").gameObject;
-            LockIcon = transform.Find("Lock Icon").gameObject;
-        }
     }
 
     public void SetSkillInSlot(BaseSkill skill)
@@ -47,14 +59,24 @@ public class SkillSlot : MonoBehaviour,IPointerClickHandler
             EquipmentImage.color = new Color(142f / 255, 142f / 255, 142f / 255);
         else EquipmentImage.color = Color.white;
 
-        LockIcon.SetActive(!skill.IsHave);
+        if (LockIcon != null)
+            LockIcon.SetActive(!skill.IsHave);
         Border.SetActive(skill.IsEquip);
+
+        if (AddIcon != null && this.skill != null)
+            AddIcon.SetActive(false);
 
         this.EquipmentImage.sprite = skill.Icon;
     }
 
     public void EquipSkill(BaseSkill skill)
     {
+        if (skill == null)
+        {
+            DontHaveSkillInSlot();
+            return;
+        }
+
         skill.IsEquip = true;
         SetSkillInSlot(skill);
         SetBorderActive();
@@ -76,7 +98,9 @@ public class SkillSlot : MonoBehaviour,IPointerClickHandler
         SetAttr();
         EquipmentImage.color = new Color(142f / 255, 142f / 255, 142f / 255);
 
-        LockIcon.SetActive(false);
+        if (AddIcon != null && this.skill == null)
+            AddIcon.SetActive(true);
+
         Border.SetActive(false);
 
         this.EquipmentImage.sprite = null;

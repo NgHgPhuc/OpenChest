@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b6fbed4adedf4998869a13d2c06be85, type: 3}
   m_Name: Ticket
   m_EditorClassIdentifier: 
-  type: 4
+  type: 6
   Icon: {fileID: 21300000, guid: 3b0b17de3a5e84adfb9a11f6b455b22c, type: 3}

@@ -21,13 +21,17 @@ MonoBehaviour:
     tier: 0
     role: 2
     Level: 1
+    Avatar: {fileID: 21300000, guid: 1d6c6ec89253644479e577ec0e1c3e8f, type: 3}
     Icon: {fileID: 21300000, guid: fcf2f2901c248453ca5f92a81a9a0df4, type: 3}
     Name: Pink Star
-    StarCount: 1
+    currentStarCount: 1
+    maxStarCount: 5
+    DescriptionTranscendLevel: []
     CurrentExp: 10000
     NeedExp: 100
-    CurrentSharp: 1820
+    CurrentSharp: 1930
     NeedSharp: 50
-    IsOwn: 1
+    IsOwn: 0
     IsInTeam: 0
+    PositionInTeam: 0
     skill: []

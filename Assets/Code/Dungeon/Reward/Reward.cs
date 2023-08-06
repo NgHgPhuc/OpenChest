@@ -7,7 +7,7 @@ using System;
 [Serializable]
 public class Reward 
 {
-    public RewardItem item;
+    public Item item;
 
     public int Mount;
 
@@ -15,21 +15,22 @@ public class Reward
     {
         switch(item.type)
         {
-            case RewardItem.Type.Gold:
-                ResourceManager.Instance.ChangeGold(Mount);
+            case Item.Type.Gold:
+                ResourceManager.Instance.ChangeGold(Mount, TemporaryData.ChangeType.ADDING);
                 break;
 
-            case RewardItem.Type.Diamond:
-                ResourceManager.Instance.ChangeDiamond(Mount);
+            case Item.Type.Diamond:
+                ResourceManager.Instance.ChangeDiamond(Mount, TemporaryData.ChangeType.ADDING);
                 break;
 
-            case RewardItem.Type.Exp:
-                ResourceManager.Instance.GainExp(Mount);
+            case Item.Type.CurrentExp:
+                ResourceManager.Instance.ChangeExp(Mount, TemporaryData.ChangeType.ADDING);
                 break;
 
-            case RewardItem.Type.Chest:
-                ChestHandlerManager.Instance.GetChest(Mount);
+            case Item.Type.Chest:
+                ResourceManager.Instance.ChangeChest(Mount, TemporaryData.ChangeType.ADDING);
                 break;
+
             default:
                 break;
         }

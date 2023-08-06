@@ -55,7 +55,7 @@ public class StatsPanelManager : MonoBehaviour
         foreach (KeyValuePair<Equipment.Passive, float> kvp in equipment.PassiveList)
             AllPassivePanel[(int)kvp.Key-1].SetStatsValue(kvp.Value,1);
 
-        TeamManager.Instance.SetStatsPlayer(AllStatsPanel, AllPassivePanel);
+        PlayerManager.Instance.SetStatsPlayer(AllStatsPanel, AllPassivePanel);
 
         Power += equipment.PowerPoint;
         PowerText.SetText((Convert.ToUInt32(Power)).ToString());

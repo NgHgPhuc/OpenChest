@@ -6,28 +6,30 @@ using UnityEngine.UI;
 public class StarListPanel : MonoBehaviour
 {
     List<Image> StarList = new List<Image>();
-    void Start()
-    {
-        SetAttr();
-    }
 
-    void SetAttr()
+    void SetAttr(int MaxStarInUI)
     {
         if (StarList.Count > 0)
             return;
 
-        for (int i = 1; i <= 3; i++)
+        for (int i = 1; i <= MaxStarInUI; i++)
             StarList.Add(transform.Find("Star "+i).GetComponent<Image>());
     }
 
-    public void SetStarCount(int StarCount)
+    public void SetStarCount(int CurrentStarCount,int MaxStarCount,int MaxStarInUI)
     {
-        SetAttr();
+        SetAttr(MaxStarInUI);
 
-        for (int i = 0; i < 3; i++)
-            if (i < StarCount)
+        for (int i = 0; i < MaxStarInUI; i++)
+        {
+            if(i < MaxStarCount)
+                StarList[i].gameObject.SetActive(true);
+            else StarList[i].gameObject.SetActive(false);
+
+            if (i < CurrentStarCount)
                 StarList[i].color = Color.white;
             else
                 StarList[i].color = Color.black;
+        }
     }
 }

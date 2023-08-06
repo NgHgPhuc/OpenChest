@@ -21,13 +21,17 @@ MonoBehaviour:
     tier: 0
     role: 4
     Level: 17
+    Avatar: {fileID: 21300000, guid: 4b3288f876ce740b39ac2d648897ec3e, type: 3}
     Icon: {fileID: 21300000, guid: 8c2a644cb42924d86bf3d290a4d1f287, type: 3}
     Name: Happy Piggy
-    StarCount: 1
+    currentStarCount: 1
+    maxStarCount: 5
+    DescriptionTranscendLevel: []
     CurrentExp: 1255.781
     NeedExp: 1848.844
-    CurrentSharp: 1640
+    CurrentSharp: 1690
     NeedSharp: 50
-    IsOwn: 1
+    IsOwn: 0
     IsInTeam: 0
+    PositionInTeam: 0
     skill: []

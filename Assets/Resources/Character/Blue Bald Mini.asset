@@ -21,13 +21,17 @@ MonoBehaviour:
     tier: 1
     role: 3
     Level: 14
+    Avatar: {fileID: 21300000, guid: 2fd46cbf3ca3a47bf860eddd74025792, type: 3}
     Icon: {fileID: 21300000, guid: cda3c4202847e4bdabeee3cdbe380bd8, type: 3}
     Name: Blue Bald Mini
-    StarCount: 1
+    currentStarCount: 1
+    maxStarCount: 5
+    DescriptionTranscendLevel: []
     CurrentExp: 300.6738
     NeedExp: 2139.865
-    CurrentSharp: 940
+    CurrentSharp: 1040
     NeedSharp: 50
-    IsOwn: 1
-    IsInTeam: 1
+    IsOwn: 0
+    IsInTeam: 0
+    PositionInTeam: 0
     skill: []

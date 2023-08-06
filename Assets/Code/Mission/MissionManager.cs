@@ -44,7 +44,7 @@ public class MissionManager: MonoBehaviour
         if (mission.type != Mission.Type.LevelUp)
             return;
 
-        this.mission.SetCurrent(ResourceManager.Instance.PlayerLevel);
+        this.mission.SetCurrent(DataManager.Instance.temporaryData.GetValue_Float(Item.Type.PlayerLevel));
     }
     public void DoingMission_DefeatChapter()
     {
@@ -78,7 +78,7 @@ public class MissionManager: MonoBehaviour
         switch(this.mission.type)
         {
             case Mission.Type.LevelUp:
-                this.mission.SetCurrent(ResourceManager.Instance.PlayerLevel);
+                this.mission.SetCurrent(DataManager.Instance.temporaryData.GetValue_Float(Item.Type.PlayerLevel));
                 break;
 
             case Mission.Type.DefeatChapter:

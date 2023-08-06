@@ -40,10 +40,11 @@ public abstract class BaseSkill : ScriptableObject
     public int CurrentSharp;
     public bool IsHave;
     public bool IsEquip;
+    public int SlotEquipIndex;
 
     public string ToStringData()
     {
-        string data = Name + "-" + CurrentSharp + "-" + IsHave + "-" + IsEquip;
+        string data = Name + "-" + CurrentSharp + "-" + IsHave + "-" + IsEquip + "-" + SlotEquipIndex;
 
         return data;
     }
@@ -53,6 +54,7 @@ public abstract class BaseSkill : ScriptableObject
         CurrentSharp = Convert.ToInt32(dataList[1]);
         IsHave = Convert.ToBoolean(dataList[2]);
         IsEquip = Convert.ToBoolean(dataList[3]);
+        SlotEquipIndex = Convert.ToInt16(dataList[4]);
     }
     public abstract void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit);
 }

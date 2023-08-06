@@ -43,14 +43,16 @@ public class AllyGachaPanel : MonoBehaviour
 
     void AcceptRandom()
     {
-        if (!ResourceManager.Instance.CheckEnough_Diamond(times * 160))
+        float DiamondHave = DataManager.Instance.temporaryData.GetValue_Float(Item.Type.Diamond);
+        if (DiamondHave < times * 160)
         {
             InformManager.Instance.Initialize_InformObject("No Enough Diamond", "you dont have enough diamond!",null);
             return;
         }
 
         List<Character> getCharList = new List<Character>();
-        ResourceManager.Instance.ChangeDiamond(-times * 160);
+        ResourceManager.Instance.ChangeDiamond(times * 160, TemporaryData.ChangeType.USING);
+
         for (int i = 0; i < times; i++)
         {
             float r = UnityEngine.Random.Range(0f, 100f);
@@ -90,6 +92,5 @@ public class AllyGachaPanel : MonoBehaviour
     {
         int index = UnityEngine.Random.Range(0,characters.Count);
         return characters[index];
-
     }
 }

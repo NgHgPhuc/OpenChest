@@ -8,53 +8,98 @@ using TMPro;
 public class LogPanel : MonoBehaviour
 {
     public AccountManager accountManager;
+    public TemporaryData temporaryData;
+
+    [Header("Login Method")]
+    public GameObject LoginMethodForm;
+    public Button LoginByGameAccount;
+    public Button LoginByGoogle;
+    public Button LoginByPlay;
 
     [Header("Login")]
-    public GameObject LoginObject;
+    public Button LoginReturnButton;
+    public GameObject LoginForm;
     public TMP_InputField LoginUsername;
     public TMP_InputField LoginPassword;
+    public Button TurnToRegister;
     public Button LoginButton;
 
     [Header("Register")]
-    public GameObject RegisterObject;
+    public Button RegisterReturnButton;
+    public GameObject RegisterForm;
     public TMP_InputField RegisterUsername;
     public TMP_InputField RegisterPassword;
     public TMP_InputField RegisterRe_Password;
+    public Button TurnToLogin;
     public Button RegisterButton;
     void Start()
     {
-        LoginButton.onClick.AddListener(LoginButtonClick);
-        RegisterButton.onClick.AddListener(RegisterButtonClick);
+        //LOGIN METHOD
+        LoginByGameAccount.onClick.AddListener(LoginByGameAccount_Func);
+        LoginByGoogle.onClick.AddListener(LoginByGoogle_Func);
+        LoginByPlay.onClick.AddListener(LoginByPlay_Func);
+
+        //LOGIN FORM
+        LoginReturnButton.onClick.AddListener(LoginReturnButton_Func);
+        TurnToRegister.onClick.AddListener(TurnToRegister_Func);
+        LoginButton.onClick.AddListener(LoginButton_Func);
+
+        //REGISTER FORM
+        RegisterReturnButton.onClick.AddListener(LoginReturnButton_Func);//same
+        TurnToLogin.onClick.AddListener(TurnToLogin_Func);
+        RegisterButton.onClick.AddListener(RegisterButton_Func);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        LoginMethodForm.SetActive(true);
+        LoginForm.SetActive(false);
+        RegisterForm.SetActive(false);
+
     }
 
-    public void TurnToRegister()
+    //LOGIN METHOD BUTTON FUNCTION
+    void LoginByGameAccount_Func()
     {
-        LoginObject.SetActive(false);
-        RegisterObject.SetActive(true);
+        LoginMethodForm.SetActive(false);
+        LoginForm.SetActive(true);
+    }
+    void LoginByGoogle_Func()
+    {
+        InformManager.Instance.Initialize_FloatingInform("Login By Google is currently not working!");
+    }
+    void LoginByPlay_Func()
+    {
+        InformManager.Instance.Initialize_FloatingInform("Login By Play is currently not working!");
     }
 
-    public void TurnToLogin()
-    {
-        LoginObject.SetActive(true);
-        RegisterObject.SetActive(false);
-    }
 
-    public void BackgroundClick()
+    //LOGIN FORM
+    void LoginReturnButton_Func()
     {
-        gameObject.SetActive(false);
+        LoginForm.SetActive(false);
+        RegisterForm.SetActive(false);
+        LoginMethodForm.SetActive(true);
     }
-    public void LoginButtonClick()
+    void TurnToRegister_Func()
+    {
+        LoginForm.SetActive(false);
+        RegisterForm.SetActive(true);
+    }
+    public void LoginButton_Func()
     {
         accountManager.LoginAccount(this.LoginUsername.text, this.LoginPassword.text);
     }
 
-    public void RegisterButtonClick()
+
+    //REGISTER FORM
+    void TurnToLogin_Func()
+    {
+        LoginForm.SetActive(true);
+        RegisterForm.SetActive(false);
+    }
+
+    public void RegisterButton_Func()
     {
         if(this.RegisterPassword.text.Length < 6)
         {
@@ -70,5 +115,10 @@ public class LogPanel : MonoBehaviour
         }
 
         accountManager.RegisterAccount(this.RegisterUsername.text, this.RegisterPassword.text);
+    }
+
+    public void BackgroundClick()
+    {
+        gameObject.SetActive(false);
     }
 }

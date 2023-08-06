@@ -21,13 +21,17 @@ MonoBehaviour:
     tier: 1
     role: 3
     Level: 1
+    Avatar: {fileID: 21300000, guid: a819f47bf73a1471e83a4c5ded9469de, type: 3}
     Icon: {fileID: 21300000, guid: b76414af95cbb40eaa8757576a959f4b, type: 3}
     Name: Cute Mushroom
-    StarCount: 1
+    currentStarCount: 1
+    maxStarCount: 5
+    DescriptionTranscendLevel: []
     CurrentExp: 0
     NeedExp: 500
-    CurrentSharp: 0
+    CurrentSharp: 200
     NeedSharp: 50
-    IsOwn: 1
+    IsOwn: 0
     IsInTeam: 0
+    PositionInTeam: 0
     skill: []

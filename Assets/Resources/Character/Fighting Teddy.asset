@@ -21,13 +21,17 @@ MonoBehaviour:
     tier: 0
     role: 1
     Level: 1
+    Avatar: {fileID: 21300000, guid: 9f794b391ccf24d6890374eee6bcc20a, type: 3}
     Icon: {fileID: 21300000, guid: eb0b176cc9ffb4a87949bdaf53aecfd5, type: 3}
     Name: Fighting Teddy
-    StarCount: 1
+    currentStarCount: 1
+    maxStarCount: 5
+    DescriptionTranscendLevel: []
     CurrentExp: 0
     NeedExp: 500
-    CurrentSharp: 10
+    CurrentSharp: 60
     NeedSharp: 50
-    IsOwn: 1
+    IsOwn: 0
     IsInTeam: 0
+    PositionInTeam: 0
     skill: []

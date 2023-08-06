@@ -21,13 +21,17 @@ MonoBehaviour:
     tier: 0
     role: 4
     Level: 1
+    Avatar: {fileID: 21300000, guid: 9416494a6f2a24df0a209cba05ebecf6, type: 3}
     Icon: {fileID: 21300000, guid: a8e974fe9ed384e269563fc9466eb6eb, type: 3}
     Name: The Green Whale
-    StarCount: 1
+    currentStarCount: 1
+    maxStarCount: 5
+    DescriptionTranscendLevel: []
     CurrentExp: 0
     NeedExp: 500
-    CurrentSharp: 0
+    CurrentSharp: 30
     NeedSharp: 50
-    IsOwn: 1
+    IsOwn: 0
     IsInTeam: 0
+    PositionInTeam: 0
     skill: []

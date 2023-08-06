@@ -6,7 +6,7 @@ using System.Linq;
 public class AllySingleton : MonoBehaviour
 {
     AllyPanel allyPanel;
-    DetailAllyPanel detailAllyPanel;
+    public DetailAllyPanel detailAllyPanel { get; private set; } //call in item handle manager
 
     public static AllySingleton Instance { get; private set; }
 
@@ -26,6 +26,9 @@ public class AllySingleton : MonoBehaviour
     {
         allyPanel = transform.Find("Ally UI Panel").GetComponent<AllyPanel>();
         detailAllyPanel = transform.Find("Detail Ally Panel"). GetComponent<DetailAllyPanel>();
+    }
+    private void OnEnable()
+    {
         Initialize();
     }
 
