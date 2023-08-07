@@ -32,6 +32,7 @@ public class Defense
 public class FightingUnit : MonoBehaviour, IPointerClickHandler
 {
     public Character Character;
+
     public Character CharacterClone;
     public Character basicStatsCharacter;
 

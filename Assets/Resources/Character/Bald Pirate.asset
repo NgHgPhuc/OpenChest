@@ -35,5 +35,5 @@ MonoBehaviour:
     NeedSharp: 50
     IsOwn: 1
     IsInTeam: 1
-    PositionInTeam: 3
+    PositionInTeam: 1
     skill: []

@@ -43,14 +43,8 @@ public class SkillSlot : MonoBehaviour,IPointerClickHandler
             Border = transform.Find("Border").gameObject;
     }
 
-    public void SetSkillInSlot(BaseSkill skill)
+    void SetSkillUI(BaseSkill skill)
     {
-        if (skill == null)
-        {
-            gameObject.SetActive(false);
-            return;
-        }
-
         this.skill = skill;
         gameObject.SetActive(true);
         SetAttr();
@@ -61,15 +55,23 @@ public class SkillSlot : MonoBehaviour,IPointerClickHandler
 
         if (LockIcon != null)
             LockIcon.SetActive(!skill.IsHave);
-        Border.SetActive(skill.IsEquip);
+
+        SetBorderActive();
 
         if (AddIcon != null && this.skill != null)
             AddIcon.SetActive(false);
 
         this.EquipmentImage.sprite = skill.Icon;
     }
+    public void GetSkillRandomUI(BaseSkill skill)
+    {
+        if (skill == null)
+            gameObject.SetActive(false);
+        else
+            SetSkillUI(skill);
+    }
 
-    public void EquipSkill(BaseSkill skill)
+    public void SetSkillInSlot(BaseSkill skill)
     {
         if (skill == null)
         {
@@ -78,8 +80,7 @@ public class SkillSlot : MonoBehaviour,IPointerClickHandler
         }
 
         skill.IsEquip = true;
-        SetSkillInSlot(skill);
-        SetBorderActive();
+        SetSkillUI(skill);
     }
 
     public void SetBorderActive()

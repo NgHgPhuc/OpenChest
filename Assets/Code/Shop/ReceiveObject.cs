@@ -87,7 +87,7 @@ public class ReceiveObject : MonoBehaviour
             SharpIcon.gameObject.SetActive(false);
             skillSlot.gameObject.SetActive(true);
             Name.gameObject.SetActive(true);
-            skillSlot.SetSkillInSlot(skill);
+            skillSlot.GetSkillRandomUI(skill);
             this.Name.SetText(skill.Name);
 
             skill.IsHave = true;

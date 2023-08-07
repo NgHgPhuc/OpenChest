@@ -21,8 +21,8 @@ public class EffectIcon : MonoBehaviour
 
         for(int i = 0; i<10; i++)
         {
-            EffectIconList.Add(transform.GetChild(i).GetComponent<Image>());
-            EffectIconText.Add(EffectIconList[i].GetComponentInChildren<TextMeshProUGUI>());
+            EffectIconList.Add(transform.GetChild(i).GetComponentInChildren<Image>());
+            EffectIconText.Add(transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>());
         }
     }
     // Update is called once per frame
@@ -39,12 +39,15 @@ public class EffectIcon : MonoBehaviour
             if (i < buffs.Count)
             {
                 EffectIconList[i].gameObject.SetActive(true);
+                EffectIconText[i].gameObject.SetActive(true);
+
                 EffectIconList[i].sprite = buffs[i].Icon;
                 EffectIconText[i].SetText((buffs[i].duration+1).ToString());
             }
             else
             {
                 EffectIconList[i].gameObject.SetActive(false);
+                EffectIconText[i].gameObject.SetActive(false);
             }
     }
 }

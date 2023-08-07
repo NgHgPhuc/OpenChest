@@ -50,15 +50,18 @@ public class FightManager : MonoBehaviour
             Instance = this;
         }
 
-        string currentChapterName = PlayerPrefs.GetString("Current Chapter Name");
-        CurrentChapter = Resources.Load<Chapter>("Chapter/" + currentChapterName);
-
-        //CurrentChapter = Resources.Load<Chapter>("Chapter/" + "Chapter 1");
-        PlayerPrefs.DeleteKey("Current Chapter Name");
-
-        for (int i = 0; i < 3; i++)
+        if(PlayerPrefs.GetString("Current Chapter Name") != null)
         {
-            if (i < CurrentChapter.MyTeam.Count)
+            string currentChapterName = PlayerPrefs.GetString("Current Chapter Name");
+            CurrentChapter = Resources.Load<Chapter>("Chapter/" + currentChapterName);
+            PlayerPrefs.DeleteKey("Current Chapter Name");
+        }
+        else
+            CurrentChapter = Resources.Load<Chapter>("Chapter/" + "Chapter 1");
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (CurrentChapter.MyTeam[i] != null)
             {
                 PlayerTeam[i].gameObject.SetActive(true);
                 PlayerTeam[i].CharacterClone = CurrentChapter.MyTeam[i].Clone();
@@ -69,9 +72,13 @@ public class FightManager : MonoBehaviour
 
                 PlayerCount++;
             }
-            else PlayerTeam[i].gameObject.SetActive(false);
+            else
+            {
+                PlayerTeam[i].gameObject.SetActive(false);
+                PlayerTeam[i].stateData = FightingUnit.StateData.None;
+            }
 
-            if (i < CurrentChapter.EnemyTeam.Count)
+            if (i < CurrentChapter.EnemyTeam.Count && CurrentChapter.EnemyTeam[i] != null)
             {
                 EnemyTeam[i].gameObject.SetActive(true);
                 EnemyTeam[i].CharacterClone = CurrentChapter.EnemyTeam[i].Clone();
@@ -82,7 +89,11 @@ public class FightManager : MonoBehaviour
 
                 EnemyCount++;
             }
-            else EnemyTeam[i].gameObject.SetActive(false);
+            else
+            {
+                EnemyTeam[i].gameObject.SetActive(false);
+                EnemyTeam[i].stateData = FightingUnit.StateData.None;
+            }
         }
 
         PlayerTeam = PlayerTeam.Where(x => x.stateData == FightingUnit.StateData.HaveChamp).ToList();
@@ -386,7 +397,6 @@ public class FightManager : MonoBehaviour
         if (unit.team == FightingUnit.Team.Enemy)
         {
             EnemyCount--;
-            print(EnemyCount);
             EnemyTeam = EnemyTeam.Where(x => x.stateFighting == FightingUnit.StateFighting.Alive).ToList();
             if (EnemyCount == 0)
             {
@@ -398,7 +408,6 @@ public class FightManager : MonoBehaviour
         if (unit.team == FightingUnit.Team.Player)
         {
             PlayerCount--;
-            print(PlayerCount);
             PlayerTeam = PlayerTeam.Where(x => x.stateFighting == FightingUnit.StateFighting.Alive).ToList();
             if (PlayerCount == 0)
             {
@@ -443,23 +452,5 @@ public class FightManager : MonoBehaviour
     {
         StopAllCoroutines();
         FailPanelObject.SetActive(true);
-    }
-
-    public void SaveData(Dictionary<string, string> dict)
-    {
-        var request = new UpdateUserDataRequest
-        {
-            Data = dict
-        };
-
-        PlayFabClientAPI.UpdateUserData(request, OnSaveSuccess, OnSaveFail);
-    }
-
-    private void OnSaveFail(PlayFabError obj)
-    {
-    }
-
-    private void OnSaveSuccess(UpdateUserDataResult obj)
-    {
     }
 }

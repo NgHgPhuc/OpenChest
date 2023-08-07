@@ -18,7 +18,7 @@ public class AllRewardPanel : MonoBehaviour
 
     public void Initialize()
     {
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < 4; i++)
             allyGetRewardList[i].Initialize(FightManager.Instance.PlayerTeam[i]);
     }
 }

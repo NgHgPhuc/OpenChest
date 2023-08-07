@@ -13,8 +13,12 @@ public class ProrityPanel : MonoBehaviour
     Image Current;
     private void Awake()
     {
-        for(int i = 1; i <= 6; i++)
-            PriorityList.Add(transform.Find("Priority " + i).GetComponentInChildren<Image>());
+        for(int i = 1; i <= 8; i++)
+        {
+            Transform p = transform.Find("Priority " + i).GetChild(1);
+            Image allyImage = p.GetChild(0).GetComponentInChildren<Image>();
+            PriorityList.Add(allyImage);
+        }
 
         if (Instance != null && Instance != this)
         {
@@ -39,17 +43,17 @@ public class ProrityPanel : MonoBehaviour
     public void Initialize(List<FightingUnit> fightingUnitList)
     {
         int c = fightingUnitList.Count;
-        for (int i = 0 ; i < 6; i++)
+        for (int i = 0 ; i < 8; i++)
         {
             if (i < c)
             {
-                PriorityList[i].gameObject.SetActive(true);
+                PriorityList[i].transform.parent.parent.gameObject.SetActive(true);
                 PriorityList[i].sprite = fightingUnitList[i].CharacterClone.Avatar;
                 if (fightingUnitList[i].stateFighting == FightingUnit.StateFighting.Death)
                     PriorityList[i].color = Color.gray;
             }
             else
-                PriorityList[i].gameObject.SetActive(false);
+                PriorityList[i].transform.parent.parent.gameObject.SetActive(false);
         }
     }
 
@@ -58,8 +62,6 @@ public class ProrityPanel : MonoBehaviour
         if(Current != null)
             Current.color = Color.white;
 
-        Current = PriorityList[index].GetComponent<Image>();
-        Current.color = Color.green;
-
+        PriorityList[index].color = Color.green;
     }
 }

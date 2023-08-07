@@ -28,15 +28,30 @@ public class TeamManager : MonoBehaviour
     }
     public void InitializeTeam()
     {
-        foreach (Character c in AllyOwnManager.Instance.CharTeam())
+        //foreach (Character c in AllyOwnManager.Instance.CharTeam())
+        //    if (c != null)
+        //        AllyInTeam[c.PositionInTeam - 1] = c;//null dont have position
+
+        //Character player = PlayerManager.Instance.GetPlayer();
+        //AllyInTeam[player.PositionInTeam - 1] = player;
+
+        //for (int i = 0; i < 3; i++)
+        //    AllySlotUIs[i].SetCharacterInSlot(AllyOwnManager.Instance.CharTeam()[i]);
+
+        for (int i = 0; i < 4; i++)
+        {
+            if(i == 3)
+            {
+                Character player = PlayerManager.Instance.GetPlayer();
+                AllyInTeam[player.PositionInTeam - 1] = player;
+                break;
+            }
+
+            Character c = AllyOwnManager.Instance.CharTeam()[i];
+            AllySlotUIs[i].SetCharacterInSlot(c);
             if (c != null)
-                AllyInTeam[c.PositionInTeam - 1] = c;
-
-        Character player = PlayerManager.Instance.GetPlayer();
-        AllyInTeam[player.PositionInTeam - 1] = player;
-
-        for (int i = 0; i < 3; i++)
-            AllySlotUIs[i].SetCharacterInSlot(AllyOwnManager.Instance.CharTeam()[i]);
+                AllyInTeam[c.PositionInTeam - 1] = c;//null dont have position
+        }
     }
 
     public bool CanRemoveThisSlot(int slotIndex)
@@ -44,7 +59,7 @@ public class TeamManager : MonoBehaviour
         if (AllyInTeam[slotIndex - 1] == null)
             return true;
 
-        if (AllyInTeam[slotIndex - 1].Name == "Player")
+        if (AllyInTeam[slotIndex - 1].Name == "Player Fighting")
             return false;
 
         return true;
@@ -99,196 +114,15 @@ public class TeamManager : MonoBehaviour
 
         AllyInTeam[index1 - 1] = char2;
         AllyInTeam[index2 - 1] = char1;
-        //print(AllyInTeam[index1 - 1].Name + "/" + AllyInTeam[index1 - 1].PositionInTeam);
-        //print(AllyInTeam[index2 - 1].Name + "/" + AllyInTeam[index2 - 1].PositionInTeam);
+
+        //print(AllyInTeam[index1 - 1] + "-" + index1 + "-->" + AllyInTeam[index2 - 1] + "-" + index2);
     }
     public List<Character> MyTeam()
     {
-        List<Character> characters = new List<Character>();
-        return characters;
+        return AllyInTeam;
     }
     public List<Character> GetAllyInTeam()
     {
         return this.AllyInTeam;
     }
-
-
-    //public bool SetCompainAlly(Character character)
-    //{
-    //    if(this.Ally1 == null)
-    //    {
-    //        SetStatsAlly1(character);
-    //        return true;
-    //    }
-
-    //    if(this.Ally2 == null)
-    //    {
-    //        SetStatsAlly2(character);
-    //        return true;
-    //    }
-
-    //    return false;
-    //}
-    //public void RemoveCompainAlly(Character character)
-    //{
-    //    if(character.Name == this.Ally1.Name && this.Ally1.Name != null)
-    //    {
-    //        RemoveAlly1();
-    //        return;
-    //    }
-    //    if(character.Name == this.Ally2.Name && this.Ally2.Name != null)
-    //    {
-    //        RemoveAlly2();
-    //        return;
-    //    }
-    //}
-
-    //public void SetStatsAlly1(Character character)
-    //{
-    //    if (this.Ally1 != null)
-    //        RemoveAlly1();
-
-    //    this.Ally1 = character;
-    //    this.Ally1.IsInTeam = true;
-    //    //DataManager.Instance.SaveData(character.Name, character.ToStringData());
-    //    AllySlot1.SetCharacterInSlot(this.Ally1);
-    //}
-    //public void RemoveAlly1()
-    //{
-    //    this.Ally1.IsInTeam = false;
-    //    this.Ally1 = null;
-    //    AllySlot1.DontHaveCharacterInSlot();
-    //}
-
-    //public void SetStatsAlly2(Character character)
-    //{
-    //    if (this.Ally2 != null)
-    //        RemoveAlly2();
-
-    //    this.Ally2 = character;
-    //    this.Ally2.IsInTeam = true;
-    //    //DataManager.Instance.SaveData(character.Name, character.ToStringData());
-    //    AllySlot2.SetCharacterInSlot(this.Ally2);
-    //}
-    //public void RemoveAlly2()
-    //{
-    //    this.Ally2.IsInTeam = false;
-    //    this.Ally2 = null;
-    //    AllySlot2.DontHaveCharacterInSlot();
-    //}
-
-    //public List<Character> MyTeam()
-    //{
-    //    List<Character> characters = new List<Character>();
-    //    Ally1 = AllySlot1.character;
-    //    Ally2 = AllySlot2.character;
-
-    //    if (Ally1 != null)
-    //        characters.Add(Ally1);
-
-    //    if (Ally2 != null)
-    //        characters.Add(Ally2);
-
-    //    characters.Add(PlayerManager.Instance.GetPlayer());
-    //    return characters;
-    //}
-
-    //public Character GetAlly1()
-    //{
-    //    return Ally1;
-    //}
-    //public Character GetAlly2()
-    //{
-    //    return Ally2;
-    //}
-
-
-    //public bool SetCompainAlly(Character character)
-    //{
-    //    if(this.Ally1 == null)
-    //    {
-    //        SetStatsAlly1(character);
-    //        return true;
-    //    }
-
-    //    if(this.Ally2 == null)
-    //    {
-    //        SetStatsAlly2(character);
-    //        return true;
-    //    }
-
-    //    return false;
-    //}
-    //public void RemoveCompainAlly(Character character)
-    //{
-    //    if(character.Name == this.Ally1.Name && this.Ally1.Name != null)
-    //    {
-    //        RemoveAlly1();
-    //        return;
-    //    }
-    //    if(character.Name == this.Ally2.Name && this.Ally2.Name != null)
-    //    {
-    //        RemoveAlly2();
-    //        return;
-    //    }
-    //}
-
-    //public void SetStatsAlly1(Character character)
-    //{
-    //    if (this.Ally1 != null)
-    //        RemoveAlly1();
-
-    //    this.Ally1 = character;
-    //    this.Ally1.IsInTeam = true;
-    //    //DataManager.Instance.SaveData(character.Name, character.ToStringData());
-    //    AllySlot1.SetCharacterInSlot(this.Ally1);
-    //}
-    //public void RemoveAlly1()
-    //{
-    //    this.Ally1.IsInTeam = false;
-    //    this.Ally1 = null;
-    //    AllySlot1.DontHaveCharacterInSlot();
-    //}
-
-    //public void SetStatsAlly2(Character character)
-    //{
-    //    if (this.Ally2 != null)
-    //        RemoveAlly2();
-
-    //    this.Ally2 = character;
-    //    this.Ally2.IsInTeam = true;
-    //    //DataManager.Instance.SaveData(character.Name, character.ToStringData());
-    //    AllySlot2.SetCharacterInSlot(this.Ally2);
-    //}
-    //public void RemoveAlly2()
-    //{
-    //    this.Ally2.IsInTeam = false;
-    //    this.Ally2 = null;
-    //    AllySlot2.DontHaveCharacterInSlot();
-    //}
-
-    //public List<Character> MyTeam()
-    //{
-    //    List<Character> characters = new List<Character>();
-    //    Ally1 = AllySlot1.character;
-    //    Ally2 = AllySlot2.character;
-
-    //    if (Ally1 != null)
-    //        characters.Add(Ally1);
-
-    //    if (Ally2 != null)
-    //        characters.Add(Ally2);
-
-    //    characters.Add(PlayerManager.Instance.GetPlayer());
-    //    return characters;
-    //}
-
-    //public Character GetAlly1()
-    //{
-    //    return Ally1;
-    //}
-    //public Character GetAlly2()
-    //{
-    //    return Ally2;
-    //}
 }

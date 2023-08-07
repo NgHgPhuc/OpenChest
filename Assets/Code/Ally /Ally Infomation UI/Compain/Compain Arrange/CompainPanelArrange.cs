@@ -49,7 +49,6 @@ public class CompainPanelArrange : MonoBehaviour,IDragHandler,IBeginDragHandler,
         if (indexDragged == -1)
             return;
 
-        print(indexDragged + "-->" + indexSwaping);
         Character t = compainSlotUIs[indexDragged - 1].character;
         compainSlotUIs[indexDragged - 1].SetCharacterInSlot(compainSlotUIs[indexSwaping - 1].character);
         compainSlotUIs[indexSwaping - 1].SetCharacterInSlot(t);

@@ -10,17 +10,13 @@ public class ChapterPanelUI : MonoBehaviour
 {
     Chapter chapter;
 
-    TextMeshProUGUI ChapterName;
-
     public Transform InformationChapterPanel;
     RewardPanelUI rewardPanelUI;
     Image DoneIcon;
 
-    public Transform FormationPanel;
-    EnemyTeamPanel myTeamPanel;
-    EnemyTeamPanel enemyTeamPanel;
-
     public RewardPanelUI GetClearItem;
+
+    public CompainPanelArrange compainPanelArrange;
 
     void Start()
     {
@@ -35,13 +31,8 @@ public class ChapterPanelUI : MonoBehaviour
 
     void SetAttr()
     {
-        ChapterName = transform.Find("Chapter Name Panel").GetChild(0).GetComponent<TextMeshProUGUI>();
-
         rewardPanelUI = InformationChapterPanel.Find("Reward Panel").GetComponent<RewardPanelUI>();
         DoneIcon = InformationChapterPanel.Find("Done Icon").GetComponent<Image>();
-
-        enemyTeamPanel = FormationPanel.Find("Enemy Team Panel").GetComponent<EnemyTeamPanel>();
-        myTeamPanel = FormationPanel.Find("My Team Panel").GetComponent<EnemyTeamPanel>();
     }
     public void SetChapterInfomation(Chapter chapter)
     {
@@ -52,14 +43,7 @@ public class ChapterPanelUI : MonoBehaviour
 
         gameObject.SetActive(true);
 
-        this.ChapterName.SetText(this.chapter.name);
-
-        enemyTeamPanel.SetCharacterData(this.chapter.EnemyTeam);
-
         rewardPanelUI.SetRewardList(this.chapter.reward, this.chapter.StarCount);
-
-        this.chapter.MyTeam = new List<Character>(TeamManager.Instance.MyTeam());
-        myTeamPanel.SetCharacterData(this.chapter.MyTeam);
 
         DoneIcon.gameObject.SetActive(chapter.IsDone);
     }
@@ -71,7 +55,9 @@ public class ChapterPanelUI : MonoBehaviour
 
     public void EnterButton()
     {
-        PlayerPrefs.SetString("Current Chapter Name", ChapterName.text);
+        this.chapter.SetMyTeam(TeamManager.Instance.MyTeam());
+
+        PlayerPrefs.SetString("Current Chapter Name", chapter.Name);
         SceneManager.LoadScene("Fighting");
     }
 
@@ -100,11 +86,12 @@ public class ChapterPanelUI : MonoBehaviour
     public void TurnTo_InfomationPanel()
     {
         InformationChapterPanel.gameObject.SetActive(true);
-        FormationPanel.gameObject.SetActive(false);
+        compainPanelArrange.gameObject.SetActive(false);
     }
     public void TurnTo_FormationPanel()
     {
         InformationChapterPanel.gameObject.SetActive(false);
-        FormationPanel.gameObject.SetActive(true);
+        compainPanelArrange.gameObject.SetActive(true);
+        compainPanelArrange.CompainArrangeButton();
     }
 }

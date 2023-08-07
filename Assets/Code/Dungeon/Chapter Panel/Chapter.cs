@@ -11,6 +11,11 @@ public class Chapter : ScriptableObject
     public int StarCount;
     public List<Character> EnemyTeam;
     public List<Reward> reward;
-    public List<Character> MyTeam;
 
+    public List<Character> MyTeam { get; private set; }
+
+    public void SetMyTeam(List<Character> MyTeam)
+    {
+        this.MyTeam = MyTeam;
+    }
 }
