@@ -138,6 +138,12 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     //INSTANTIATE VALUE OF THIS
     public void Instantiate()
     {
+        if(Character != null)
+        {
+            CharacterClone = Character.Clone();
+            basicStatsCharacter = CharacterClone.Clone();
+        }
+
         if (healthBar == null)
         {
             healthBar = transform.Find("Health Bar").GetComponent<Slider>();
@@ -163,9 +169,6 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         }
 
         CoolDown = new List<int>(new int[this.CharacterClone.skill.Count]);
-
-        //CharacterClone = Character.Clone();
-        basicStatsCharacter = CharacterClone.Clone();
     }
 
     void UpdateHealthBar()

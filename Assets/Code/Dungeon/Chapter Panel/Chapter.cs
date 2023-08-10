@@ -9,6 +9,7 @@ public class Chapter : ScriptableObject
     public bool IsOpen;
     public bool IsDone;
     public int StarCount;
+    public int ExpForCharacter;
     public List<Character> EnemyTeam;
     public List<Reward> reward;
 

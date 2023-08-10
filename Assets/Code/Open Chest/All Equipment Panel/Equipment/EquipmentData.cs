@@ -34,6 +34,10 @@ public class EquipmentData : MonoBehaviour, IPointerClickHandler
         this.equipment = equipment;
         SetSlotData(equipment);
 
+        if(equipmentSlot == null)
+        {
+            equipmentSlot = GetComponent<EquipmentSlot>();
+        }
         equipmentSlot.SetEquipmentInSlot(this.equipment);
 
         StatsPanelManager.Instance.Equip(slot);

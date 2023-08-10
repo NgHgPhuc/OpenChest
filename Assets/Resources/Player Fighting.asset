@@ -28,7 +28,7 @@ MonoBehaviour:
     maxStarCount: 0
     DescriptionTranscendLevel: []
     CurrentExp: 0
-    NeedExp: 0
+    NeedExp: 500
     CurrentSharp: 0
     NeedSharp: 0
     IsOwn: 1

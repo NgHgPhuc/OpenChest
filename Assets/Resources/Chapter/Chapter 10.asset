@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Chapter 10
   m_EditorClassIdentifier: 
   Name: Chapter 10
-  IsOpen: 1
+  IsOpen: 0
   IsDone: 0
   StarCount: 0
+  ExpForCharacter: 40
   EnemyTeam:
   - AttackDamage: 50
     HealthPoint: 300
@@ -23,48 +24,66 @@ MonoBehaviour:
     Speed: 10
     PowerPoint: 0
     tier: 0
+    role: 0
     Level: 5
+    Avatar: {fileID: 0}
     Icon: {fileID: 21300000, guid: 94252b2bb7a2f4fd0a04cbf49ceb825c, type: 3}
     Name: Bee
-    StarCount: 0
+    currentStarCount: 0
+    maxStarCount: 0
+    DescriptionTranscendLevel: []
     CurrentExp: 0
     NeedExp: 0
     CurrentSharp: 0
     NeedSharp: 0
     IsOwn: 0
     IsInTeam: 0
+    PositionInTeam: 0
+    skill: []
   - AttackDamage: 30
     HealthPoint: 200
     DefensePoint: 10
     Speed: 8
     PowerPoint: 0
     tier: 0
+    role: 0
     Level: 1
+    Avatar: {fileID: 0}
     Icon: {fileID: 21300000, guid: 2b5edd196eacb41ab9317eb17cfb869f, type: 3}
     Name: Egg
-    StarCount: 0
+    currentStarCount: 0
+    maxStarCount: 0
+    DescriptionTranscendLevel: []
     CurrentExp: 0
     NeedExp: 0
     CurrentSharp: 0
     NeedSharp: 0
     IsOwn: 0
     IsInTeam: 0
+    PositionInTeam: 0
+    skill: []
   - AttackDamage: 100
     HealthPoint: 400
     DefensePoint: 20
     Speed: 15
     PowerPoint: 0
     tier: 0
+    role: 0
     Level: 1
+    Avatar: {fileID: 0}
     Icon: {fileID: 21300000, guid: 2b5edd196eacb41ab9317eb17cfb869f, type: 3}
     Name: Egg
-    StarCount: 0
+    currentStarCount: 0
+    maxStarCount: 0
+    DescriptionTranscendLevel: []
     CurrentExp: 0
     NeedExp: 0
     CurrentSharp: 0
     NeedSharp: 0
     IsOwn: 0
     IsInTeam: 0
+    PositionInTeam: 0
+    skill: []
   reward:
   - item: {fileID: 11400000, guid: 4d51e5b187a3546d58cc2c10edbd8c54, type: 2}
     Mount: 60
@@ -72,52 +91,3 @@ MonoBehaviour:
     Mount: 30
   - item: {fileID: 11400000, guid: 3f2bfaee8bafe4050a2cdfac92dd24ea, type: 2}
     Mount: 1
-  MyTeam:
-  - AttackDamage: 5
-    HealthPoint: 5
-    DefensePoint: 5
-    Speed: 5
-    PowerPoint: 5
-    tier: 0
-    Level: 5
-    Icon: {fileID: 21300000, guid: d25d6665f19b44c15ad9bd34c7f85f1b, type: 3}
-    Name: Froggo
-    StarCount: 5
-    CurrentExp: 5
-    NeedExp: 5
-    CurrentSharp: 5
-    NeedSharp: 5
-    IsOwn: 0
-    IsInTeam: 0
-  - AttackDamage: 0
-    HealthPoint: 0
-    DefensePoint: 0
-    Speed: 0
-    PowerPoint: 0
-    tier: 0
-    Level: 0
-    Icon: {fileID: 0}
-    Name: 
-    StarCount: 0
-    CurrentExp: 0
-    NeedExp: 0
-    CurrentSharp: 0
-    NeedSharp: 0
-    IsOwn: 0
-    IsInTeam: 0
-  - AttackDamage: 133.1
-    HealthPoint: 382.8
-    DefensePoint: 88
-    Speed: 55
-    PowerPoint: 0
-    tier: 0
-    Level: 0
-    Icon: {fileID: 21300000, guid: 41d892d181dea45d98f75142587db8c8, type: 3}
-    Name: 
-    StarCount: 0
-    CurrentExp: 0
-    NeedExp: 0
-    CurrentSharp: 0
-    NeedSharp: 0
-    IsOwn: 0
-    IsInTeam: 0

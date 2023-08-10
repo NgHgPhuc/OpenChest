@@ -13,7 +13,7 @@ public class EquipmentPanelManager : MonoBehaviour
         else
             Instance = this;
 
-        for (int i = 0; i< transform.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             Transform childTrans = transform.GetChild(i);
             if (childTrans.GetComponent<EquipmentData>() == null)
@@ -34,6 +34,19 @@ public class EquipmentPanelManager : MonoBehaviour
                 equipmentData.SetEquipmentData(equipmentSO.equipment);
         }
 
+        //for (int i = 0; i < transform.childCount; i++)
+        //{
+        //    Transform childTrans = transform.GetChild(i);
+        //    if (childTrans.GetComponent<EquipmentData>() == null)
+        //        continue;
+
+        //    string childName = childTrans.name; //name : "Weapon Slot Panel
+        //    if (equipments.ContainsKey(childName) == false) //have = continue
+        //    {
+        //        EquipmentData equipmentData = childTrans.GetComponent<EquipmentData>();
+        //        equipments.Add(childName, equipmentData);
+        //    }
+        //}
     }
 
 

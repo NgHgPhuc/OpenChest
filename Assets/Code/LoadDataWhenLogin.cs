@@ -8,8 +8,10 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
 using System.Reflection;
+using Unity.VisualScripting;
+using UnityEditor.U2D.Path;
 
-public class LoginDataWhenLogin : MonoBehaviour
+public class LoadDataWhenLogin : MonoBehaviour
 {
     public GameObject LoadingPanel;
     public TextMeshProUGUI LoadingTMP;
@@ -25,7 +27,7 @@ public class LoginDataWhenLogin : MonoBehaviour
 
     public TemporaryData temporaryData;
 
-    public static LoginDataWhenLogin Instance { get; private set; }
+    public static LoadDataWhenLogin Instance { get; private set; }
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -37,42 +39,11 @@ public class LoginDataWhenLogin : MonoBehaviour
             Instance = this;
         }
 
-        string username = PlayerPrefs.GetString("Username");
-        string password = PlayerPrefs.GetString("Password");
-        print(username + "-" + password);
-        LoginAccount(username, password);
-
         LoadingProgress.maxValue = 78;
         LoadingProgress.value = 0;
     }
 
-    void Start()
-    {
-
-    }
-
-    public void LoginAccount(string username, string password)
-    {
-        var request = new LoginWithPlayFabRequest
-        {
-            Username = username,
-            Password = password,
-        };
-
-        PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnLoginFail);
-    }
-
-    private void OnLoginFail(PlayFabError obj)
-    {
-    }
-
-    private void OnLoginSuccess(LoginResult obj)
-    {
-        LoadData();
-    }
-
-
-    void LoadData()
+    public void LoadData()
     {
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnGetDataSuccess, OnGetDataFail);
     }
@@ -85,6 +56,7 @@ public class LoginDataWhenLogin : MonoBehaviour
     private void OnGetDataSuccess(GetUserDataResult DataReceive)
     {
         this.DataReceive = DataReceive;
+        LoadingPanel.SetActive(true);
         Invoke("LoadAllData", 0.1f);
     }
 
@@ -92,103 +64,11 @@ public class LoginDataWhenLogin : MonoBehaviour
     {
         StartCoroutine(LoadResource());
     }
-    IEnumerator LoadResource()
-    {
-        //load money
-        StartCoroutine(LoadMoney());
-
-
-        //Update Equipment
-        for (int i = 1; i <= 12; i++)
-        {
-            Equipment equipment = new Equipment();
-            string type = ((Equipment.Type)i).ToString();
-            string data = "";
-            ShowStateLoading("Loading Equipement " + type + ".....");
-
-            if (DataReceive.Data.ContainsKey(type))
-                data = DataReceive.Data[type].Value;
-            else
-            {
-                data = "0-0-0-0-0-0";
-                SaveData(type, data);
-            }
-
-            Equip(equipment.ExtractStringData(i, data));
-
-            print("Equipment");
-            yield return new WaitForSeconds(LoadingTimes);
-        }
-
-
-        //load Ally Data
-        List<AllySO> charRawData = new List<AllySO>(Resources.LoadAll<AllySO>("Character Raw"));
-        List<AllySO> charStoreData = new List<AllySO>(Resources.LoadAll<AllySO>("Character"));
-        for (int i = 0; i < charStoreData.Count; i++)
-        {
-            ShowStateLoading("Loading Ally.....");
-
-            charStoreData[i].character = charRawData[i].character.Clone();
-
-            string AllyName = charStoreData[i].character.Name;
-            if (DataReceive.Data.ContainsKey(AllyName))
-            {
-                string data = DataReceive.Data[AllyName].Value;
-                charStoreData[i].character.ExtractStringData(DataReceive.Data[AllyName].Value);
-            }
-            //else
-            //    SaveData(AllyName, aSO.character.ToStringData());
-
-            yield return new WaitForSeconds(LoadingTimes);
-        }
-
-
-        //Set Ally to use in future
-        //AllyOwnManager.Instance.SetAllAlly(charStoreData);
-
-        //load mission
-        MissionManager.Instance.LoadNextMission();
-
-        //load all skill ==============
-        List<BaseSkill> skills = new List<BaseSkill>(Resources.LoadAll<BaseSkill>("Skill/"));
-        foreach (BaseSkill s in skills)
-        {
-            ShowStateLoading("Loading Skill.....");
-
-            //if (DataReceive.Data.ContainsKey(s.Name))
-            //    s.ExtractString(DataReceive.Data[s.Name].Value);
-
-            yield return new WaitForSeconds(LoadingTimes);
-        }
-
-
-        //load equip skill
-        List<string> skillsNameData = new List<string>();
-        for (int i = 1; i <= 3; i++)
-        {
-            if (DataReceive.Data.ContainsKey("Skill " + i + " Slot"))
-                skillsNameData.Add(DataReceive.Data["Skill " + i + " Slot"].Value);
-            else
-                SaveData("Skill " + i + " Slot", "");
-        }
-        PlayerManager.Instance.LoadSkillData(skillsNameData);
-
-        print("All Loading:" + CurrentLoading);
-        LoadingPanel.GetComponent<Animator>().Play("Loading Screen Ending");
-        Invoke("Ending", 1.5f);
-    }
 
     public void Ending()//call in animation Loading Screen Ending
     {
         LoadingPanel.SetActive(false);
-    }
-
-    void Equip(Equipment equipment)
-    {
-        if (equipment == null)
-            return;
-
-        EquipmentPanelManager.Instance.LoadEquipment(equipment);
+        SceneManager.LoadScene("Open Chest");
     }
 
     //SAVE
@@ -204,22 +84,22 @@ public class LoginDataWhenLogin : MonoBehaviour
 
         PlayFabClientAPI.UpdateUserData(request, OnSaveSuccess, OnSaveFail);
     }
-
+    #region Save Status Handle
     private void OnSaveFail(PlayFabError obj)
     {
     }
-
     private void OnSaveSuccess(UpdateUserDataResult obj)
     {
     }
+    #endregion
 
-    IEnumerator LoadMoney()
+
+    IEnumerator LoadResource()
     {
         temporaryData.LoadAllItemSO();
         foreach (KeyValuePair<Item.Type, Slot> kvp in temporaryData.inventorys)
         {
-            string Str = "Loading " + kvp.Key.ToString() + ".....";
-            ShowStateLoading(Str);
+            ShowStateLoading("Loading " + kvp.Key.ToString() + ".....");
             if (!DataReceive.Data.ContainsKey(kvp.Key.ToString()))
             {
                 switch (kvp.Key)
@@ -268,7 +148,103 @@ public class LoginDataWhenLogin : MonoBehaviour
 
             yield return new WaitForSeconds(LoadingTimes);
         }
-        ResourceManager.Instance.UpdateShowUI();
+
+        yield return StartCoroutine(LoadEquipment());
+    }
+    IEnumerator LoadEquipment()
+    {
+        //Update Equipment
+        for (int i = 1; i <= 12; i++)
+        {
+            Equipment equipment = new Equipment();
+            string type = ((Equipment.Type)i).ToString();
+            string data = "";
+            ShowStateLoading("Loading Equipement " + type + ".....");
+
+            EquipmentSO equipmentSO = Resources.Load<EquipmentSO>("Equipment/" + type);
+            if (DataReceive.Data.ContainsKey(type))
+            {
+                data = DataReceive.Data[type].Value;
+                equipmentSO.equipment = equipment.ExtractStringData(i, data);
+                equipmentSO.IsNull = false;
+            }
+            else
+            {
+                data = "AttackDamage:0-HealthPoint:0-DefensePoint:0-Speed:0-quality:0-Level:0";
+                //SaveData(type, data);
+                equipmentSO.equipment = equipment.ExtractStringData(i, data);
+                equipmentSO.IsNull = true;
+            }
+
+            yield return new WaitForSeconds(LoadingTimes);
+        }
+        yield return StartCoroutine(LoadAlly());
+    }
+
+    IEnumerator LoadAlly()
+    {
+        //load Ally Data
+        List<AllySO> charRawData = new List<AllySO>(Resources.LoadAll<AllySO>("Character Raw"));
+        List<AllySO> charStoreData = new List<AllySO>(Resources.LoadAll<AllySO>("Character"));
+        for (int i = 0; i < charStoreData.Count; i++)
+        {
+            charStoreData[i].character = charRawData[i].character.Clone();
+            string AllyName = charStoreData[i].character.Name;
+
+            ShowStateLoading("Loading Ally " + AllyName+ " .....");
+
+            if (DataReceive.Data.ContainsKey(AllyName))
+            {
+                string data = DataReceive.Data[AllyName].Value;
+                charStoreData[i].character.ExtractStringData(DataReceive.Data[AllyName].Value);
+            }
+
+            yield return new WaitForSeconds(LoadingTimes);
+        }
+        yield return StartCoroutine(LoadMission());
+    }
+
+    IEnumerator LoadMission()
+    {
+        yield return StartCoroutine(LoadSkill());
+    }
+
+    IEnumerator LoadSkill()
+    {
+        //load all skill ==============
+        List<BaseSkill> skills = new List<BaseSkill>(Resources.LoadAll<BaseSkill>("Skill/"));
+        foreach (BaseSkill s in skills)
+        {
+            ShowStateLoading("Loading Skill " + s.Name + " .....");
+
+            string data = "";
+            if (DataReceive.Data.ContainsKey(s.Name))
+            {
+                data = DataReceive.Data[s.Name].Value;
+            }
+            else
+            {
+                data = "CurrentSharp:0-IsHave:false-IsEquip:false-SlotEquipIndex:0";
+            }
+            s.ExtractString(data);
+            yield return new WaitForSeconds(LoadingTimes);
+        }
+
+
+        ////load equip skill
+        //List<string> skillsNameData = new List<string>();
+        //for (int i = 1; i <= 3; i++)
+        //{
+        //    if (DataReceive.Data.ContainsKey("Skill " + i + " Slot"))
+        //        skillsNameData.Add(DataReceive.Data["Skill " + i + " Slot"].Value);
+        //    else
+        //        SaveData("Skill " + i + " Slot", "");
+        //}
+        //PlayerManager.Instance.LoadSkillData(skillsNameData);
+
+        print("All Loading:" + CurrentLoading);
+        LoadingPanel.GetComponent<Animator>().Play("Loading Screen Ending");
+        Invoke("Ending", 1.5f);
     }
 
     void ShowStateLoading(string msg)

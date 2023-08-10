@@ -74,7 +74,7 @@ public class DetailAllyPanel : MonoBehaviour
 
     void AllyGetExp()
     {
-        this.character.CurrentExp += this.AddExpValue;
+        this.character.AddCurrentExp(this.AddExpValue, LevelUpEfx);
         DataManager.Instance.SaveData(character.Name, character.ToStringData());
         statAndLevelUI.SetAllyUI(this.character);
 
@@ -82,10 +82,6 @@ public class DetailAllyPanel : MonoBehaviour
             DataManager.Instance.temporaryData.ChangeValue(kvp.Key, kvp.Value, TemporaryData.ChangeType.USING);
 
         ResetValueUsing();
-
-
-        if (this.character.CheckCanLevelUp())
-            LevelUp();
     }
     void ResetValueUsing()
     {
@@ -98,14 +94,9 @@ public class DetailAllyPanel : MonoBehaviour
         };
         AddExpValue = 0;
     }
-    void LevelUp()
+    void LevelUpEfx()
     {
-        this.character.LevelUp();
-        statAndLevelUI.SetAllyUI(this.character);
-
         allyInfomationUI.LevelUpEffect();
-
-        DataManager.Instance.SaveData(character.Name, character.ToStringData());
 
         InformManager.Instance.Initialize_FloatingInform("Upgrade your ally's level successfully!");
     }

@@ -63,7 +63,12 @@ public class Equipment : BaseStats
 
     public string ToStringData()
     {
-        string Stat = AttackDamage + "-" + HealthPoint + "-" + DefensePoint + "-" + Speed + "-" + (int)quality + "-" + Level;
+        string Stat = "AttackDamage:" + AttackDamage + "-" +
+                      "HealthPoint:" + HealthPoint + "-" +
+                      "DefensePoint:" + DefensePoint + "-" +
+                      "Speed:" + Speed + "-" +
+                      "quality:" + (int)quality + "-" +
+                      "Level:" + Level;
         string Passive = "";
         foreach (KeyValuePair<Passive, float> kvp in PassiveList)
             Passive += "-" + (int)kvp.Key + "+" + kvp.Value;
@@ -76,13 +81,13 @@ public class Equipment : BaseStats
     {
         List<string> dataList = new List<string>(DataReceive.Split("-"));
 
-        this.AttackDamage = (float)Convert.ToDouble(dataList[0]);
-        this.HealthPoint = (float)Convert.ToDouble(dataList[1]);
-        this.DefensePoint = (float)Convert.ToDouble(dataList[2]);
-        this.Speed = (float)Convert.ToDouble(dataList[3]);
+        this.AttackDamage = (float)Convert.ToDouble(dataList[0].Split(":")[1]);
+        this.HealthPoint = (float)Convert.ToDouble(dataList[1].Split(":")[1]);
+        this.DefensePoint = (float)Convert.ToDouble(dataList[2].Split(":")[1]);
+        this.Speed = (float)Convert.ToDouble(dataList[3].Split(":")[1]);
         this.type = (Equipment.Type)i;
-        this.quality = (Equipment.Quality)Convert.ToInt16(dataList[4]);
-        this.Level = Convert.ToInt16(dataList[5]);
+        this.quality = (Equipment.Quality)Convert.ToInt16(dataList[4].Split(":")[1]);
+        this.Level = Convert.ToInt16(dataList[5].Split(":")[1]);
 
 
         if (this.Level == 0)

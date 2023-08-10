@@ -61,10 +61,10 @@ public class FightManager : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            if (CurrentChapter.MyTeam[i] != null)
+            if (i < CurrentChapter.MyTeam.Count && CurrentChapter.MyTeam[i] != null)
             {
                 PlayerTeam[i].gameObject.SetActive(true);
-                PlayerTeam[i].CharacterClone = CurrentChapter.MyTeam[i].Clone();
+                PlayerTeam[i].Character = CurrentChapter.MyTeam[i];
                 PlayerTeam[i].stateData = FightingUnit.StateData.HaveChamp;
                 PlayerTeam[i].team = FightingUnit.Team.Player;
                 PlayerTeam[i].position = (FightingUnit.Position)i;
@@ -81,7 +81,7 @@ public class FightManager : MonoBehaviour
             if (i < CurrentChapter.EnemyTeam.Count && CurrentChapter.EnemyTeam[i] != null)
             {
                 EnemyTeam[i].gameObject.SetActive(true);
-                EnemyTeam[i].CharacterClone = CurrentChapter.EnemyTeam[i].Clone();
+                EnemyTeam[i].Character = CurrentChapter.EnemyTeam[i];
                 EnemyTeam[i].stateData = FightingUnit.StateData.HaveChamp;
                 EnemyTeam[i].team = FightingUnit.Team.Enemy;
                 EnemyTeam[i].position = (FightingUnit.Position)i;

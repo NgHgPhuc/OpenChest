@@ -8,8 +8,8 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
 using System.Reflection;
-using static TemporaryData;
 using System.Globalization;
+using UnityEngine.Events;
 
 public class DataManager : MonoBehaviour
 {
@@ -19,6 +19,8 @@ public class DataManager : MonoBehaviour
 
     string LoadingState;
     int index = 5;
+
+    public UnityEvent LoadingEvent;
 
     public TemporaryData temporaryData;
 
@@ -40,27 +42,7 @@ public class DataManager : MonoBehaviour
 
     void LoadResource()
     {
-        //load mission
-        //MissionManager.Instance.LoadNextMission();
-
-        //load all skill
-        //List<BaseSkill> skills = new List<BaseSkill>(Resources.LoadAll<BaseSkill>("Skill/"));
-        //temporaryData.skillList = skills;
-
-        //load equip skill
-        //List<string> skillsNameData = new List<string>();
-        //for (int i = 1; i <= 3; i++)
-        //{
-        //    if (DataReceive.Data.ContainsKey("Skill " + i + " Slot"))
-        //        skillsNameData.Add(DataReceive.Data["Skill " + i + " Slot"].Value);
-        //    else
-        //        SaveData("Skill " + i + " Slot", "");
-        //}
-        //TeamManager.Instance.LoadSkillData(skillsNameData);
-
-        //print("All Loading:" + CurrentLoading);
-        //LoadingPanel.GetComponent<Animator>().Play("Loading Screen Ending");
-        //Invoke("Ending", 1.5f);
+        LoadingEvent?.Invoke();
     }
 
 
@@ -68,7 +50,7 @@ public class DataManager : MonoBehaviour
     #region SAVE DATA IN HERE
     ////SAVE
     
-    public void ChangeValue(Item.Type type, float changeMount, ChangeType changeType)
+    public void ChangeValue(Item.Type type, float changeMount, TemporaryData.ChangeType changeType)
     {
         temporaryData.ChangeValue(type, changeMount, changeType);
 

@@ -94,9 +94,9 @@ public class ListSkillSingleton : MonoBehaviour
         }
 
         if(this.skillSlotOfList != null)
-            this.skillSlotOfEquipment.EquipSkill(this.skillSlotOfList.getSkill());
+            this.skillSlotOfEquipment.SetSkillInSlot(this.skillSlotOfList.getSkill());
         else
-            this.skillSlotOfEquipment.EquipSkill(this.skillSlotChosen.getSkill());
+            this.skillSlotOfEquipment.SetSkillInSlot(this.skillSlotChosen.getSkill());
 
         this.skillSlotChosen = listSkillUI.skillDict[this.skillSlotOfEquipment.getSkill().Name];
 

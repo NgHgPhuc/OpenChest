@@ -16,19 +16,19 @@ public class Reward
         switch(item.type)
         {
             case Item.Type.Gold:
-                ResourceManager.Instance.ChangeGold(Mount, TemporaryData.ChangeType.ADDING);
+                DataManager.Instance.ChangeValue(Item.Type.Gold,Mount, TemporaryData.ChangeType.ADDING);
                 break;
 
             case Item.Type.Diamond:
-                ResourceManager.Instance.ChangeDiamond(Mount, TemporaryData.ChangeType.ADDING);
+                DataManager.Instance.ChangeValue(Item.Type.Diamond, Mount, TemporaryData.ChangeType.ADDING);
                 break;
 
             case Item.Type.CurrentExp:
-                ResourceManager.Instance.ChangeExp(Mount, TemporaryData.ChangeType.ADDING);
+                DataManager.Instance.ChangeValue(Item.Type.CurrentExp, Mount, TemporaryData.ChangeType.ADDING);
                 break;
 
             case Item.Type.Chest:
-                ResourceManager.Instance.ChangeChest(Mount, TemporaryData.ChangeType.ADDING);
+                DataManager.Instance.ChangeValue(Item.Type.Chest, Mount, TemporaryData.ChangeType.ADDING);
                 break;
 
             default:

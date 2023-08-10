@@ -25,8 +25,11 @@ public class StatsPanelManager : MonoBehaviour
         }
     }
 
-    void Start()
+    void SetAttr()
     {
+        if (AllStatsPanel != null && AllPassivePanel != null)
+            return;
+
         AllStatsPanel = new List<StatsPanel>();
         AllPassivePanel = new List<StatsPanel>();
 
@@ -38,14 +41,14 @@ public class StatsPanelManager : MonoBehaviour
                 AllPassivePanel.Add(transform.GetChild(i).GetComponent<StatsPanel>());
 
         }
-
-        PowerText.SetText(Power.ToString());
     }
 
     public void Equip(Equipment equipment)
     {
         if (equipment == null)
             return;
+
+        SetAttr();
 
         AllStatsPanel[0].SetStatsValue(equipment.AttackDamage);
         AllStatsPanel[1].SetStatsValue(equipment.HealthPoint);
@@ -54,8 +57,6 @@ public class StatsPanelManager : MonoBehaviour
 
         foreach (KeyValuePair<Equipment.Passive, float> kvp in equipment.PassiveList)
             AllPassivePanel[(int)kvp.Key-1].SetStatsValue(kvp.Value,1);
-
-        PlayerManager.Instance.SetStatsPlayer(AllStatsPanel, AllPassivePanel);
 
         Power += equipment.PowerPoint;
         PowerText.SetText((Convert.ToUInt32(Power)).ToString());

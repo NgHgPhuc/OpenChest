@@ -26,14 +26,12 @@ public class VictoryPanel : MonoBehaviour
         allRewardPanel.gameObject.SetActive(false);
 
         this.currentChapter = currentChapter;
-        rewardPanelUI.SetReward(this.currentChapter.reward);
 
-        this.currentChapter.IsDone = true;
-        this.currentChapter.StarCount = 3;
+        allRewardPanel.Initialize(this.currentChapter);
+        SetUI();
+        OpenNextChapter();
+        GetReward();
 
-        string n = this.currentChapter.Name.Split(" ")[1];
-        Chapter nextChapter = Resources.Load<Chapter>("Chapter/Chapter " + n);
-        nextChapter.IsOpen = true;
     }
 
     public void ExitButton()
@@ -45,6 +43,33 @@ public class VictoryPanel : MonoBehaviour
     {
         InformVictoryPanel.SetActive(false);
         allRewardPanel.gameObject.SetActive(true);
-        allRewardPanel.Initialize();
+    }
+
+    //UI
+    void SetUI()
+    {
+        rewardPanelUI.SetReward(this.currentChapter.reward);
+
+        this.currentChapter.IsDone = true;
+        this.currentChapter.StarCount = 3;
+    }
+    void OpenNextChapter()
+    {
+        string n = this.currentChapter.Name.Split(" ")[1];
+        Chapter nextChapter = Resources.Load<Chapter>("Chapter/Chapter " + n);
+        nextChapter.IsOpen = true;
+    }
+
+    void GetReward()
+    {
+        foreach (Reward r in currentChapter.reward)
+            r.Earning();
+
+        foreach(Character c in this.currentChapter.MyTeam)
+            if (c != null && c.Name != "Player Fighting")
+            {
+                AllySO allySO = Resources.Load<AllySO>("Character/" + c.Name);
+                allySO.character.AddCurrentExp(this.currentChapter.ExpForCharacter);
+            }
     }
 }

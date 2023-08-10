@@ -151,6 +151,22 @@ public class Character : BaseStats
             LevelStats(Level - 1);
     }
 
+    public void AddCurrentExp(float mount)
+    {
+        CurrentExp += mount;
+        if (CheckCanLevelUp())
+            LevelUp();
+    }
+
+    public void AddCurrentExp(float mount,Action e)
+    {
+        CurrentExp += mount;
+        if (CheckCanLevelUp())
+        {
+            LevelUp();
+            e?.Invoke();
+        }
+    }
 
     public bool CheckCanLevelUp()
     {

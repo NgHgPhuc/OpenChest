@@ -101,18 +101,18 @@ public class LogPanel : MonoBehaviour
 
     public void RegisterButton_Func()
     {
-        if(this.RegisterPassword.text.Length < 6)
-        {
-            InformManager.Instance.Initialize_FloatingInform("Password must longer than 5 characters");
-            return;
-        }
+        //if(this.RegisterPassword.text.Length < 6)
+        //{
+        //    InformManager.Instance.Initialize_FloatingInform("Password must longer than 5 characters");
+        //    return;
+        //}
 
 
-        if (this.RegisterPassword.text != this.RegisterRe_Password.text)
-        {
-            InformManager.Instance.Initialize_FloatingInform("Password and re-Password is not duplicated!");
-            return;
-        }
+        //if (this.RegisterPassword.text != this.RegisterRe_Password.text)
+        //{
+        //    InformManager.Instance.Initialize_FloatingInform("Password and re-Password is not duplicated!");
+        //    return;
+        //}
 
         accountManager.RegisterAccount(this.RegisterUsername.text, this.RegisterPassword.text);
     }
