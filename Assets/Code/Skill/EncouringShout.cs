@@ -123,4 +123,9 @@ public class EncouringShout : BaseSkill
 
         return IncreaseMaxHP;
     }
+
+    public override void UpgradeSkill_Effect()
+    {
+        throw new System.NotImplementedException();
+    }
 }

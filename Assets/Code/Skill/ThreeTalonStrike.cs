@@ -37,4 +37,9 @@ public class ThreeTalonStrike : BaseSkill
 
             }
     }
+
+    public override void UpgradeSkill_Effect()
+    {
+        throw new System.NotImplementedException();
+    }
 }

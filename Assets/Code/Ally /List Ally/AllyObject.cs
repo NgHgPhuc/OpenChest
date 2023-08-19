@@ -11,65 +11,70 @@ public class AllyObject : MonoBehaviour, IPointerClickHandler
 {
     public Character character;
     public int index;
-    Image Icon;
-    TextMeshProUGUI Name;
-    TextMeshProUGUI StarCount;
-    TextMeshProUGUI Level;
-    StarListPanel StarList;
-    List<GameObject> StarShow = new List<GameObject>();
-    GameObject TierEffect;
-    Image TierEffect_Image;
-    Animator TierEffect_Animator;
 
-    CanvasGroup canvasGroup;
+    public Image Background;
+    public Image Icon;
+    public Image Shadow;
+    public TextMeshProUGUI Name;
+    public TextMeshProUGUI Level;
+    public StarListPanel StarList;
+    public Image TierEffect;
+    public Image Role;
+    public GameObject LockIcon;
+    public Slider SharpBarProgress;
+    public TextMeshProUGUI TextProgress;
+    public GameObject InTeamIcon;
 
-    void Attr()
-    {
-        Icon = transform.Find("Character Panel").Find("Character").GetComponent<Image>();
-        Name = transform.Find("Name Panel").GetChild(0).GetComponent<TextMeshProUGUI>();
-        StarCount = transform.Find("Star Count").GetComponent<TextMeshProUGUI>();
-        Level = transform.Find("Level").GetComponent<TextMeshProUGUI>();
-        StarList = transform.Find("Star List ").GetComponent<StarListPanel>();
-        TierEffect = transform.Find("Tier Effect").gameObject;
-        TierEffect_Image = TierEffect.GetComponent<Image>();
-        TierEffect_Animator = TierEffect.GetComponent<Animator>();
-
-        canvasGroup = GetComponent<CanvasGroup>();
-    }
+    public CanvasGroup canvasGroup;
 
     public void SetAlly(Character character,int index)
     {
         if (character == null)
             return;
 
-        //this.character = character.Clone();
         this.character = character;
         this.index = index;
-        Attr();
 
-        if (!character.IsOwn)
-            canvasGroup.alpha = 0.7f;
+        if (character.IsOwn)
+            OpenAllyUI();
         else
-            canvasGroup.alpha = 1f;
+            LockAllyUI();
+
+        InTeamIcon.SetActive(character.IsInTeam);
 
         Icon.sprite = this.character.Icon;
-        StarCount.SetText(this.character.currentStarCount.ToString());
+        Shadow.sprite = this.character.Icon;
         Name.SetText(this.character.Name);
-        Name.color = character.GetColor();
-        Level.SetText(this.character.Level.ToString());
+        Level.SetText("Lv. " + this.character.Level.ToString());
 
         int currentStarCount = character.currentStarCount;
         int maxStarCount = character.maxStarCount;
         StarList.SetStarCount(currentStarCount, maxStarCount, 5);
 
-        if ((int)character.tier >= 2)
-        {
-            TierEffect.SetActive(true);
-            TierEffect_Image.color = character.GetColor();
-        }
-        else
-            TierEffect.SetActive(false);
+        TierEffect.color = character.GetColor();
+        Role.sprite = Resources.Load<Sprite>("Character Role/" + character.role);
 
+        int currentSharp = character.CurrentSharp;
+        int needSharp = character.NeedSharp;
+        TextProgress.SetText(currentSharp + "/" + needSharp);
+        SharpBarProgress.value = (float)currentSharp / needSharp;
+    }
+
+    void OpenAllyUI()
+    {
+        Level.gameObject.SetActive(true);
+        Icon.color = Color.white;
+        LockIcon.SetActive(false);
+        Background.color = new Color(161f / 255, 200f / 255, 224f / 255);
+        canvasGroup.alpha = 1f;
+    }
+    void LockAllyUI()
+    {
+        Level.gameObject.SetActive(false);
+        Icon.color = new Color(180f / 255, 180f / 255, 180f / 255);
+        LockIcon.SetActive(true);
+        Background.color = new Color(120f / 255, 120f / 255, 120f / 255);
+        canvasGroup.alpha = 0.85f;
     }
 
     public void OnPointerClick(PointerEventData eventData)

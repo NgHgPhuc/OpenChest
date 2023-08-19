@@ -55,6 +55,14 @@ public class ChapterPanelUI : MonoBehaviour
 
     public void EnterButton()
     {
+        if (!TicketClearPanel.Instance.IsEnoughTicket(1))
+        {
+            InformManager.Instance.Initialize_FloatingInform("You do not enough ticket");
+            return;
+        }
+
+        TicketClearPanel.Instance.UsingTicket(-1);
+
         this.chapter.SetMyTeam(TeamManager.Instance.MyTeam());
 
         PlayerPrefs.SetString("Current Chapter Name", chapter.Name);

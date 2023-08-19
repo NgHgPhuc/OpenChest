@@ -28,8 +28,8 @@ public class EquipmentData : MonoBehaviour, IPointerClickHandler
 
     public void SetEquipmentData(Equipment equipment)
     {
-        if(slot != null)
-            StatsPanelManager.Instance.Unequip(slot);
+        //if(slot != null)
+        //    StatsPanelManager.Instance.Unequip(slot);
 
         this.equipment = equipment;
         SetSlotData(equipment);
@@ -40,7 +40,7 @@ public class EquipmentData : MonoBehaviour, IPointerClickHandler
         }
         equipmentSlot.SetEquipmentInSlot(this.equipment);
 
-        StatsPanelManager.Instance.Equip(slot);
+        //StatsPanelManager.Instance.Equip(slot);
 
     }
 
@@ -57,7 +57,7 @@ public class EquipmentData : MonoBehaviour, IPointerClickHandler
         foreach (Equipment.Passive key in keys)
             slot.PassiveList[key] += slot.PassiveList[key] * PassivePlus / 100f;
 
-        slot.PowerPoint = slot.calPowerPoint();
+        //slot.PowerPoint = slot.PowerPoint();
 
     }
 

@@ -7,5 +7,5 @@ using UnityEngine.UI;
 public class AllySO : ScriptableObject
 {
     public Character character;
-
+    private void OnEnable() => hideFlags = HideFlags.DontUnloadUnusedAsset;
 }

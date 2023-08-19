@@ -46,7 +46,7 @@ public class ResourceManager : MonoBehaviour
 
     public void ChangeGold(float Mount, TemporaryData.ChangeType changeType)
     {
-        DataManager.Instance.temporaryData.ChangeValue(Item.Type.Gold, Mount, changeType);
+        DataManager.Instance.ChangeValue(Item.Type.Gold, Mount, changeType);
 
         ShowFloating(Mount, changeType, GoldMount.transform);
         UpdateShowUI();
@@ -56,7 +56,7 @@ public class ResourceManager : MonoBehaviour
 
     public void ChangeDiamond(float Mount, TemporaryData.ChangeType changeType)
     {
-        DataManager.Instance.temporaryData.ChangeValue(Item.Type.Diamond, Mount, changeType);
+        DataManager.Instance.ChangeValue(Item.Type.Diamond, Mount, changeType);
 
         ShowFloating(Mount, changeType, DiamondMount.transform);
         UpdateShowUI();
@@ -66,7 +66,7 @@ public class ResourceManager : MonoBehaviour
 
     public void ChangeExp(float Mount, TemporaryData.ChangeType changeType)
     {
-        DataManager.Instance.temporaryData.ChangeValue(Item.Type.CurrentExp, Mount, changeType);
+        DataManager.Instance.ChangeValue(Item.Type.CurrentExp, Mount, changeType);
 
         ShowFloating(Mount, changeType, Progress.transform);
         UpdateShowUI();
@@ -77,14 +77,14 @@ public class ResourceManager : MonoBehaviour
     }
     public void LevelUp()
     {
-        DataManager.Instance.temporaryData.ChangeValue(Item.Type.PlayerLevel, 1, TemporaryData.ChangeType.ADDING);
+        DataManager.Instance.ChangeValue(Item.Type.PlayerLevel, 1, TemporaryData.ChangeType.ADDING);
 
         float NeedExp = DataManager.Instance.temporaryData.GetValue_Float(Item.Type.NeedExp);
         int PlayerLevel = DataManager.Instance.temporaryData.GetValue_Int(Item.Type.PlayerLevel);
 
         ChangeExp(NeedExp, TemporaryData.ChangeType.USING);
         float IncreaseNeedExp = NeedExp * (10 + PlayerLevel) / 100;
-        DataManager.Instance.temporaryData.ChangeValue(Item.Type.NeedExp, IncreaseNeedExp, TemporaryData.ChangeType.ADDING);
+        DataManager.Instance.ChangeValue(Item.Type.NeedExp, IncreaseNeedExp, TemporaryData.ChangeType.ADDING);
 
         Level.SetText(PlayerLevel.ToString());
 
@@ -96,7 +96,7 @@ public class ResourceManager : MonoBehaviour
         if(DataManager.Instance.temporaryData.GetValue_Int(Item.Type.Chest) <= 0)
             OpenChestPanel.Instance.InitializeChest();
 
-        DataManager.Instance.temporaryData.ChangeValue(Item.Type.Chest, Mount, changeType);
+        DataManager.Instance.ChangeValue(Item.Type.Chest, Mount, changeType);
 
         ShowFloating(Mount, changeType, ChestCount.transform);
         UpdateShowUI();

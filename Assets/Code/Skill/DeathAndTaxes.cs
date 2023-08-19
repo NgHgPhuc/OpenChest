@@ -5,6 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Death And Taxes", menuName = "Skill/Death And Taxes")]
 public class DeathAndTaxes : BaseSkill
 {
+    public override void UpgradeSkill_Effect()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
     {
         Attack currentUnitAttack = currentUnit.attack();

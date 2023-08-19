@@ -85,14 +85,12 @@ public class ChestManager : MonoBehaviour
             else equipment.PassiveList[(BaseStats.Passive)PassiveNum] = PassiveValue;
         }
 
-        equipment.PowerPoint = equipment.calPowerPoint();
-
         return equipment;
     }
 
     Equipment.Type RandomType()
     {
-        int Type = UnityEngine.Random.Range(1, 14);
+        int Type = UnityEngine.Random.Range(1, 13);
         return (Equipment.Type)Type;
     }
     Equipment.Quality RandomQuality()

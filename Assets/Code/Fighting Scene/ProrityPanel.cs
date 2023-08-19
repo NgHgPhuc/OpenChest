@@ -6,18 +6,21 @@ using UnityEngine.UI;
 
 public class ProrityPanel : MonoBehaviour
 {
-    List<Image> PriorityList = new List<Image>();
-
+    List<Image> BackgroundList = new List<Image>();
+    List<Image> IconList = new List<Image>();
     public static ProrityPanel Instance { get; private set; }
 
     Image Current;
     private void Awake()
     {
-        for(int i = 1; i <= 8; i++)
+        for(int i = 0; i <= 7; i++)
         {
-            Transform p = transform.Find("Priority " + i).GetChild(1);
-            Image allyImage = p.GetChild(0).GetComponentInChildren<Image>();
-            PriorityList.Add(allyImage);
+            Transform backgroundTrans = transform.GetChild(i).GetChild(1);
+            Image backgroundImage = backgroundTrans.GetComponent<Image>();
+            BackgroundList.Add(backgroundImage);
+
+            Image IconImage = backgroundTrans.GetChild(0).GetComponent<Image>();
+            IconList.Add(IconImage);
         }
 
         if (Instance != null && Instance != this)
@@ -47,13 +50,13 @@ public class ProrityPanel : MonoBehaviour
         {
             if (i < c)
             {
-                PriorityList[i].transform.parent.parent.gameObject.SetActive(true);
-                PriorityList[i].sprite = fightingUnitList[i].CharacterClone.Avatar;
+                BackgroundList[i].transform.parent.parent.gameObject.SetActive(true);
+                IconList[i].sprite = fightingUnitList[i].CharacterClone.Avatar;
                 if (fightingUnitList[i].stateFighting == FightingUnit.StateFighting.Death)
-                    PriorityList[i].color = Color.gray;
+                    BackgroundList[i].color = Color.gray;
             }
             else
-                PriorityList[i].transform.parent.parent.gameObject.SetActive(false);
+                BackgroundList[i].transform.parent.parent.gameObject.SetActive(false);
         }
     }
 
@@ -62,6 +65,7 @@ public class ProrityPanel : MonoBehaviour
         if(Current != null)
             Current.color = Color.white;
 
-        PriorityList[index].color = Color.green;
+        BackgroundList[index].color = Color.green;
+        Current = BackgroundList[index];
     }
 }

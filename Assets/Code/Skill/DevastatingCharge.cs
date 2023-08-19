@@ -94,4 +94,9 @@ public class DevastatingCharge : BaseSkill
             targetUnit.OnlyTakenDamage(DamageCause, 100);
 
     }
+
+    public override void UpgradeSkill_Effect()
+    {
+        throw new System.NotImplementedException();
+    }
 }

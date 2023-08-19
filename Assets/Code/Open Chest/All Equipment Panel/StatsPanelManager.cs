@@ -9,23 +9,9 @@ public class StatsPanelManager : MonoBehaviour
     public List<StatsPanel> AllStatsPanel { get; private set; }
     public List<StatsPanel> AllPassivePanel { get; private set; }
 
-    float Power=0;
     public TextMeshProUGUI PowerText;
 
-    public static StatsPanelManager Instance { get; private set; }
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
-
-    void SetAttr()
+    public void Initialize()
     {
         if (AllStatsPanel != null && AllPassivePanel != null)
             return;
@@ -43,40 +29,17 @@ public class StatsPanelManager : MonoBehaviour
         }
     }
 
-    public void Equip(Equipment equipment)
+    public void ShowStats(List<float> Stats, List<float> Passives,float AllPower)
     {
-        if (equipment == null)
-            return;
+        Initialize();
 
-        SetAttr();
+        for (int i = 0; i < AllStatsPanel.Count; i++)
+            AllStatsPanel[i].SetStatsValue(Stats[i]);
 
-        AllStatsPanel[0].SetStatsValue(equipment.AttackDamage);
-        AllStatsPanel[1].SetStatsValue(equipment.HealthPoint);
-        AllStatsPanel[2].SetStatsValue(equipment.DefensePoint);
-        AllStatsPanel[3].SetStatsValue(equipment.Speed);
+        for (int i = 0; i < AllPassivePanel.Count; i++)
+            AllPassivePanel[i].SetStatsValue(Passives[i],1);
 
-        foreach (KeyValuePair<Equipment.Passive, float> kvp in equipment.PassiveList)
-            AllPassivePanel[(int)kvp.Key-1].SetStatsValue(kvp.Value,1);
+        PowerText.SetText((Convert.ToUInt32(AllPower)).ToString());
 
-        Power += equipment.PowerPoint;
-        PowerText.SetText((Convert.ToUInt32(Power)).ToString());
-
-    }
-
-    public void Unequip(Equipment equipment)
-    {
-        if (equipment == null)
-            return;
-
-        AllStatsPanel[0].SetStatsValue(-equipment.AttackDamage);
-        AllStatsPanel[1].SetStatsValue(-equipment.HealthPoint);
-        AllStatsPanel[2].SetStatsValue(-equipment.DefensePoint);
-        AllStatsPanel[3].SetStatsValue(-equipment.Speed);
-
-        foreach (KeyValuePair<Equipment.Passive, float> kvp in equipment.PassiveList)
-            AllPassivePanel[(int)kvp.Key-1].SetStatsValue(-kvp.Value);
-
-        Power -= equipment.PowerPoint;
-        PowerText.SetText((Convert.ToUInt32(Power)).ToString());
     }
 }

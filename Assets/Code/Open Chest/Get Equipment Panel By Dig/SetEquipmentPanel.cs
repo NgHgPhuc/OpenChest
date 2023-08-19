@@ -21,27 +21,29 @@ public class SetEquipmentPanel : MonoBehaviour
 
     public void SetEquipment(Equipment equipment)
     {
-        SetError();
+        SetAttr();
 
         equipmentSlot.SetEquipmentInSlot(equipment);
         equipmentStats.SetStatsInSlot(equipment);
         if(equipment != null)
-            equipmentPower.SetText(equipment.PowerPoint.ToString(CultureInfo.InvariantCulture));
+            equipmentPower.SetText(equipment.PowerPoint().ToString(CultureInfo.InvariantCulture));
         else equipmentPower.SetText("No Equipment");
     }
 
-    void SetError()
+    void SetAttr()
     {
-        if (equipmentSlot == null || equipmentStats == null || equipmentPower == null)
-        {
+        if (equipmentSlot == null)
             equipmentSlot = transform.Find("Weapon Slot Panel").GetComponent<EquipmentSlot>();
+
+        if (equipmentStats == null)
             equipmentStats = transform.Find("Equipment Stats Panel").GetComponent<EquipmentStats>();
+
+        if (equipmentPower == null)
             equipmentPower = transform.Find("Equipment Power").GetComponent<TextMeshProUGUI>();
-        }
     }
     public float Power()
     {
-        SetError();
+        SetAttr();
         try
         {
             return (float)Convert.ToDouble(equipmentPower.text);

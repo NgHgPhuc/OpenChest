@@ -37,7 +37,7 @@ public class DetailAllyPanel : MonoBehaviour
 
         allyInfomationUI.SetAllyUI(this.character);
         statAndLevelUI.SetAllyUI(this.character);
-        skillAllyPanel.SetSkillList(this.character.skill);
+        skillAllyPanel.SetSkillList(this.character.skills);
         transcendAllyPanel.SetTranscendUI(this.character);
 
         ResetValueUsing();

@@ -71,7 +71,7 @@ public class TurnManager : MonoBehaviour
         if (currentUnitAttack.IsHaveEffect == true)
             currentUnit.Unit_Attack?.Invoke(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
 
-        if (targetUnitDefense.IsDogde)
+        if (targetUnitDefense.IsDodge)
         {
             targetUnit.DogdeUI();
             return;
@@ -89,25 +89,19 @@ public class TurnManager : MonoBehaviour
         if (targetUnit.stateFighting == FightingUnit.StateFighting.Death)
             return;
 
-        //if (currentUnitAttack.IsStun)
+        //if (targetUnitDefense.IsCounter)
         //{
-        //    targetUnit.StunUI();
-        //    return;
+        //    Attack targetUnitAttack = targetUnit.attack();
+        //    Defense currentUnitDefense = currentUnit.defense();
+        //    currentUnitDefense.IsCounter = false;
+        //    AttackOneEnemy(targetUnit, currentUnit, targetUnitAttack, currentUnitDefense);
         //}
-
-        if (targetUnitDefense.IsCounter)
-        {
-            Attack targetUnitAttack = targetUnit.attack();
-            Defense currentUnitDefense = currentUnit.defense();
-            currentUnitDefense.IsCounter = false;
-            AttackOneEnemy(targetUnit, currentUnit, targetUnitAttack, currentUnitDefense);
-        }
     }
 
     public void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit,int skillCount)
     {
         this.currentUnit = currentUnit;
-        currentUnit.CharacterClone.skill[skillCount].UsingSkill(currentUnit, ChosenUnit);
+        currentUnit.CharacterClone.skills[skillCount].UsingSkill(currentUnit, ChosenUnit);
         EndCurrentTurn();
     }
 

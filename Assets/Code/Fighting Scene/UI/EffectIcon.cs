@@ -42,7 +42,7 @@ public class EffectIcon : MonoBehaviour
                 EffectIconText[i].gameObject.SetActive(true);
 
                 EffectIconList[i].sprite = buffs[i].Icon;
-                EffectIconText[i].SetText((buffs[i].duration+1).ToString());
+                EffectIconText[i].SetText((buffs[i].duration).ToString());
             }
             else
             {

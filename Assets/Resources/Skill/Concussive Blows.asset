@@ -15,9 +15,21 @@ MonoBehaviour:
   Name: Concussive Blows
   Cooldown: 4
   Icon: {fileID: 21300000, guid: d04526c2530ed40fba30fd9198e710e3, type: 3}
+  Level: 1
   Description: Attack all enemy deal 80% Attack damage on each and have 40% to stun
     them
+  SkillLevelEffect:
+  - 'Level 2: +5% Damage, increase to 50% to stun them'
+  - 'Level 3: +5% Damage, have 20% to decrease their defense point 20% in 1 turn'
+  - 'Level 4: +5% Damage, Increase to 60% Stun them and 30% to decrease their 20%
+    defense point in 1 turn'
+  - 'Level 5: +5% Damage, Increase to 60% to stun them and 40% to decrease their
+    30% defense point in 1 turn'
   range: 2
-  DamagePercent: 0
-  DamagePlus: 0
-  type: 0
+  skillType: 1
+  userType: 0
+  CurrentSharp: 0
+  NeedSharp: 0
+  IsHave: 0
+  IsEquip: 0
+  SlotEquipIndex: 0

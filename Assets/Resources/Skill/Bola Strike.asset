@@ -13,13 +13,24 @@ MonoBehaviour:
   m_Name: Bola Strike
   m_EditorClassIdentifier: 
   Name: Bola Strike
-  Cooldown: 3
+  Cooldown: 4
   Icon: {fileID: 21300000, guid: 1d22df4b3bcde4f30a7b635e8b1526ee, type: 3}
-  Description: Attack all enemy deal 120% Attack Damage and have 40% to decrease
-    30% Speed
+  Level: 5
+  Description: Attack all enemy deal 80% Attack Damage and have 40% to decrease 30%
+    Speed
+  SkillLevelEffect:
+  - 'Level 2: + 5% Damage, increase to 50% to decrease 30% Speed'
+  - 'Level 3: + 5% Damage, increase to 60% to decrease 35% Speed, and have 10% to
+    increase 10% speed of user'
+  - 'Level 4: + 5% Damage, increase to 80% to decrease 40% Speed, and have 20% to
+    increase 15% speed of user'
+  - 'Level 5: + 5% Damage, increase to 100% to decrease 50% Speed, and have 30% to
+    increase 20% speed of user'
   range: 2
   skillType: 1
   userType: 0
   CurrentSharp: 0
+  NeedSharp: 0
   IsHave: 0
   IsEquip: 0
+  SlotEquipIndex: 0

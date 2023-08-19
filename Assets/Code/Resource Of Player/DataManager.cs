@@ -15,11 +15,6 @@ public class DataManager : MonoBehaviour
 {
     public float LoadingTimes;
 
-    int CurrentLoading = 0;
-
-    string LoadingState;
-    int index = 5;
-
     public UnityEvent LoadingEvent;
 
     public TemporaryData temporaryData;
@@ -37,25 +32,24 @@ public class DataManager : MonoBehaviour
         }
 
         temporaryData.LoadAllItemSO();
-        LoadResource();
     }
 
-    void LoadResource()
+    private void Start()
     {
         LoadingEvent?.Invoke();
     }
 
 
 
-    #region SAVE DATA IN HERE
-    ////SAVE
-    
+
     public void ChangeValue(Item.Type type, float changeMount, TemporaryData.ChangeType changeType)
     {
         temporaryData.ChangeValue(type, changeMount, changeType);
 
         SaveData(type.ToString(), temporaryData.GetValue_String(type));
     }
+    #region SAVE DATA IN HERE
+    ////SAVE
 
     public void SaveData(string dataName, string dataSave)
     {
@@ -67,15 +61,11 @@ public class DataManager : MonoBehaviour
             },
         };
 
-        PlayFabClientAPI.UpdateUserData(request, OnSaveSuccess, OnSaveFail);
+        PlayFabClientAPI.UpdateUserData(request, (UpdateUserDataResult obj) => { }, LoadDataFailed);
     }
-
-    private void OnSaveFail(PlayFabError obj)
+    public void LoadDataFailed(PlayFabError obj)
     {
-    }
-
-    private void OnSaveSuccess(UpdateUserDataResult obj)
-    {
+        print(obj);
     }
     #endregion
 }

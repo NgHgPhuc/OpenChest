@@ -57,6 +57,11 @@ public class RewardPanelUI : MonoBehaviour
         {
             rewardItemUIList.Add(RewardList.GetChild(i).GetComponent<RewardItemUI>());
         }
+        RewardList = transform.Find("Reward List (1)");
+        for (int i = 0; i < 5; i++)
+        {
+            rewardItemUIList.Add(RewardList.GetChild(i).GetComponent<RewardItemUI>());
+        }
 
     }
     void SetAttrCondition()

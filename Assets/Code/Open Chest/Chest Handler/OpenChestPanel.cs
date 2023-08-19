@@ -148,7 +148,7 @@ public class OpenChestPanel : MonoBehaviour
         getEquipmentPanel.gameObject.SetActive(true);
         getEquipmentPanel.SetNewEquipment(NewEquipment);
 
-        Equipment OldEquipment = EquipmentPanelManager.Instance.GetEquipment(NewEquipment.type);
+        Equipment OldEquipment = EquipmentManager.Instance.Get(NewEquipment.type);
         getEquipmentPanel.SetOldEquipment(OldEquipment);
 
         getEquipmentPanel.NewPanel.SetActive(true);

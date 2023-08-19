@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Defiance Shout", menuName = "Skill/Defiance Shout")]
-public class DefianceShout: BaseSkill
+public class DefianceShout : BaseSkill
 {
     public override void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
     {
@@ -79,5 +79,10 @@ public class DefianceShout: BaseSkill
         };
 
         return IncreaseDEF;
+    }
+
+    public override void UpgradeSkill_Effect()
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.TextCore.Text;
 
-public class CompainPanelChosen : CompainPanel
+public class CompainPanelChosen : MonoBehaviour
 {
     public List<CompainSlot> compainSlotUIs = new List<CompainSlot>();
 

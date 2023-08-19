@@ -10,7 +10,13 @@ public abstract class BaseSkill : ScriptableObject
     public string Name;
     public int Cooldown;
     public Sprite Icon;
+    public int Level = 1;
+
+    [TextAreaAttribute]
     public string Description;
+
+    [TextAreaAttribute]
+    public List<string> SkillLevelEffect;
 
     public enum Range
     {
@@ -38,9 +44,19 @@ public abstract class BaseSkill : ScriptableObject
     public UserType userType;
 
     public int CurrentSharp;
+    public int NeedSharp;
     public bool IsHave;
     public bool IsEquip;
     public int SlotEquipIndex;
+
+    private void Awake()
+    {
+        SetAttr();
+    }
+    public void SetAttr()
+    {
+        UpgradeSkill_Effect();//set attr    
+    }
 
     public string ToStringData()
     {
@@ -60,4 +76,18 @@ public abstract class BaseSkill : ScriptableObject
         SlotEquipIndex = Convert.ToInt16(dataList[3].Split(":")[1]);
     }
     public abstract void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit);
+
+    bool CheckEnoughSharp()
+    {
+        if (CurrentSharp >= NeedSharp)
+            return true;
+        return false;
+    }
+    public void UpgradeSkill()
+    {
+        if (CheckEnoughSharp())
+            UpgradeSkill_Effect();
+
+    }
+    public abstract void UpgradeSkill_Effect();
 }

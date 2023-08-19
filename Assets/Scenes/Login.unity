@@ -10254,7 +10254,7 @@ MonoBehaviour:
   LoadingPanel: {fileID: 185426548}
   LoadingTMP: {fileID: 1618502714}
   LoadingProgress: {fileID: 397718454}
-  LoadingTimes: 0.1
+  LoadingTimes: 0
   temporaryData: {fileID: 11400000, guid: 75734f4df416d4bb297098e105899cb0, type: 2}
 --- !u!1 &1768207060
 GameObject:

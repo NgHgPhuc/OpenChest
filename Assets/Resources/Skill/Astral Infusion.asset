@@ -15,9 +15,26 @@ MonoBehaviour:
   Name: Astral Infusion
   Cooldown: 3
   Icon: {fileID: 21300000, guid: 0ad791391a38a4c49bcb458ba4474a55, type: 3}
-  Description: Heals for a allies the health equal to 50% of damage
+  Level: 5
+  Description: Heals for a allies the health equal to 50% of Attack Damage
+  SkillLevelEffect:
+  - 'Level 1 : Heals for a allies the health equal to 50% of Attack Damage'
+  - 'Level 2 : Heals for a allies the health equal to <color = green>60%</color>
+    of Attack Damage'
+  - 'Level 3 : Heals for a allies the health equal to <color = green>70%</color>
+    of Attack Damage, <color = green> have 60% to add "healing" buff (heal 10% max
+    hp/ 1 turn) in 1 turn</color>'
+  - 'Level 4 :  Heals for a allies the health equal to <color = green>80%</color>
+    of Attack Damage, have <color = green>100%</color> to add "healing" buff (heal
+    10% max hp/ 1 turn) in 1 turn'
+  - "Level 5 :  Heals for a allies the health equal to <color = green>90%</color>
+    of Attack Damage, have 100% to add \"healing\" buff (heal 10% max hp/ 1 turn)
+    in <color = green>2</color> turn, <color = green>-1 turn</color>\n CD</color>"
   range: 3
-  type: 0
+  skillType: 1
+  userType: 0
   CurrentSharp: 80
+  NeedSharp: 0
   IsHave: 1
   IsEquip: 0
+  SlotEquipIndex: 0

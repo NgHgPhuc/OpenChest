@@ -33,7 +33,6 @@ public class GetEquipmentPanel : MonoBehaviour
     public void SetNewEquipment(Equipment equipment)
     {
         this.NewEquipment = equipment;
-        this.NewEquipment.PowerPoint = this.NewEquipment.calPowerPoint(); 
         NewEquipmentPanel.SetEquipment(equipment);
         compareNewAndOld.Compare();
     }
@@ -41,15 +40,13 @@ public class GetEquipmentPanel : MonoBehaviour
     public void SetOldEquipment(Equipment equipment)
     {
         this.OldEquipment = equipment;
-        if(this.OldEquipment != null)
-            this.OldEquipment.PowerPoint = this.OldEquipment.calPowerPoint();
         OldEquipmentPanel.SetEquipment(equipment);
         compareNewAndOld.Compare();
     }
 
     public void DropFunc()
     {
-        if (this.OldEquipment == null || this.NewEquipment.calPowerPoint() > this.OldEquipment.calPowerPoint())
+        if (this.OldEquipment == null || this.NewEquipment.PowerPoint() > this.OldEquipment.PowerPoint())
         {
             string paragraph = "The new equipment you found have stronger than you old equipment\nAre you sure to drop it?";
             InformManager.Instance.Initialize_QuestionObject("Warning!", paragraph, Drop);
@@ -62,7 +59,7 @@ public class GetEquipmentPanel : MonoBehaviour
         if (this.NewEquipment == null)
             return;
 
-        float Mount = NewEquipment.PowerPoint;
+        float Mount = NewEquipment.PowerPoint();
         ResourceManager.Instance.ChangeGold(Mount, TemporaryData.ChangeType.ADDING);
         ResourceManager.Instance.ChangeExp(Mount/2, TemporaryData.ChangeType.ADDING);
         this.NewEquipment = null;
@@ -72,7 +69,7 @@ public class GetEquipmentPanel : MonoBehaviour
 
     public void EquipFunc()
     {
-        EquipmentPanelManager.Instance.SetEquipment(this.NewEquipment);
+        EquipmentManager.Instance.EquipNewEquipment(this.NewEquipment);
 
         if(this.OldEquipment == null)
         {

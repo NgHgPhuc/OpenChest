@@ -38,6 +38,8 @@ public class FightManager : MonoBehaviour
     public TextMeshProUGUI RoundText;
     int RoundIndex = 1;
 
+    public bool IsTest;
+
     public static FightManager Instance { get; private set; }
     private void Awake()
     {
@@ -50,14 +52,19 @@ public class FightManager : MonoBehaviour
             Instance = this;
         }
 
-        if(PlayerPrefs.GetString("Current Chapter Name") != null)
+
+        if(IsTest)
+        {
+            CurrentChapter = Resources.Load<Chapter>("Chapter/" + "Chapter Test");
+        }
+        else if(PlayerPrefs.HasKey("Current Chapter Name"))
         {
             string currentChapterName = PlayerPrefs.GetString("Current Chapter Name");
             CurrentChapter = Resources.Load<Chapter>("Chapter/" + currentChapterName);
             PlayerPrefs.DeleteKey("Current Chapter Name");
         }
         else
-            CurrentChapter = Resources.Load<Chapter>("Chapter/" + "Chapter 1");
+            CurrentChapter = Resources.Load<Chapter>("Chapter/" + "Chapter Test");
 
         for (int i = 0; i < 4; i++)
         {
@@ -130,8 +137,8 @@ public class FightManager : MonoBehaviour
         ActionPanel.SetActive(true);
 
         for(int i = 0; i < 3; i++)
-            if(i < All[currentTurn].CharacterClone.skill.Count)
-                SkillButtonList[i].SetSkill(All[currentTurn].CharacterClone.skill[i], All[currentTurn].CoolDown[i]);
+            if(i < All[currentTurn].CharacterClone.skills.Count)
+                SkillButtonList[i].SetSkill(All[currentTurn].CharacterClone.skills[i], All[currentTurn].CurrentCooldown[i]);
             else
                 SkillButtonList[i].SetSkill(null, 0);
 
@@ -139,10 +146,10 @@ public class FightManager : MonoBehaviour
 
     private void OnUsingSkillUI(int skillIndex)
     {
-        if (All[currentTurn].CoolDown[skillIndex] > 0)
+        if (All[currentTurn].CurrentCooldown[skillIndex] > 0)
             return;
 
-        switch (All[currentTurn].CharacterClone.skill[skillIndex].range)
+        switch (All[currentTurn].CharacterClone.skills[skillIndex].range)
         {
             case BaseSkill.Range.OnEnemy:
                 TargetEnemy(EnemyTeam);
@@ -295,7 +302,7 @@ public class FightManager : MonoBehaviour
         UntargetAllEnemy();
         UntargetAllAlly();
 
-        switch (All[currentTurn].CharacterClone.skill[skillIndex].range)
+        switch (All[currentTurn].CharacterClone.skills[skillIndex].range)
         {
             case BaseSkill.Range.OnEnemy: 
                 All[currentTurn].Skill(new List<FightingUnit>() { ChosenTarget }, skillIndex);

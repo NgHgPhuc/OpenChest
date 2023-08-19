@@ -40,4 +40,9 @@ public class VanguardEdge : BaseSkill
         float DamageCause = currentUnitAttack.DamageCause * 0.4f;
         targetUnit.OnlyTakenDamage(DamageCause,0);
     }
+
+    public override void UpgradeSkill_Effect()
+    {
+        throw new System.NotImplementedException();
+    }
 }

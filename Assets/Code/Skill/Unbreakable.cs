@@ -106,4 +106,9 @@ public class Unbreakable : BaseSkill
         Debug.Log(EnemyAttack.DamageCause);
 
     }
+
+    public override void UpgradeSkill_Effect()
+    {
+        throw new System.NotImplementedException();
+    }
 }

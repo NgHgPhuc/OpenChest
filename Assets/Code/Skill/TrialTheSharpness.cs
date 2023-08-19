@@ -20,13 +20,13 @@ public class TrialTheSharpness : BaseSkill
 
                 TurnManager.Instance.AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
 
-                targetUnit.AddBuff(Leech_Debuff(targetUnit));
+                Leech_Debuff(targetUnit);
 
             }
 
     }
 
-    public Buff Leech_Debuff(FightingUnit targetUnit)
+    public void Leech_Debuff(FightingUnit targetUnit)
     {
         Buff Leech = new Buff();
 
@@ -50,12 +50,18 @@ public class TrialTheSharpness : BaseSkill
             targetUnit.BeingAttacked(targetUnit.GetPercentMaxHP(8));
         };
 
-        return Leech;
+        targetUnit.AddBuff(Leech);
     }
 
     void EffectLeech(FightingUnit currentUnit, FightingUnit targetUnit, Attack HaveNothing, Defense HaveNothing2)
     {
-        float DamageTaken = currentUnit.GetPercentMaxHP(10) * currentUnit.CalculateDamage(0);
+        //call "CalculateDamage" because dont need Defense
+        float DamageTaken = currentUnit.GetPercentMaxHP(8) * currentUnit.CalculateDamage(0);
         currentUnit.BeingAttacked(DamageTaken);
+    }
+
+    public override void UpgradeSkill_Effect()
+    {
+        throw new System.NotImplementedException();
     }
 }

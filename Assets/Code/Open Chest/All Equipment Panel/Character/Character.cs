@@ -68,7 +68,7 @@ public class Character : BaseStats
     public bool IsInTeam;
     public int PositionInTeam;
 
-    public List<BaseSkill> skill = new List<BaseSkill>();
+    public List<BaseSkill> skills = new List<BaseSkill>();
 
     public Color GetColor()
     {
@@ -106,12 +106,12 @@ public class Character : BaseStats
         character.IsOwn = this.IsOwn;
 
         character.IsInTeam = this.IsInTeam;
+        character.PositionInTeam = this.PositionInTeam;
 
         foreach (KeyValuePair<Passive, float> kvp in PassiveList)
             character.PassiveList[kvp.Key] = kvp.Value;
-        character.PowerPoint = this.PowerPoint;
 
-        character.skill = new List<BaseSkill>(this.skill);
+        character.skills = new List<BaseSkill>(this.skills);
 
         character.DescriptionTranscendLevel = new List<string>(this.DescriptionTranscendLevel);
 
@@ -196,7 +196,11 @@ public class Character : BaseStats
         this.DefensePoint   *=  (float)Math.Pow(1 + ((int)this.tier + 1 + currentStarCount) / 10f, levelMount);
     }
 
-
+    public void LoadSkills()
+    {
+        foreach(BaseSkill skill in skills)
+            skill.SetAttr();
+    }
     //public string ToStringData()
     //{
     //    string Stat = AttackDamage + "-" + HealthPoint + "-" + DefensePoint + "-" + Speed + "-" + (int)tier + "-"
@@ -242,7 +246,9 @@ public class Character : BaseStats
                     + "Current Sharp:" + CurrentSharp + "-"
                     + "Need Sharp:" + NeedSharp + "-"
                     + "Is Own:" + IsOwn + "-"
-                    + "Is In Team:" + IsInTeam;
+                    + "Is In Team:" + IsInTeam + "-"
+                    + "Position:" + PositionInTeam;
+
 
         return Stat;
     }
@@ -264,7 +270,7 @@ public class Character : BaseStats
         this.NeedSharp = Convert.ToInt32(dataList[4].Split(":")[1]);
         this.IsOwn = Convert.ToBoolean(dataList[5].Split(":")[1]);
         this.IsInTeam = Convert.ToBoolean(dataList[6].Split(":")[1]);
-
+        this.PositionInTeam = Convert.ToInt16(dataList[7].Split(":")[1]);
         return this;
     }
 }

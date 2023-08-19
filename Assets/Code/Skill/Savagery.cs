@@ -5,6 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Savagery", menuName = "Skill/Savagery")]
 public class Savagery : BaseSkill
 {
+    public override void UpgradeSkill_Effect()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
     {
         Attack currentUnitAttack = currentUnit.attack();

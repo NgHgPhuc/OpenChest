@@ -70,7 +70,7 @@ public class CharInfoPanel : MonoBehaviour
         Name.SetText(character.Name);
         Quality.SetText(character.tier.ToString());
         Quality.color = character.GetColor();
-        Power.SetText(character.calPowerPoint().ToString());
+        Power.SetText(character.PowerPoint().ToString());
         CharacterIcon.sprite = character.Icon;
 
         for (int i = 0; i < starPanel.childCount; i++)

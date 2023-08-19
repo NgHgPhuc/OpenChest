@@ -5,13 +5,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "The Last Lighting", menuName = "Skill/The Last Lighting")]
 public class TheLastLighting : BaseSkill
 {
+    public override void UpgradeSkill_Effect()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
     {
+        currentUnit.UsingPercentMaxHP(30);
+
         foreach (FightingUnit targetUnit in ChosenUnit)
             if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
             {
-                currentUnit.UsingPercentHP(30);
-
                 Buff IncreaseDamaged = new Buff();
 
                 IncreaseDamaged.type = Buff.Type.IncreaseDamage;

@@ -15,9 +15,20 @@ MonoBehaviour:
   Name: Darkness Blade
   Cooldown: 3
   Icon: {fileID: 21300000, guid: 019ef7dfa0e544127b29ffd490268f6e, type: 3}
+  Level: 1
   Description: Losing yourself, lost 20% current HP to boost 60% Attack in 1 turn
+  SkillLevelEffect:
+  - 'Level 2: Lost 15% current HP, boost 70% Attack in 1 turn'
+  - 'Level 3: Lost 10% current HP, boost 85% Attack in 1 turn and 20% Defense Point
+    in 1 turn'
+  - 'Level 4: Lost 5% current HP, boost 100% Attack in 1 turn and 40% Defense Point
+    in 1 turn'
+  - 'Level 5: Not lost any Hp, boost 100% Attack and 40% Defense Point in 2 turn'
   range: 0
-  type: 1
+  skillType: 1
+  userType: 0
   CurrentSharp: 40
+  NeedSharp: 0
   IsHave: 1
   IsEquip: 0
+  SlotEquipIndex: 0

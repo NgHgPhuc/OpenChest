@@ -1,0 +1,195 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 751c17d1d6af34194896834350db78a4, type: 3}
+  m_Name: Chapter Test
+  m_EditorClassIdentifier: 
+  Name: Chapter Test
+  IsOpen: 1
+  IsDone: 1
+  StarCount: 3
+  ExpForCharacter: 40
+  EnemyTeam:
+  - AttackDamage: 100
+    HealthPoint: 100000
+    DefensePoint: 100
+    Speed: 17
+    tier: 0
+    role: 0
+    Level: 0
+    Avatar: {fileID: 21300000, guid: 5d180b65b9ada47c180fe5c4f96bc70c, type: 3}
+    Icon: {fileID: 0}
+    Name: Cowboys Cactus
+    currentStarCount: 0
+    maxStarCount: 0
+    DescriptionTranscendLevel: []
+    CurrentExp: 0
+    NeedExp: 0
+    CurrentSharp: 0
+    NeedSharp: 0
+    IsOwn: 0
+    IsInTeam: 0
+    PositionInTeam: 0
+    skills: []
+  - AttackDamage: 100
+    HealthPoint: 100000
+    DefensePoint: 100
+    Speed: 23
+    tier: 0
+    role: 0
+    Level: 0
+    Avatar: {fileID: 21300000, guid: 5d180b65b9ada47c180fe5c4f96bc70c, type: 3}
+    Icon: {fileID: 0}
+    Name: Cowboys Cactus
+    currentStarCount: 0
+    maxStarCount: 0
+    DescriptionTranscendLevel: []
+    CurrentExp: 0
+    NeedExp: 0
+    CurrentSharp: 0
+    NeedSharp: 0
+    IsOwn: 0
+    IsInTeam: 0
+    PositionInTeam: 0
+    skills: []
+  - AttackDamage: 100
+    HealthPoint: 100000
+    DefensePoint: 100
+    Speed: 26
+    tier: 0
+    role: 0
+    Level: 0
+    Avatar: {fileID: 21300000, guid: 5d180b65b9ada47c180fe5c4f96bc70c, type: 3}
+    Icon: {fileID: 0}
+    Name: Cowboys Cactus
+    currentStarCount: 0
+    maxStarCount: 0
+    DescriptionTranscendLevel: []
+    CurrentExp: 0
+    NeedExp: 0
+    CurrentSharp: 0
+    NeedSharp: 0
+    IsOwn: 0
+    IsInTeam: 0
+    PositionInTeam: 0
+    skills: []
+  - AttackDamage: 100
+    HealthPoint: 100000
+    DefensePoint: 100
+    Speed: 13
+    tier: 0
+    role: 0
+    Level: 0
+    Avatar: {fileID: 21300000, guid: 5d180b65b9ada47c180fe5c4f96bc70c, type: 3}
+    Icon: {fileID: 0}
+    Name: Cowboys Cactus
+    currentStarCount: 0
+    maxStarCount: 0
+    DescriptionTranscendLevel: []
+    CurrentExp: 0
+    NeedExp: 0
+    CurrentSharp: 0
+    NeedSharp: 0
+    IsOwn: 0
+    IsInTeam: 0
+    PositionInTeam: 0
+    skills: []
+  reward:
+  - item: {fileID: 11400000, guid: 4d51e5b187a3546d58cc2c10edbd8c54, type: 2}
+    Mount: 10
+  MyTeam:
+  - AttackDamage: 1000
+    HealthPoint: 50000
+    DefensePoint: 100
+    Speed: 30
+    tier: 0
+    role: 0
+    Level: 0
+    Avatar: {fileID: 21300000, guid: 214fbf69bc73545f99606f05d084034a, type: 3}
+    Icon: {fileID: 21300000, guid: 214fbf69bc73545f99606f05d084034a, type: 3}
+    Name: Player Fighting
+    currentStarCount: 0
+    maxStarCount: 0
+    DescriptionTranscendLevel: []
+    CurrentExp: 0
+    NeedExp: 1000
+    CurrentSharp: 0
+    NeedSharp: 0
+    IsOwn: 0
+    IsInTeam: 0
+    PositionInTeam: 0
+    skills:
+    - {fileID: 11400000, guid: 1739d4140968546fda7c6411fa65294c, type: 2}
+    - {fileID: 11400000, guid: e122a65450fd745d4ac7d8eb8a00e562, type: 2}
+    - {fileID: 11400000, guid: ab8f6b508ce714e5ba7f47f11afbe1ad, type: 2}
+  - AttackDamage: 1000
+    HealthPoint: 50000
+    DefensePoint: 100
+    Speed: 27
+    tier: 0
+    role: 0
+    Level: 0
+    Avatar: {fileID: 21300000, guid: b5afb4a0fecf74532842eefcd2f1ca06, type: 3}
+    Icon: {fileID: 21300000, guid: f3fb4cfd7a40a4eaba39e55b081666ae, type: 3}
+    Name: Bald Pirate
+    currentStarCount: 0
+    maxStarCount: 0
+    DescriptionTranscendLevel: []
+    CurrentExp: 0
+    NeedExp: 1000
+    CurrentSharp: 0
+    NeedSharp: 0
+    IsOwn: 0
+    IsInTeam: 0
+    PositionInTeam: 0
+    skills: []
+  - AttackDamage: 1000
+    HealthPoint: 50000
+    DefensePoint: 100
+    Speed: 20
+    tier: 0
+    role: 0
+    Level: 0
+    Avatar: {fileID: 21300000, guid: 60822e94b584f43389dcc2f22997f1e5, type: 3}
+    Icon: {fileID: 0}
+    Name: Bigguy
+    currentStarCount: 0
+    maxStarCount: 0
+    DescriptionTranscendLevel: []
+    CurrentExp: 0
+    NeedExp: 1000
+    CurrentSharp: 0
+    NeedSharp: 0
+    IsOwn: 0
+    IsInTeam: 0
+    PositionInTeam: 0
+    skills: []
+  - AttackDamage: 1000
+    HealthPoint: 50000
+    DefensePoint: 100
+    Speed: 10
+    tier: 0
+    role: 0
+    Level: 0
+    Avatar: {fileID: 21300000, guid: e8f8e4db5e8874a0cadd05156ae588d3, type: 3}
+    Icon: {fileID: 21300000, guid: 214fbf69bc73545f99606f05d084034a, type: 3}
+    Name: Coyote The Mage
+    currentStarCount: 0
+    maxStarCount: 0
+    DescriptionTranscendLevel: []
+    CurrentExp: 0
+    NeedExp: 1000
+    CurrentSharp: 0
+    NeedSharp: 0
+    IsOwn: 0
+    IsInTeam: 0
+    PositionInTeam: 0
+    skills: []

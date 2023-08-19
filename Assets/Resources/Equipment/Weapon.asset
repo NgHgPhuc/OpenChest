@@ -19,7 +19,7 @@ MonoBehaviour:
     DefensePoint: 0
     Speed: 0
     PowerPoint: 0
-    type: 1
+    type: 0
     Icon: {fileID: 0}
     quality: 0
     Level: 0

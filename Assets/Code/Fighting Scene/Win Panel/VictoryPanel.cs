@@ -27,7 +27,6 @@ public class VictoryPanel : MonoBehaviour
 
         this.currentChapter = currentChapter;
 
-        allRewardPanel.Initialize(this.currentChapter);
         SetUI();
         OpenNextChapter();
         GetReward();
@@ -57,7 +56,8 @@ public class VictoryPanel : MonoBehaviour
     {
         string n = this.currentChapter.Name.Split(" ")[1];
         Chapter nextChapter = Resources.Load<Chapter>("Chapter/Chapter " + n);
-        nextChapter.IsOpen = true;
+        if(nextChapter != null)
+            nextChapter.IsOpen = true;
     }
 
     void GetReward()
@@ -65,11 +65,21 @@ public class VictoryPanel : MonoBehaviour
         foreach (Reward r in currentChapter.reward)
             r.Earning();
 
+        List<Character> allies = new List<Character>(new Character[3]);
+        int currentAlliesSlot = 0;
         foreach(Character c in this.currentChapter.MyTeam)
             if (c != null && c.Name != "Player Fighting")
             {
                 AllySO allySO = Resources.Load<AllySO>("Character/" + c.Name);
-                allySO.character.AddCurrentExp(this.currentChapter.ExpForCharacter);
+                Character allyUnit = allySO.character;
+
+                allies[currentAlliesSlot++] = allyUnit.Clone();
+
+                allyUnit.AddCurrentExp(this.currentChapter.ExpForCharacter);
+                DataManager.Instance.SaveData(allySO.character.Name, allySO.character.ToString());
+
             }
+
+        allRewardPanel.Initialize(allies,currentChapter.ExpForCharacter);
     }
 }

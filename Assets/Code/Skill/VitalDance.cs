@@ -46,4 +46,9 @@ public class VitalDance : BaseSkill
 
         return Broken;
     }
+
+    public override void UpgradeSkill_Effect()
+    {
+        throw new System.NotImplementedException();
+    }
 }

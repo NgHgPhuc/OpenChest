@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using UnityEngine.TextCore.Text;
 
 public class TeamManager : MonoBehaviour
 {
@@ -70,7 +71,7 @@ public class TeamManager : MonoBehaviour
         AllyInTeam[slotIndex - 1] = character;
         AllyInTeam[slotIndex - 1].IsInTeam = true;
         AllyInTeam[slotIndex - 1].PositionInTeam = slotIndex;
-        //DataManager.Instance.SaveData(character.Name, character.ToStringData());
+        DataManager.Instance.SaveData(character.Name, character.ToStringData());
 
         for (int i = 0; i < 3; i++)
             AllySlotUIs[i].SetCharacterInSlot(AllyOwnManager.Instance.CharTeam()[i]);
@@ -86,6 +87,7 @@ public class TeamManager : MonoBehaviour
 
         AllyInTeam[slotIndex - 1].IsInTeam = false;
         AllyInTeam[slotIndex - 1].PositionInTeam = 0;
+        DataManager.Instance.SaveData(AllyInTeam[slotIndex - 1].Name, AllyInTeam[slotIndex - 1].ToStringData());
         AllyInTeam[slotIndex - 1] = null;
 
         for (int i = 0; i < 3; i++)

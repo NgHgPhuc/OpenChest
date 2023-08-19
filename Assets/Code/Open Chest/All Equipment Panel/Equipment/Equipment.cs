@@ -56,7 +56,6 @@ public class Equipment : BaseStats
         e.Speed = this.Speed;
         foreach (KeyValuePair<Passive, float> kvp in PassiveList)
             e.PassiveList[kvp.Key] = kvp.Value;
-        e.PowerPoint = this.PowerPoint;
 
         return e;
     }

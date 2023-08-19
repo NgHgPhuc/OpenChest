@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -58,15 +59,15 @@ public class PlayerManager : MonoBehaviour
     }
 
     //call in Stats Panel Manager
-    public void SetStatsPlayer(List<StatsPanel> Stats, List<StatsPanel> Passives)
+    public void SetStatsPlayer()
     {
-        this.Player.AttackDamage = Stats[0].GetValue();
-        this.Player.HealthPoint = Stats[1].GetValue();
-        this.Player.DefensePoint = Stats[2].GetValue();
-        this.Player.Speed = Stats[3].GetValue();
+        this.Player.AttackDamage = EquipmentManager.Instance.Stats[0];
+        this.Player.HealthPoint = EquipmentManager.Instance.Stats[1];
+        this.Player.DefensePoint = EquipmentManager.Instance.Stats[2];
+        this.Player.Speed = EquipmentManager.Instance.Stats[3];
 
-        for (int i = 0; i < Passives.Count; i++)
-            this.Player.PassiveList[(Equipment.Passive)i + 1] = Passives[i].GetValue();
+        for (int i = 0; i < EquipmentManager.Instance.Passives.Count; i++)
+            this.Player.PassiveList[(Equipment.Passive)i + 1] = EquipmentManager.Instance.Passives[i];
     }
 
     public Character GetPlayer()
@@ -81,6 +82,7 @@ public class PlayerManager : MonoBehaviour
         if (Player == null)
             Player = AllySO.character;
 
+        SetStatsPlayer();
         return Player;
     }
 }

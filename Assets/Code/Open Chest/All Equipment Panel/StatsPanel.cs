@@ -27,9 +27,9 @@ public class StatsPanel : MonoBehaviour
 
 
 
-    public virtual void SetStatsValue(float value, int mode = 0)
+    public void SetStatsValue(float value, int mode = 0)
     {
-        this.Value += value;
+        this.Value = value;
         this.Value = (float)Math.Round(this.Value, 2);
         ShowStatsValue(mode);
     }

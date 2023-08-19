@@ -7,11 +7,12 @@ using UnityEngine;
 public class EquipmentSO : ScriptableObject
 {
     public bool IsNull;
+    public float StatsPlus;
+    public float PassivePlus;
 
     public Equipment equipment;
 
-    public float StatsPlus;
-    public float PassivePlus;
+    private void OnEnable() => hideFlags = HideFlags.DontUnloadUnusedAsset;
 
     public Equipment.Type equipmentType()
     {

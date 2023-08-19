@@ -50,4 +50,9 @@ public class Judgement : BaseSkill
 
         return DecreaseDEF;
     }
+
+    public override void UpgradeSkill_Effect()
+    {
+        throw new System.NotImplementedException();
+    }
 }

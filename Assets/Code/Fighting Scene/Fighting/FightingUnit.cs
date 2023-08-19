@@ -23,7 +23,7 @@ public class Attack
 public class Defense
 {
     public float TakenDmgPercent;
-    public bool IsDogde = false;
+    public bool IsDodge = false;
     public bool IsCounter = false;
     public bool IsHaveEffect = true;
 }
@@ -78,7 +78,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     GameObject Shield;
 
     public bool IsTarget;
-    public List<int> CoolDown;
+    public List<int> CurrentCooldown;
 
     //UI
     Slider healthBar;
@@ -168,7 +168,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         }
 
-        CoolDown = new List<int>(new int[this.CharacterClone.skill.Count]);
+        CurrentCooldown = new List<int>(new int[this.CharacterClone.skills.Count]);
+
     }
 
     void UpdateHealthBar()
@@ -299,8 +300,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         ShowBuff();
 
 
-        for (int i = 0; i < CoolDown.Count; i++)
-            CoolDown[i] -= 1;
+        for (int i = 0; i < CurrentCooldown.Count; i++)
+            CurrentCooldown[i] -= 1;
 
         if (IsBlock == true)
             EndShield();
@@ -332,8 +333,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     public void Skill(List<FightingUnit> ChosenUnit,int skillCount)
     {
         TurnManager.Instance.UsingSkill(this,ChosenUnit, skillCount);
-        Floating(this.CharacterClone.skill[skillCount].Name, Color.white);
-        this.CoolDown[skillCount] = this.CharacterClone.skill[skillCount].Cooldown +1;
+        Floating(this.CharacterClone.skills[skillCount].Name, Color.white);
+        this.CurrentCooldown[skillCount] = this.CharacterClone.skills[skillCount].Cooldown +1;
     }
 
 
@@ -402,9 +403,15 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         HealUI();
     }
 
-    public void UsingPercentHP(float percentHP)
+
+    public void HealingPercentMaxHp(float percent)
     {
-        float usingMount = percentHP * MaxHP/100;
+        Heal(GetPercentMaxHP(percent));
+    }
+
+    public void UsingPercentMaxHP(float percent)
+    {
+        float usingMount = GetPercentMaxHP(percent);
         CurrentHP -= usingMount;
         if (CurrentHP <= 0)
             Death();
@@ -432,6 +439,22 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         UpdateHealthBar();
     }
 
+    public void UsingPercentCurrentHP(float percent)
+    {
+        float usingMount = GetPercentCurrentHP(percent);
+        CurrentHP -= usingMount;
+        if (CurrentHP <= 0)
+            Death();
+
+        UpdateHealthBar();
+        HealUI();
+        Floating(Math.Ceiling(usingMount).ToString(), Color.red);
+    }
+    public float GetPercentCurrentHP(float percent)
+    {
+        return CurrentHP * percent / 100f;
+    }
+
 
     //BEING ATTACKED - END BEING ATTACKED
     public Defense defense(float ArmorPenetration = 0)
@@ -445,7 +468,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         float DogdeRate = UnityEngine.Random.Range(0f, 100f);
         if (DogdeRate < this.CharacterClone.PassiveList[BaseStats.Passive.Dodge])
-            defense.IsDogde = true;
+            defense.IsDodge = true;
 
         return defense;
     }
@@ -490,6 +513,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     public void AddBuff(Buff buff)
     {
         buffOfUnit.AddBuff(buff);
+        Floating(buff.type.ToString(), Color.white);
         ShowBuff();
     }
     public void CheckBuff()

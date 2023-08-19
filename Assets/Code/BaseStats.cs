@@ -21,35 +21,18 @@ public class BaseStats
         CriticalChance,
         CriticalDamage
     }
-    public Dictionary<BaseStats.Passive, float> PassiveList = new Dictionary<BaseStats.Passive, float>();
+    public Dictionary<Passive, float> PassiveList = new Dictionary<Passive, float>();
 
-    public float PowerPoint;
-
-    public float calPowerPoint()
+    public float PowerPoint()
     {
         if (this == null)
             return 0;
 
         float powerPoint = this.AttackDamage * 3 + this.HealthPoint * 1.5f + this.DefensePoint * 5 + this.Speed * 8;
-        foreach (KeyValuePair<BaseStats.Passive, float> kvp in this.PassiveList)
+        foreach (KeyValuePair<Passive, float> kvp in this.PassiveList)
             powerPoint += kvp.Value * 30;
 
         return powerPoint;
-    }
-
-    public BaseStats CloneStats()
-    {
-        BaseStats baseStats = new BaseStats();
-
-        baseStats.AttackDamage = this.AttackDamage;
-        baseStats.HealthPoint = this.HealthPoint;
-        baseStats.DefensePoint = this.DefensePoint;
-        baseStats.Speed = this.Speed;
-        foreach (KeyValuePair<Passive, float> kvp in PassiveList)
-            baseStats.PassiveList[kvp.Key] = kvp.Value;
-        baseStats.PowerPoint = this.PowerPoint;
-
-        return baseStats;
     }
 
 }

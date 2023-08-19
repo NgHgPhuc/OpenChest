@@ -53,4 +53,9 @@ public class MockingBlade : BaseSkill
 
         return DecreaseAttack;
     }
+
+    public override void UpgradeSkill_Effect()
+    {
+        throw new System.NotImplementedException();
+    }
 }

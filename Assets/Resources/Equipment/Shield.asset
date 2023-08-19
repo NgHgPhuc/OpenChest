@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 32
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -13,15 +13,14 @@ MonoBehaviour:
   m_Name: Shield
   m_EditorClassIdentifier: 
   IsNull: 1
+  StatsPlus: 0
+  PassivePlus: 0
   equipment:
     AttackDamage: 0
     HealthPoint: 0
     DefensePoint: 0
     Speed: 0
-    PowerPoint: 0
     type: 7
     Icon: {fileID: 0}
     quality: 0
     Level: 0
-  StatsPlus: 0
-  PassivePlus: 0

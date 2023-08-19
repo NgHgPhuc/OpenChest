@@ -88,4 +88,9 @@ public class DeathAdapted : BaseSkill
 
         return IncreaseDEF;
     }
+
+    public override void UpgradeSkill_Effect()
+    {
+        throw new NotImplementedException();
+    }
 }

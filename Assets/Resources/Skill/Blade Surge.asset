@@ -15,9 +15,23 @@ MonoBehaviour:
   Name: Blade Surge
   Cooldown: 2
   Icon: {fileID: 21300000, guid: 7894d6890027c49c2af7c9f92f63ca85, type: 3}
+  Level: 1
   Description: Deal 150% Attack Damage to an Enemy and healing 20% losing HP
+  SkillLevelEffect:
+  - 'Level 2 : + 10% Damage and +5% healing
+
+'
+  - 'Level 3: + 20% Damage and +5% healing, have 60% to cause "Leech" to target (deal
+    5% max hp / 1 turn), in 1 turn'
+  - 'Level 4: + 30% Damage, have 100% to cause "Leech" to target (deal 5% max hp
+    / 1 turn), in 1 turn'
+  - 'Level 5: have 100% to cause "Leech" to target (deal 8% max hp / 1 turn), in
+    2 turn'
   range: 1
-  type: 0
+  skillType: 1
+  userType: 0
   CurrentSharp: 80
+  NeedSharp: 0
   IsHave: 1
   IsEquip: 0
+  SlotEquipIndex: 0

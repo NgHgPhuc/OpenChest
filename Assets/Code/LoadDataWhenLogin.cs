@@ -45,12 +45,7 @@ public class LoadDataWhenLogin : MonoBehaviour
 
     public void LoadData()
     {
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnGetDataSuccess, OnGetDataFail);
-    }
-
-    private void OnGetDataFail(PlayFabError obj)
-    {
-        print(obj.ToString());
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnGetDataSuccess, (PlayFabError obj) => { });
     }
 
     private void OnGetDataSuccess(GetUserDataResult DataReceive)
@@ -82,16 +77,8 @@ public class LoadDataWhenLogin : MonoBehaviour
             },
         };
 
-        PlayFabClientAPI.UpdateUserData(request, OnSaveSuccess, OnSaveFail);
+        PlayFabClientAPI.UpdateUserData(request, (UpdateUserDataResult obj) => { }, (PlayFabError obj) => { });
     }
-    #region Save Status Handle
-    private void OnSaveFail(PlayFabError obj)
-    {
-    }
-    private void OnSaveSuccess(UpdateUserDataResult obj)
-    {
-    }
-    #endregion
 
 
     IEnumerator LoadResource()
@@ -170,9 +157,7 @@ public class LoadDataWhenLogin : MonoBehaviour
             }
             else
             {
-                data = "AttackDamage:0-HealthPoint:0-DefensePoint:0-Speed:0-quality:0-Level:0";
-                //SaveData(type, data);
-                equipmentSO.equipment = equipment.ExtractStringData(i, data);
+                equipmentSO.equipment = null;
                 equipmentSO.IsNull = true;
             }
 
