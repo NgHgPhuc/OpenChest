@@ -41,4 +41,9 @@ public class FloatingObject : MonoBehaviour
         RectTransform r = (RectTransform)this.transform;
         return new Vector3(r.rect.center.x, r.rect.center.y, 1);
     }
+
+    public void SetSpeed(int speed)
+    {
+        animator.speed = speed;
+    }
 }

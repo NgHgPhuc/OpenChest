@@ -106,7 +106,7 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 4d51e5b187a3546d58cc2c10edbd8c54, type: 2}
     Mount: 10
   MyTeam:
-  - AttackDamage: 1000
+  - AttackDamage: 10000000
     HealthPoint: 50000
     DefensePoint: 100
     Speed: 30
@@ -127,8 +127,8 @@ MonoBehaviour:
     IsInTeam: 0
     PositionInTeam: 0
     skills:
-    - {fileID: 11400000, guid: 1739d4140968546fda7c6411fa65294c, type: 2}
-    - {fileID: 11400000, guid: e122a65450fd745d4ac7d8eb8a00e562, type: 2}
+    - {fileID: 11400000, guid: 5b125a18321ce49fd91f36da0d4e5ef2, type: 2}
+    - {fileID: 11400000, guid: 71205acffd39b474a8a7234f074a428b, type: 2}
     - {fileID: 11400000, guid: ab8f6b508ce714e5ba7f47f11afbe1ad, type: 2}
   - AttackDamage: 1000
     HealthPoint: 50000

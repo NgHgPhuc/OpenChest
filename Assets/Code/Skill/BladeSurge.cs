@@ -79,7 +79,7 @@ public class BladeSurge : BaseSkill
                 Defense targetUnitDefense = targetUnit.defense();
                 if (targetUnitDefense.IsDodge)
                 {
-                    targetUnit.DogdeUI();
+                    targetUnit.DodgeUI();
                     continue;
                 }
 

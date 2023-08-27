@@ -7,7 +7,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0797ab01cf5eb4e8295ec0828e9fb35e, type: 3}
   m_Name: Death And Taxes
@@ -15,10 +15,23 @@ MonoBehaviour:
   Name: Death And Taxes
   Cooldown: 3
   Icon: {fileID: 21300000, guid: 27e6253fa88e5469d80a7b38e617a5ef, type: 3}
-  Description: Attack on an enemy deal 250% Attack Damage and penetrate 50% Defense
-    of them
+  Level: 1
+  Description: Attack on an enemy deal 250% Attack Damage and penetrate 20% Defense
+    of them, if eneny have less than 10% max hp, currently death and user will heal
+    10% max hp
+  SkillLevelEffect:
+  - Attack on an enemy deal 250% Attack Damage and penetrate 20% Defense of them,
+    if eneny have less than 10% max hp, currently death and user will heal 10% max
+    hp
+  - 
+  - 
+  - 
+  - 
   range: 1
-  type: 0
+  skillType: 1
+  userType: 0
   CurrentSharp: 40
+  NeedSharp: 0
   IsHave: 1
   IsEquip: 0
+  SlotEquipIndex: 0

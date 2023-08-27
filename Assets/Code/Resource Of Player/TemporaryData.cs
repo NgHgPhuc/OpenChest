@@ -26,6 +26,7 @@ public class TemporaryData : ScriptableObject
     public List<Slot> slotInventories;
     public Dictionary<Item.Type, Slot> inventorys = new Dictionary<Item.Type, Slot>();//split - resource - item
 
+
     public void LoadAllItemSO()
     {
         foreach (Slot i in slotInventories)

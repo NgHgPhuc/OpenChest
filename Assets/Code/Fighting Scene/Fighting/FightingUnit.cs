@@ -1,15 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using TMPro;
 using System;
-using Unity.VisualScripting.Antlr3.Runtime;
-using System.Security.Cryptography;
-using static FightingUnit;
-using static UnityEngine.GraphicsBuffer;
-using UnityEngine.Events;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Attack
 {
@@ -70,6 +64,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     public bool IsTaunted = false;
     public bool IsBlock = false;
 
+    public bool IsActioned = false;
+
     public int Range;
 
     public bool IsInTurn;
@@ -86,6 +82,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     float MaxHP;
     public float CurrentHP;
     Image CharacterIcon;
+    Image CharacterOuterLineSignal;
     Image TargetSignal;
     Image InTurnSignal;
     Transform EffectPanel;
@@ -98,7 +95,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     public ActionCatcher Unit_Attack;
     public ActionCatcher Unit_BeAttacked;
     //public UnityEvent Unit_Block;
-    
+
+    int speedAction;
     private void Awake()
     {
         if (healthBar == null)
@@ -132,8 +130,48 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         if (InTurnSignal == null)
             InTurnSignal = transform.Find("In Turn Signal").GetComponent<Image>();
         InTurnSignal.gameObject.SetActive(false);
+
+        if (CharacterOuterLineSignal == null)
+            CharacterOuterLineSignal = transform.Find("Character Outliner").GetComponent<Image>();
+        CharacterOuterLineSignal.gameObject.SetActive(false);
     }
 
+    private void Update()
+    {
+        //if (!CharacterOuterLineSignal.IsActive())
+        //    return;
+
+        //CharacterOuterLineSignal.material.SetTexture("_MainTex", ConvertSpriteToTexture(CharacterIcon.sprite));
+
+        //Material newMat = new Material(Shader.Find("Shader Graphs/Out"));
+        //newMat.CopyPropertiesFromMaterial(CharacterOuterLineSignal.material);
+        //CharacterOuterLineSignal.material = newMat;
+    }
+
+    //public Texture2D ConvertSpriteToTexture(Sprite sprite)
+    //{
+    //    try
+    //    {
+    //        if (sprite.rect.width != sprite.texture.width)
+    //        {
+    //            Texture2D newText = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
+    //            Color[] colors = newText.GetPixels();
+    //            Color[] newColors = sprite.texture.GetPixels((int)System.Math.Ceiling(sprite.textureRect.x),
+    //                                                         (int)System.Math.Ceiling(sprite.textureRect.y),
+    //                                                         (int)System.Math.Ceiling(sprite.textureRect.width),
+    //                                                         (int)System.Math.Ceiling(sprite.textureRect.height));
+    //            newText.SetPixels(newColors);
+    //            newText.Apply();
+    //            return newText;
+    //        }
+    //        else
+    //            return sprite.texture;
+    //    }
+    //    catch
+    //    {
+    //        return sprite.texture;
+    //    }
+    //}
 
     //INSTANTIATE VALUE OF THIS
     public void Instantiate()
@@ -171,6 +209,12 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         CurrentCooldown = new List<int>(new int[this.CharacterClone.skills.Count]);
 
     }
+    public void SetAnimationSpeed(int speed)
+    {
+        animator.speed = speed;
+        speedAction = speed;
+        InTurnSignal.GetComponent<Animator>().speed = speed;
+    }
 
     void UpdateHealthBar()
     {
@@ -201,6 +245,9 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         if (InTurnSignal == null)
             InTurnSignal = transform.Find("In Turn Signal").GetComponent<Image>();
+
+        if (CharacterOuterLineSignal == null)
+            CharacterOuterLineSignal = transform.Find("Character Outliner").GetComponent<Image>();
     }
     public void IsTargetUI()
     {
@@ -208,6 +255,10 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         TargetSignal.gameObject.SetActive(true);
         TargetSignal.color = Color.red;
+
+        CharacterOuterLineSignal.gameObject.SetActive(true);
+        CharacterOuterLineSignal.material.SetColor("_BaseColor", Color.red);
+
         IsTarget = true;
     }
     public void UntargetUI()
@@ -216,6 +267,10 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         TargetSignal.gameObject.SetActive(false);
         TargetSignal.color = Color.white;
+
+        CharacterOuterLineSignal.gameObject.SetActive(false);
+        CharacterOuterLineSignal.material.SetColor("_BaseColor", Color.white);
+
         IsTarget = false;
     }
     public void IsAllyUI()
@@ -224,12 +279,15 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         TargetSignal.gameObject.SetActive(true);
         TargetSignal.color = Color.green;
+
+        CharacterOuterLineSignal.gameObject.SetActive(true);
+        CharacterOuterLineSignal.material.SetColor("_BaseColor", Color.green);
+
         IsTarget = true;
     }
     public void EndTurnUI()
     {
         SetTargetSignal();
-
 
         InTurnSignal.gameObject.SetActive(false);
     }
@@ -248,10 +306,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     public void BeingAttackUI()
     {
         this.CharacterIcon.color = Color.red;
-
-        float width = CharacterIcon.rectTransform.rect.width;
-        float height = CharacterIcon.rectTransform.rect.height;
-        EffectManager.Instance.InitializeEffect(EffectDict[EffectPos.InMiddle], EffectManager.EffectName.BeingAttack, 0.5f,width,height);
+        InitializeEffect(EffectPos.InMiddle, EffectManager.EffectName.BeingAttack, 0.5f);
 
         animator.Play("Hit " + CharacterClone.Name);
     }
@@ -262,12 +317,12 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
     public void CounterUI()
     {
-
+        Floating("Counter", Color.white);
     }
 
-    public void DogdeUI()
+    public void DodgeUI()
     {
-
+        Floating("Miss!", Color.white);
     }
 
     public void StunUI()
@@ -276,9 +331,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     }
     public void HealUI()
     {
-        float width = CharacterIcon.rectTransform.rect.width;
-        float height = CharacterIcon.rectTransform.rect.height;
-        EffectManager.Instance.InitializeEffect(EffectDict[EffectPos.InMiddle], EffectManager.EffectName.Healing, 0.5f,width,height);
+        InitializeEffect(EffectPos.InMiddle, EffectManager.EffectName.Healing, 0.5f);
     }
     //Effect UI
     public void InitializeEffect(EffectPos effectPos,EffectManager.EffectName effectName, float LivingTime)
@@ -296,10 +349,6 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         IsInTurn = true;
         InTurnUI();
 
-        CheckBuff();
-        ShowBuff();
-
-
         for (int i = 0; i < CurrentCooldown.Count; i++)
             CurrentCooldown[i] -= 1;
 
@@ -309,14 +358,18 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         if (this.IsStuning)
         {
             StunUI();
-            EndTurnUI();
-            Invoke("EndTurn",1f);
+            EndMyTurn();
+            Invoke("EndTurn", 1f/speedAction);
         }
 
+        OnactiveBuff();
     }
 
     public void EndMyTurn()
     {
+        CheckBuff();
+        ShowBuff();
+
         IsInTurn = false;
         EndTurnUI();
 
@@ -343,12 +396,13 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     {
         IsBlock = true;
         Shield.SetActive(true);
+        Shield.GetComponent<Animator>().speed = speedAction;
 
         //Unit_Block?.Invoke();
 
         EndMyTurn();
 
-        Invoke("EndTurn", 1f);
+        Invoke("EndTurn", 1f/ speedAction);
     }
 
     public void EndShield()
@@ -454,7 +508,11 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     {
         return CurrentHP * percent / 100f;
     }
-
+    public int GetPercentHP()
+    {
+        float percent = CurrentHP / MaxHP;
+        return Mathf.RoundToInt(percent*100);
+    }
 
     //BEING ATTACKED - END BEING ATTACKED
     public Defense defense(float ArmorPenetration = 0)
@@ -494,7 +552,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     public void BeingAttacked(float DamageTaken)
     {
         CurrentHP -= DamageTaken;
-
+        FightManager.Instance.SetTotalDamage(team, DamageTaken);
         Floating(Math.Ceiling(DamageTaken).ToString(), Color.red);
 
         if (CurrentHP <= 0 && this.stateFighting == StateFighting.Alive)
@@ -516,13 +574,17 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         Floating(buff.type.ToString(), Color.white);
         ShowBuff();
     }
-    public void CheckBuff()
+    void CheckBuff()//call endbuff in here and remove buff - before end turn
     {
         buffOfUnit.CheckBuff();
     }
-    public void ShowBuff()
+    void ShowBuff()
     {
         effectIcon.SetBuffIcon(buffOfUnit.buffs);
+    }
+    void OnactiveBuff()//on active buff call in here - after in turn
+    {
+        buffOfUnit.OnactivationBuff();
     }
 
     void Death()
@@ -532,7 +594,6 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         float width = CharacterIcon.rectTransform.rect.width * (1+1/3f);
         float height = CharacterIcon.rectTransform.rect.height * (1 + 1 / 3f);
         EffectManager.Instance.InitializeEffect(EffectDict[EffectPos.InMiddle], EffectManager.EffectName.DeathEffect, 0.6f, width, height);
-
         FightManager.Instance.TargerDie(this);
         gameObject.SetActive(false);
     }

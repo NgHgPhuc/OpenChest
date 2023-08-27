@@ -136,6 +136,36 @@ public class LoadDataWhenLogin : MonoBehaviour
             yield return new WaitForSeconds(LoadingTimes);
         }
 
+        yield return StartCoroutine(LoadFightingSetting());
+    }
+    IEnumerator LoadFightingSetting()
+    {
+        List<string> settings = new List<string>()
+        {"Speed Up Fighting"};
+        foreach (string key in settings)
+        {
+            ShowStateLoading("Loading " + key + ".....");
+            if (!DataReceive.Data.ContainsKey(key))
+            {
+                switch (key)
+                {
+                    case "Speed Up Fighting":
+                        SaveData(key, "1");
+                        break;
+
+                    default:
+                        SaveData(key, "0");
+                        break;
+                }
+            }
+            else
+            {
+                float Mount = (float)Convert.ToDouble(DataReceive.Data[key].Value);
+            }
+
+            yield return new WaitForSeconds(LoadingTimes);
+        }
+
         yield return StartCoroutine(LoadEquipment());
     }
     IEnumerator LoadEquipment()
@@ -209,7 +239,8 @@ public class LoadDataWhenLogin : MonoBehaviour
             }
             else
             {
-                data = "CurrentSharp:0-IsHave:false-IsEquip:false-SlotEquipIndex:0";
+                data = "CurrentSharp:0-Level:1-IsHave:false-IsEquip:false-SlotEquipIndex:0";
+                print(data);
             }
             s.ExtractString(data);
             yield return new WaitForSeconds(LoadingTimes);

@@ -30,18 +30,6 @@ public class TurnManager : MonoBehaviour
         this.EnemyTeam = EnemyTeam;
     }
 
-
-    //public void Attack(FightingUnit currentUnit, FightingUnit targetUnit)
-    //{
-    //    this.currentUnit = currentUnit;
-
-    //    Attack currentUnitAttack = currentUnit.attack();
-    //    Defense targetUnitDefense = targetUnit.defense();
-
-    //    AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
-
-    //    EndCurrentTurn();
-    //}
     public void Attack(FightingUnit currentUnit, FightingUnit targetUnit)
     {
         this.currentUnit = currentUnit;
@@ -73,7 +61,7 @@ public class TurnManager : MonoBehaviour
 
         if (targetUnitDefense.IsDodge)
         {
-            targetUnit.DogdeUI();
+            targetUnit.DodgeUI();
             return;
         }
 
@@ -105,6 +93,7 @@ public class TurnManager : MonoBehaviour
         EndCurrentTurn();
     }
 
+    //Use attack much times - in baseskill dont have monobehaviour so cant use Start Coroutine
     public void SkillTimes(IEnumerator coroutine)
     {
         StartCoroutine(coroutine);
@@ -112,7 +101,7 @@ public class TurnManager : MonoBehaviour
 
     public void EndCurrentTurn()
     {
-        Invoke("EndTurnUI", 1f);
+        Invoke("EndTurnUI", 1f/FightManager.Instance.GameSpeed);
     }
 
     void EndTurnUI()

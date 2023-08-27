@@ -547,6 +547,7 @@ GameObject:
   - component: {fileID: 6224851638600940992}
   - component: {fileID: 2437076887196990455}
   - component: {fileID: 680546163000953586}
+  - component: {fileID: 651706782328547395}
   m_Layer: 5
   m_Name: Skill Slot Panel
   m_TagString: Untagged
@@ -603,3 +604,16 @@ MonoBehaviour:
   skill: {fileID: 0}
   IsSlotEquipment: 0
   IsSlotInList: 0
+--- !u!114 &651706782328547395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7776604477829457694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []

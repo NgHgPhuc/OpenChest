@@ -61,6 +61,7 @@ public abstract class BaseSkill : ScriptableObject
     public string ToStringData()
     {
         string data = "CurrentSharp:" + CurrentSharp + "-" +
+                      "Level:" + Level + "-" +
                       "IsHave:" + IsHave + "-" +
                       "IsEquip:" + IsEquip + "-" +
                       "SlotEquipIndex:" + SlotEquipIndex;
@@ -70,10 +71,12 @@ public abstract class BaseSkill : ScriptableObject
     public void ExtractString(string s)
     {
         List<string> dataList = new List<string>(s.Split("-"));
+
         CurrentSharp = Convert.ToInt32(dataList[0].Split(":")[1]);
-        IsHave = Convert.ToBoolean(dataList[1].Split(":")[1]);
-        IsEquip = Convert.ToBoolean(dataList[2].Split(":")[1]);
-        SlotEquipIndex = Convert.ToInt16(dataList[3].Split(":")[1]);
+        Level = Convert.ToInt16(dataList[1].Split(":")[1]);
+        IsHave = Convert.ToBoolean(dataList[2].Split(":")[1]);
+        IsEquip = Convert.ToBoolean(dataList[3].Split(":")[1]);
+        SlotEquipIndex = Convert.ToInt16(dataList[4].Split(":")[1]);
     }
     public abstract void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit);
 

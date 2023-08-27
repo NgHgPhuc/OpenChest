@@ -6,15 +6,69 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Death Adapted", menuName = "Skill/Death Adapted")]
 public class DeathAdapted : BaseSkill
 {
+    int IncreaseMaxHP_Myself;
+    float IncreaseDMG_Myself;
+    float IncreaseDEF_Myself;
+
+    float IncreaseDMG_Ally;
+    public override void UpgradeSkill_Effect()
+    {
+        switch (Level)
+        {
+            case 1:
+                IncreaseMaxHP_Myself = 40;
+                IncreaseDMG_Myself = 0.30f;
+                IncreaseDEF_Myself = 0.30f;
+
+                IncreaseDMG_Ally = 0.1f;
+                break;
+
+            case 2:
+                IncreaseMaxHP_Myself = 45;
+                IncreaseDMG_Myself = 0.35f;
+                IncreaseDEF_Myself = 0.35f;
+
+                IncreaseDMG_Ally = 0.1f;
+                break;
+
+            case 3:
+                IncreaseMaxHP_Myself = 50;
+                IncreaseDMG_Myself = 0.4f;
+                IncreaseDEF_Myself = 0.4f;
+
+                IncreaseDMG_Ally = 0.15f;
+                break;
+
+            case 4:
+                IncreaseMaxHP_Myself = 55;
+                IncreaseDMG_Myself = 0.45f;
+                IncreaseDEF_Myself = 0.45f;
+
+                IncreaseDMG_Ally = 0.15f;
+                break;
+
+            case 5:
+                IncreaseMaxHP_Myself = 60;
+                IncreaseDMG_Myself = 0.5f;
+                IncreaseDEF_Myself = 0.5f;
+
+                IncreaseDMG_Ally = 0.2f;
+                break;
+
+            default:
+                break;
+        }
+    }
+
     public override void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
     {
         //if user have more than 50% hp or not
         if(currentUnit.CurrentHP > currentUnit.CharacterClone.HealthPoint / 2)
-            currentUnit.IncreaseMaxHP(currentUnit.GetPercentMaxHP(40)); //increase 40% max hp and heal the increasing
+            currentUnit.IncreaseMaxHP(currentUnit.GetPercentMaxHP(IncreaseMaxHP_Myself)); //increase 40% max hp and heal the increasing
         else
         {
-            currentUnit.AddBuff(IncreaseDMG_Buff(currentUnit,0.3f));//increase 30% atk
-            currentUnit.AddBuff(IncreaseDEF_Buff(currentUnit, 0.3f));//increase 30% def
+            IncreaseDMG_Buff(currentUnit, IncreaseDMG_Myself);//increase 30% atk
+            IncreaseDEF_Buff(currentUnit, IncreaseDEF_Myself);//increase 30% def
         }
 
         //if player >= enemy -> increase 10% atk for all ally
@@ -24,18 +78,18 @@ public class DeathAdapted : BaseSkill
         if (enemyCount <= playerCount)
         {
             foreach(FightingUnit f in FightManager.Instance.PlayerTeam)
-                f.AddBuff(IncreaseDMG_Buff(currentUnit, 0.1f));//increase 10% atk
+                IncreaseDMG_Buff(f, IncreaseDMG_Ally);//increase 10% atk
         }
         else
         {
             float LosingHP = (currentUnit.CharacterClone.HealthPoint - currentUnit.CurrentHP);
             currentUnit.Heal(0.5f * LosingHP);
-            currentUnit.AddBuff(IncreaseDMG_Buff(currentUnit, 0.2f));
+            IncreaseDMG_Buff(currentUnit, 0.2f);
         }
 
     }
 
-    public Buff IncreaseDMG_Buff(FightingUnit currentUnit, float percent)
+    public void IncreaseDMG_Buff(FightingUnit currentUnit, float percent)
     {
         Buff IncreaseAttack = new Buff();
 
@@ -55,14 +109,10 @@ public class DeathAdapted : BaseSkill
             currentUnit.CharacterClone.AttackDamage -= IncreaseAttack.ValueChange;
         };
 
-        IncreaseAttack.Onactivation = () =>
-        {
-        };
-
-        return IncreaseAttack;
+        currentUnit.AddBuff(IncreaseAttack);
     }
 
-    public Buff IncreaseDEF_Buff(FightingUnit currentUnit,float percent)
+    public void IncreaseDEF_Buff(FightingUnit currentUnit,float percent)
     {
         Buff IncreaseDEF = new Buff();
 
@@ -82,15 +132,6 @@ public class DeathAdapted : BaseSkill
             currentUnit.CharacterClone.DefensePoint -= IncreaseDEF.ValueChange;
         };
 
-        IncreaseDEF.Onactivation = () =>
-        {
-        };
-
-        return IncreaseDEF;
-    }
-
-    public override void UpgradeSkill_Effect()
-    {
-        throw new NotImplementedException();
+        currentUnit.AddBuff(IncreaseDEF);
     }
 }

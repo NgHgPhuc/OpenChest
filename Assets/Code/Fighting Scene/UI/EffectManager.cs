@@ -63,8 +63,12 @@ public class EffectManager : MonoBehaviour
     public void InitializeEffect(Transform pos,EffectName efName,float LivingTime,float Width,float Height)
     {
         SetAttr();
-        GameObject g = effect[efName];
-        Destroy(Instantiate(g, pos.position, pos.rotation, ShowPanel),LivingTime);
+        GameObject g = Instantiate(effect[efName], pos.position, pos.rotation, ShowPanel);
+        int speed = FightManager.Instance.GameSpeed;
+        g.GetComponent<Animator>().speed = 1 / speed;
+        Destroy(g, LivingTime/speed);
+
+
 
         RectTransform r = (RectTransform)g.transform;
         r.sizeDelta = new Vector2(Width, Height);
@@ -76,6 +80,8 @@ public class EffectManager : MonoBehaviour
         fO.Iniatialize(msg, color);
         RectTransform size = (RectTransform)pos;
         fO.SetSize(size.rect.width, Times * size.rect.width / 4);
+        fO.SetSpeed(FightManager.Instance.GameSpeed);
+
     }
 
     public void InitializeShooting(Transform FromPos, Transform ToPos, EffectName efName, float LivingTime, float Width, float Height)

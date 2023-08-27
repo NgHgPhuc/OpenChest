@@ -10,6 +10,8 @@ using PlayFab.ClientModels;
 public class FightManager : MonoBehaviour
 {
     public GameObject ActionPanel;
+    public GameObject SkillPanel;
+
     public List<FightingUnit> PlayerTeam;
     public List<FightingUnit> EnemyTeam;
 
@@ -37,6 +39,12 @@ public class FightManager : MonoBehaviour
 
     public TextMeshProUGUI RoundText;
     int RoundIndex = 1;
+
+    public int GameSpeed;
+    public bool IsAuto;
+
+    public TotalDamageObject playerTotalDamage;
+    public TotalDamageObject enemyTotalDamage;
 
     public bool IsTest;
 
@@ -128,13 +136,10 @@ public class FightManager : MonoBehaviour
 
     void Player_ChooseAction()
     {
-        if (All[currentTurn].IsStuning)
-            return;
-
         IsPlayerTurn = true;
 
         PlayerAction = "";
-        ActionPanel.SetActive(true);
+        ActionPanel.SetActive(!IsAuto);
 
         for(int i = 0; i < 3; i++)
             if(i < All[currentTurn].CharacterClone.skills.Count)
@@ -142,80 +147,23 @@ public class FightManager : MonoBehaviour
             else
                 SkillButtonList[i].SetSkill(null, 0);
 
-    }
+        //continue in chooseAction(string action) by click skill or action slot
 
-    private void OnUsingSkillUI(int skillIndex)
-    {
-        if (All[currentTurn].CurrentCooldown[skillIndex] > 0)
-            return;
-
-        switch (All[currentTurn].CharacterClone.skills[skillIndex].range)
+        if(IsAuto)
         {
-            case BaseSkill.Range.OnEnemy:
-                TargetEnemy(EnemyTeam);
-                break;
-
-            case BaseSkill.Range.OnEnemyTeam:
-                TargetEnemy(EnemyTeam);
-                break;
-
-            case BaseSkill.Range.OnAlly:
-                TargetAlly(PlayerTeam);
-                break;
-
-            case BaseSkill.Range.OnMySelf:
-                TargetAlly(new List<FightingUnit>() { All[currentTurn] });
-                break;
-
-            case BaseSkill.Range.OnAllyTeam:
-                TargetAlly(PlayerTeam);
-                break;
-        }
-
-        Player_SkillAction(skillIndex);
-    }
-    void ChooseAction()
-    {
-        if(PlayerAction == "")
-            return;
-
-        UntargetAllEnemy();
-        UntargetAllAlly();
-
-        switch (PlayerAction)
-        {
-            case "Strike":
+            for(int i = 0; i < All[currentTurn].CurrentCooldown.Count; i++)
             {
-                TargetEnemy(EnemyTeam);
-                Player_AttackAction();
-                break;
+                if (All[currentTurn].CurrentCooldown[i] > 0)
+                    continue;
+
+                ChooseAction("Skill " + (i + 1).ToString());
             }
 
-            case "Block":
-            {
-                UntargetAllEnemy();
-                Player_BlockAction();
-                break;
-            }
-
-            case "Skill 1":
-            {
-                int skillIndex = 0;
-                OnUsingSkillUI(skillIndex);
-                break;
-            }
-            case "Skill 2":
-            {
-                int skillIndex = 1;
-                OnUsingSkillUI(skillIndex);
-                break;
-            }
-            case "Skill 3":
-            {
-                int skillIndex = 2;
-                OnUsingSkillUI(skillIndex);
-                break;
-            }
+            int currentHP = All[currentTurn].GetPercentHP();
+            float r = UnityEngine.Random.Range(0, 100);
+            if (r > currentHP)
+                ChooseAction("Block");
+            else ChooseAction("Strike");
         }
     }
 
@@ -234,13 +182,97 @@ public class FightManager : MonoBehaviour
         ChooseAction();
     }
 
+    void ChooseAction()
+    {
+        if (PlayerAction == "")
+            return;
+
+        UntargetAllEnemyUI();
+        UntargetAllAllyUI();
+
+        switch (PlayerAction)
+        {
+            case "Strike":
+                {
+                    TargetEnemyUI(EnemyTeam);
+                    Player_AttackAction();
+                    break;
+                }
+
+            case "Block":
+                {
+                    UntargetAllEnemyUI();
+                    Player_BlockAction();
+                    break;
+                }
+
+            case "Skill 1":
+                {
+                    int skillIndex = 0;
+                    OnUsingSkillUI(skillIndex);
+                    break;
+                }
+            case "Skill 2":
+                {
+                    int skillIndex = 1;
+                    OnUsingSkillUI(skillIndex);
+                    break;
+                }
+            case "Skill 3":
+                {
+                    int skillIndex = 2;
+                    OnUsingSkillUI(skillIndex);
+                    break;
+                }
+        }
+    }
+
+    private void OnUsingSkillUI(int skillIndex)
+    {
+        if (All[currentTurn].CurrentCooldown[skillIndex] > 0)
+            return;
+
+        switch (All[currentTurn].CharacterClone.skills[skillIndex].range)
+        {
+            case BaseSkill.Range.OnEnemy:
+                TargetEnemyUI(EnemyTeam);
+                break;
+
+            case BaseSkill.Range.OnEnemyTeam:
+                TargetEnemyUI(EnemyTeam);
+                break;
+
+            case BaseSkill.Range.OnAlly:
+                TargetAllyUI(PlayerTeam);
+                break;
+
+            case BaseSkill.Range.OnMySelf:
+                TargetAllyUI(new List<FightingUnit>() { All[currentTurn] });
+                break;
+
+            case BaseSkill.Range.OnAllyTeam:
+                TargetAllyUI(PlayerTeam);
+                break;
+        }
+
+        Player_SkillAction(skillIndex);
+    }
+
 
     #region Attack Action
     //PLAYER CHOOSE ATTACK
     void Player_AttackAction()
     {
-        ChosenTarget = null;   //enemy target set null
         IsPlayerTurn = true;    //Set this is player turn
+
+        if (!IsAuto)//if not auto - must choose target
+            ChosenTarget = null;   //enemy target set null
+        else
+        {
+            int currentEnemyCount = EnemyTeam.Count;
+            int r = UnityEngine.Random.Range(0, currentEnemyCount);
+            ChosenTarget = EnemyTeam[r];
+        }
 
         //Start coroutine to wait to gamer chosen enemy
         StartCoroutine(ChooseTarget());
@@ -287,8 +319,20 @@ public class FightManager : MonoBehaviour
 
     void Player_SkillAction(int skillIndex)
     {
-        ChosenTarget = null;   //enemy target set null
         IsPlayerTurn = true;    //Set this is player turn
+
+        if (!IsAuto)//if not auto - must choose target
+            ChosenTarget = null;   //enemy target set null
+        else
+        {
+            var targetTeam = EnemyTeam;
+            if (All[currentTurn].CharacterClone.skills[skillIndex].range == BaseSkill.Range.OnAlly)
+                targetTeam = PlayerTeam;
+
+            int currentTargetCount = targetTeam.Count;
+            int r = UnityEngine.Random.Range(0, currentTargetCount);
+            ChosenTarget = targetTeam[r];
+        }
 
         //Start coroutine to wait to gamer chosen enemy
         IEnumerator coroutine = ChooseTarger_NoCoroutine(skillIndex);
@@ -299,8 +343,8 @@ public class FightManager : MonoBehaviour
         while (ChosenTarget == null)
             yield return null;
 
-        UntargetAllEnemy();
-        UntargetAllAlly();
+        UntargetAllEnemyUI();
+        UntargetAllAllyUI();
 
         switch (All[currentTurn].CharacterClone.skills[skillIndex].range)
         {
@@ -338,16 +382,10 @@ public class FightManager : MonoBehaviour
     //ENEMY ATTACK
     void Enemy_AttackAction()
     {
-        IsPlayerTurn = false;
-
-        PlayerAction = "";
-        ActionPanel.SetActive(false);
-
-        if (All[currentTurn].IsTaunted == false)
+        if (!All[currentTurn].IsTaunted)//not taunted - attack random target
             CurrentPlayerTargeted = EnemyRandomTarget();
 
-        if (All[currentTurn].IsStuning == false)
-            TurnManager.Instance.Attack(All[currentTurn], CurrentPlayerTargeted);
+        TurnManager.Instance.Attack(All[currentTurn], CurrentPlayerTargeted);
     }
 
     FightingUnit EnemyRandomTarget()
@@ -362,17 +400,27 @@ public class FightManager : MonoBehaviour
     }
 
     //CHOOSE WHAT ACTION WILL DO IN TURN
+    public void AnotherActionInTurn()
+    {
+        //ActionInTurn();
+    }
     void ActionInTurn()
     {
+        All[currentTurn].IsActioned = true;
+
         if (All[currentTurn].stateFighting == FightingUnit.StateFighting.Death)
         {
             Endturn();
             return;
         }
 
+        bool isStuning = All[currentTurn].IsStuning;
         All[currentTurn].ItsMyTurn();
 
         ProrityPanel.Instance.SetUnitTurn(currentTurn);
+
+        if (isStuning)
+            return;
 
         if (All[currentTurn].team == FightingUnit.Team.Player)
             Player_ChooseAction();
@@ -386,15 +434,29 @@ public class FightManager : MonoBehaviour
         if (EnemyCount == 0 || PlayerCount == 0)
             return;
 
+        playerTotalDamage.End();
+        enemyTotalDamage.End();
 
-        currentTurn++;
-        if (currentTurn == All.Count)
+        for (int i = 0; i < All.Count; i++)
         {
-            currentTurn = 0;
+            if (All[i].IsActioned)
+                continue;
+
+            currentTurn = i;
+            //All[currentTurn].IsActioned = true;
+            ActionInTurn();
+            return;
+        }
+
+        if (currentTurn == All.Count-1)
+        {
+            foreach (FightingUnit fU in All)
+                fU.IsActioned = false;
+
             RoundIndex += 1;
             RoundText.SetText("Round "+RoundIndex.ToString());
+            Endturn(); //run round again
         }
-        ActionInTurn();
     }
 
     public void TargerDie(FightingUnit unit)
@@ -407,7 +469,7 @@ public class FightManager : MonoBehaviour
             EnemyTeam = EnemyTeam.Where(x => x.stateFighting == FightingUnit.StateFighting.Alive).ToList();
             if (EnemyCount == 0)
             {
-                Invoke("victoryPanel", 1f);
+                Invoke("victoryPanel", 1f/GameSpeed);
                 return;
             }
             return;
@@ -418,7 +480,7 @@ public class FightManager : MonoBehaviour
             PlayerTeam = PlayerTeam.Where(x => x.stateFighting == FightingUnit.StateFighting.Alive).ToList();
             if (PlayerCount == 0)
             {
-                Invoke("failPanel", 1f);
+                Invoke("failPanel", 1f/ GameSpeed);
                 return;
             }
             return;
@@ -426,22 +488,22 @@ public class FightManager : MonoBehaviour
 
     }
 
-    void UntargetAllEnemy()
+    void UntargetAllEnemyUI()
     {
         foreach (FightingUnit unit in EnemyTeam)
             unit.UntargetUI();
     }
-    void TargetEnemy(List<FightingUnit> EnemyTeam)
+    void TargetEnemyUI(List<FightingUnit> EnemyTeam)
     {
         foreach (FightingUnit unit in EnemyTeam)
             unit.IsTargetUI();
     }
-    void UntargetAllAlly()
+    void UntargetAllAllyUI()
     {
         foreach (FightingUnit unit in PlayerTeam)
             unit.UntargetUI();
     }
-    void TargetAlly(List<FightingUnit> PlayerTeam)
+    void TargetAllyUI(List<FightingUnit> PlayerTeam)
     {
         foreach (FightingUnit unit in PlayerTeam)
             unit.IsAllyUI();
@@ -459,5 +521,29 @@ public class FightManager : MonoBehaviour
     {
         StopAllCoroutines();
         FailPanelObject.SetActive(true);
+    }
+
+    public void SetGameSpeed(int speed)
+    {
+        GameSpeed = speed;
+        foreach(FightingUnit fU in All)
+        {
+            fU.SetAnimationSpeed(speed);
+        }
+    }
+    public void SetAuto(bool isAuto)
+    {
+        this.IsAuto = isAuto;
+        if(IsPlayerTurn)
+            Player_ChooseAction();
+    }
+
+    public void SetTotalDamage(FightingUnit.Team team,float value)
+    {
+        if(team == FightingUnit.Team.Player)
+            playerTotalDamage.AddValue(value);
+
+        if (team == FightingUnit.Team.Enemy)
+            enemyTotalDamage.AddValue(value);
     }
 }

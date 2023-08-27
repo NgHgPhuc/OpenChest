@@ -86,7 +86,7 @@ public class BolaStrike : BaseSkill
                 TurnManager.Instance.AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
                 if (targetUnitDefense.IsDodge)
                 {
-                    targetUnit.DogdeUI();
+                    targetUnit.DodgeUI();
                     continue;
                 }
 

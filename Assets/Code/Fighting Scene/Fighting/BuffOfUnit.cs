@@ -35,20 +35,24 @@ public class BuffOfUnit : MonoBehaviour
     {
         buff.duration -= 1;
 
-        if (buff.duration == -1)
+        if (buff.duration == 0)
         {
             EndBuff(buff);
             return buff.duration;
         }
-
-        if (buff.Onactivation != null)
-            buff.Onactivation();
 
         return buff.duration;
     }
 
     public void CheckBuff()
     {
-        buffs.RemoveAll(buff => OnTurnBuff(buff) == -1);
+        buffs.RemoveAll(buff => OnTurnBuff(buff) == 0);
+    }
+
+    public void OnactivationBuff()
+    {
+        foreach(Buff buff in buffs)
+            if (buff.Onactivation != null)
+                buff.Onactivation();
     }
 }

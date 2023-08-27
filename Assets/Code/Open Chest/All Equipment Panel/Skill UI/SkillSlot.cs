@@ -107,6 +107,12 @@ public class SkillSlot : MonoBehaviour,IPointerClickHandler
         this.EquipmentImage.sprite = null;
     }
 
+    public Vector2 Size()
+    {
+        RectTransform recT = (RectTransform)transform;
+        return new Vector2(recT.rect.width, recT.rect.height);
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         ListSkillSingleton.Instance.OpenPanel();

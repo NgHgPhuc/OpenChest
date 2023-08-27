@@ -22,40 +22,41 @@ public class PlayerManager : MonoBehaviour
             Instance = this;
         }
 
-        SetSkill();
+        //SetSkill();
     }
 
-    public void SetSkill()
-    {
-        foreach (SkillSlot ss in skillSlotList)
-            playerSkillDict.Add(ss, ss.getSkill());
-    }
-    public void LoadSkillData(List<string> skillsNameData)
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            if (i < skillsNameData.Count)
-            {
-                BaseSkill bS = Resources.Load<BaseSkill>("Skill/" + skillsNameData[i]);
-                skillSlotList[i].SetSkillInSlot(bS);
-            }
-            else
-                skillSlotList[i].DontHaveSkillInSlot();
-        }
+    //public void SetSkill()
+    //{
+    //    foreach (SkillSlot ss in skillSlotList)
+    //        playerSkillDict.Add(ss, ss.getSkill());
+    //}
+    //public void LoadSkillData(List<string> skillsNameData)
+    //{
+    //    for (int i = 0; i < 3; i++)
+    //    {
+    //        if (i < skillsNameData.Count)
+    //        {
+    //            BaseSkill bS = Resources.Load<BaseSkill>("Skill/" + skillsNameData[i]);
+    //            skillSlotList[i].SetSkillInSlot(bS);
+    //        }
+    //        else
+    //            skillSlotList[i].DontHaveSkillInSlot();
+    //    }
 
-        SetSkill();
-    }
+    //    SetSkill();
+    //}
 
 
     public void EquipSkillOfPlayer(SkillSlot currentSkillSlotChosen)
     {
         playerSkillDict[currentSkillSlotChosen] = currentSkillSlotChosen.getSkill();
-        DataManager.Instance.SaveData(currentSkillSlotChosen.name, currentSkillSlotChosen.getSkill().Name);
+        DataManager.Instance.SaveData(currentSkillSlotChosen.getSkill().Name, currentSkillSlotChosen.getSkill().ToStringData());
     }
     public void UnequipSkillOfPlayer(SkillSlot currentSkillSlotChosen)
     {
+        currentSkillSlotChosen.getSkill().IsEquip = false;
         playerSkillDict[currentSkillSlotChosen] = null;
-        DataManager.Instance.SaveData(currentSkillSlotChosen.name, "");
+        DataManager.Instance.SaveData(currentSkillSlotChosen.getSkill().Name, currentSkillSlotChosen.getSkill().ToStringData());
     }
 
     //call in Stats Panel Manager

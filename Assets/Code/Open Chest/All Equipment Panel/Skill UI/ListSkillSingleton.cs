@@ -87,28 +87,28 @@ public class ListSkillSingleton : MonoBehaviour
     }
     public void EquipSkill()
     {
-        if(this.skillSlotChosen != null)
+        if (this.skillSlotChosen != null)
         {
             this.skillSlotChosen.getSkill().IsEquip = false;
             this.skillSlotChosen.SetBorderActive();
         }
 
-        if(this.skillSlotOfList != null)
+        if (this.skillSlotOfList != null)
             this.skillSlotOfEquipment.SetSkillInSlot(this.skillSlotOfList.getSkill());
         else
             this.skillSlotOfEquipment.SetSkillInSlot(this.skillSlotChosen.getSkill());
 
         this.skillSlotChosen = listSkillUI.skillDict[this.skillSlotOfEquipment.getSkill().Name];
 
-        if(this.skillSlotOfList != null)
-        this.skillSlotOfList.SetBorderActive();
+        if (this.skillSlotOfList != null)
+            this.skillSlotOfList.SetBorderActive();
 
         PlayerManager.Instance.EquipSkillOfPlayer(this.skillSlotOfEquipment);
     }
     public void UnequipSkill()
     {
         this.skillSlotOfEquipment.DontHaveSkillInSlot();
-        if(this.skillSlotOfList != null)
+        if (this.skillSlotOfList != null)
             this.skillSlotOfList.SetBorderActive();
     }
     public bool CheckIsSkillInSlot()
