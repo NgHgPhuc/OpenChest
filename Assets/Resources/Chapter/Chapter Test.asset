@@ -84,7 +84,7 @@ MonoBehaviour:
   - AttackDamage: 100
     HealthPoint: 100000
     DefensePoint: 100
-    Speed: 13
+    Speed: 1
     tier: 0
     role: 0
     Level: 0
@@ -128,8 +128,8 @@ MonoBehaviour:
     PositionInTeam: 0
     skills:
     - {fileID: 11400000, guid: 5b125a18321ce49fd91f36da0d4e5ef2, type: 2}
-    - {fileID: 11400000, guid: 71205acffd39b474a8a7234f074a428b, type: 2}
     - {fileID: 11400000, guid: ab8f6b508ce714e5ba7f47f11afbe1ad, type: 2}
+    - {fileID: 11400000, guid: 71205acffd39b474a8a7234f074a428b, type: 2}
   - AttackDamage: 1000
     HealthPoint: 50000
     DefensePoint: 100

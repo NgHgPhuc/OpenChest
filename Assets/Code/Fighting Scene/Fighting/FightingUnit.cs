@@ -344,12 +344,15 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
 
     //ACTIVITY FLOW ===== ItsMyTurn -> Action -> EndMyTurn
-    public void ItsMyTurn()
+    public void ItsMyTurn(bool isAnotherTurn = false)
     {
         IsInTurn = true;
         InTurnUI();
 
-        for (int i = 0; i < CurrentCooldown.Count; i++)
+        if (isAnotherTurn)
+            return;
+
+        for (int i = 0; i < CurrentCooldown.Count && CurrentCooldown[i] != 0; i++)
             CurrentCooldown[i] -= 1;
 
         if (IsBlock == true)
@@ -363,6 +366,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         }
 
         OnactiveBuff();
+
+        IsActioned = true;
     }
 
     public void EndMyTurn()
@@ -385,9 +390,9 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     //SKILL
     public void Skill(List<FightingUnit> ChosenUnit,int skillCount)
     {
-        TurnManager.Instance.UsingSkill(this,ChosenUnit, skillCount);
         Floating(this.CharacterClone.skills[skillCount].Name, Color.white);
         this.CurrentCooldown[skillCount] = this.CharacterClone.skills[skillCount].Cooldown +1;
+        TurnManager.Instance.UsingSkill(this, ChosenUnit, skillCount);
     }
 
 
@@ -604,4 +609,18 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         if(this.IsTarget == true)
             FightManager.Instance.ChooseTarget(this);
     }
+
+    public void SetCdSkill(int newCd,string skillName)
+    {
+        int i = 0;
+        foreach(BaseSkill bS in CharacterClone.skills)
+        {
+            if (bS.Name == skillName)
+            {
+                CurrentCooldown[i] = newCd;
+                return;
+            }
+            i++;
+        }
+    }    
 }

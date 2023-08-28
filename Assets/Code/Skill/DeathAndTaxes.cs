@@ -84,7 +84,14 @@ public class DeathAndTaxes : BaseSkill
                 {
                     targetUnit.BeingAttacked(99999999);
                     currentUnit.Heal(currentUnit.GetPercentMaxHP(MaxHpHealing));
-                    FightManager.Instance.AnotherActionInTurn();
+
+                    //if(Level >= 4)
+                    //    currentUnit.SetCdSkill(0, this.Name);
+
+                    if(Level == 5)
+                    {
+                        currentUnit.IsActioned = false;
+                    }
                 }
 
             }

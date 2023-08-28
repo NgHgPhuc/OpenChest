@@ -153,10 +153,12 @@ public class FightManager : MonoBehaviour
         {
             for(int i = 0; i < All[currentTurn].CurrentCooldown.Count; i++)
             {
+                print(All[currentTurn].CurrentCooldown[i]);
                 if (All[currentTurn].CurrentCooldown[i] > 0)
                     continue;
 
                 ChooseAction("Skill " + (i + 1).ToString());
+                return;
             }
 
             int currentHP = All[currentTurn].GetPercentHP();
@@ -165,6 +167,8 @@ public class FightManager : MonoBehaviour
                 ChooseAction("Block");
             else ChooseAction("Strike");
         }
+
+        print("ACTION PANEL:" + ActionPanel.activeSelf);
     }
 
     public void ChooseAction(string action)
@@ -189,7 +193,7 @@ public class FightManager : MonoBehaviour
 
         UntargetAllEnemyUI();
         UntargetAllAllyUI();
-
+        print(PlayerAction);
         switch (PlayerAction)
         {
             case "Strike":
@@ -321,15 +325,16 @@ public class FightManager : MonoBehaviour
     {
         IsPlayerTurn = true;    //Set this is player turn
 
-        if (!IsAuto)//if not auto - must choose target
-            ChosenTarget = null;   //enemy target set null
-        else
+        ChosenTarget = null;   //enemy target set null
+        if(IsAuto)
         {
             var targetTeam = EnemyTeam;
             if (All[currentTurn].CharacterClone.skills[skillIndex].range == BaseSkill.Range.OnAlly)
                 targetTeam = PlayerTeam;
 
             int currentTargetCount = targetTeam.Count;
+            if (currentTargetCount == 0)
+                return;
             int r = UnityEngine.Random.Range(0, currentTargetCount);
             ChosenTarget = targetTeam[r];
         }
@@ -399,15 +404,31 @@ public class FightManager : MonoBehaviour
         this.CurrentPlayerTargeted = f;
     }
 
-    //CHOOSE WHAT ACTION WILL DO IN TURN
-    public void AnotherActionInTurn()
+
+    public void AnotherTurn()
     {
-        //ActionInTurn();
-    }
-    void ActionInTurn()
-    {
+        playerTotalDamage.End();
+        enemyTotalDamage.End();
+
         All[currentTurn].IsActioned = true;
 
+        if (All[currentTurn].stateFighting == FightingUnit.StateFighting.Death)
+        {
+            Endturn();
+            return;
+        }
+
+        if (All[currentTurn].team == FightingUnit.Team.Player)
+            Player_ChooseAction();
+
+        if (All[currentTurn].team == FightingUnit.Team.Enemy)
+            Enemy_AttackAction();
+
+        print("Another Turn");
+    }
+
+    void ActionInTurn()
+    {
         if (All[currentTurn].stateFighting == FightingUnit.StateFighting.Death)
         {
             Endturn();
@@ -439,6 +460,9 @@ public class FightManager : MonoBehaviour
 
         for (int i = 0; i < All.Count; i++)
         {
+            if (All[i].stateFighting == FightingUnit.StateFighting.Death)
+                continue;
+
             if (All[i].IsActioned)
                 continue;
 
@@ -448,16 +472,21 @@ public class FightManager : MonoBehaviour
             return;
         }
 
-        if (currentTurn == All.Count-1)
-        {
-            foreach (FightingUnit fU in All)
-                fU.IsActioned = false;
-
-            RoundIndex += 1;
-            RoundText.SetText("Round "+RoundIndex.ToString());
-            Endturn(); //run round again
-        }
+        ResetActionOfAll();
+        IncreaseRound();
     }
+    void ResetActionOfAll()
+    {
+        foreach (FightingUnit fU in All)
+            fU.IsActioned = false;
+    }
+    void IncreaseRound()
+    {
+        RoundIndex += 1;
+        RoundText.SetText("Round " + RoundIndex.ToString());
+        Endturn(); //run round again
+    }
+
 
     public void TargerDie(FightingUnit unit)
     {

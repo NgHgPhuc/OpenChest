@@ -10,6 +10,7 @@ public class TurnManager : MonoBehaviour
     FightingUnit currentUnit;
     FightingUnit targetUnit;
 
+    bool IsDoneTurn;
     public static TurnManager Instance { get; private set; }
     private void Awake()
     {
@@ -101,7 +102,10 @@ public class TurnManager : MonoBehaviour
 
     public void EndCurrentTurn()
     {
-        Invoke("EndTurnUI", 1f/FightManager.Instance.GameSpeed);
+        if (this.currentUnit.IsActioned == true)
+            Invoke("EndTurnUI", 1f / FightManager.Instance.GameSpeed);
+        else
+            FightManager.Instance.AnotherTurn();
     }
 
     void EndTurnUI()

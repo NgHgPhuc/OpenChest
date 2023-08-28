@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: Death And Taxes
   Cooldown: 3
   Icon: {fileID: 21300000, guid: 27e6253fa88e5469d80a7b38e617a5ef, type: 3}
-  Level: 1
+  Level: 5
   Description: Attack on an enemy deal 250% Attack Damage and penetrate 20% Defense
     of them, if eneny have less than 10% max hp, currently death and user will heal
     10% max hp
