@@ -6,14 +6,69 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Devastating Charge", menuName = "Skill/Devastating Charge")]
 public class DevastatingCharge : BaseSkill
 {
+    float IncreaseSpeedActiveValue;
+    float IncreaseSpeedOnturnValue;
+
+    float AttackDamageValueEffect;
+    float SpeedDamageValueEffect;
+
+    public override void UpgradeSkill_Effect()
+    {
+        switch(Level)
+        {
+            case 1:
+                IncreaseSpeedActiveValue = 0.3f;
+                IncreaseSpeedOnturnValue = 0.1f;
+
+                AttackDamageValueEffect = 0.1f;
+                SpeedDamageValueEffect = 0.3f;
+                break;
+
+            case 2:
+                IncreaseSpeedActiveValue = 0.4f;
+                IncreaseSpeedOnturnValue = 0.125f;
+
+                AttackDamageValueEffect = 0.1f;
+                SpeedDamageValueEffect = 0.325f;
+                break;
+
+            case 3:
+                IncreaseSpeedActiveValue = 0.5f;
+                IncreaseSpeedOnturnValue = 0.15f;
+
+                AttackDamageValueEffect = 0.1f;
+                SpeedDamageValueEffect = 0.35f;
+                break;
+
+            case 4:
+                IncreaseSpeedActiveValue = 0.6f;
+                IncreaseSpeedOnturnValue = 0.175f;
+
+                AttackDamageValueEffect = 0.1f;
+                SpeedDamageValueEffect = 0.375f;
+                break;
+
+            case 5:
+                IncreaseSpeedActiveValue = 0.3f;
+                IncreaseSpeedOnturnValue = 0.2f;
+
+                AttackDamageValueEffect = 0.1f;
+                SpeedDamageValueEffect = 0.4f;
+                break;
+
+            default:
+                break;
+        }
+    }
+
     public override void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
     {
         //first add 30% spd and 10% on each turn - at least 3 turn
-        currentUnit.AddBuff(IncreaseSpeed_Buff(currentUnit,0.1f));
-        currentUnit.AddBuff(IncreaseAtkOnSpd_Buff(currentUnit));
+        IncreaseSpeed_Buff(currentUnit, IncreaseSpeedActiveValue, IncreaseSpeedOnturnValue);
+        IncreaseAtkOnSpd_Buff(currentUnit);
     }
 
-    public Buff IncreaseSpeed_Buff(FightingUnit currentUnit, float percent)
+    public void IncreaseSpeed_Buff(FightingUnit currentUnit, float activePercent,float onturnPercent)
     {
         Buff IncreaseSpeed = new Buff();
 
@@ -21,7 +76,8 @@ public class DevastatingCharge : BaseSkill
         IncreaseSpeed.duration = 3;
 
         IncreaseSpeed.SetIcon();
-        IncreaseSpeed.ValueChange = currentUnit.basicStatsCharacter.Speed * 3 * percent;
+        //first add 30% spd and 10% on each turn - at least 3 turn
+        IncreaseSpeed.ValueChange = currentUnit.basicStatsCharacter.Speed * activePercent;
 
         IncreaseSpeed.Activation = () =>
         {
@@ -37,14 +93,14 @@ public class DevastatingCharge : BaseSkill
 
         IncreaseSpeed.Onactivation = () =>
         {
-            IncreaseSpeed.ValueChange += currentUnit.basicStatsCharacter.Speed * percent;
+            IncreaseSpeed.ValueChange += currentUnit.basicStatsCharacter.Speed * onturnPercent;
             currentUnit.CharacterClone.Speed += IncreaseSpeed.ValueChange;
             FightManager.Instance.SortSpeed();
         };
 
-        return IncreaseSpeed;
+        currentUnit.AddBuff(IncreaseSpeed);
     }
-    public Buff IncreaseAtkOnSpd_Buff(FightingUnit currentUnit)
+    public void IncreaseAtkOnSpd_Buff(FightingUnit currentUnit)
     {
         Buff AttackDamageOnSpeed = new Buff();
 
@@ -56,7 +112,6 @@ public class DevastatingCharge : BaseSkill
         AttackDamageOnSpeed.Activation = () =>
         {
             currentUnit.Unit_Attack += EffectAtkOnSpd;
-
         };
 
         AttackDamageOnSpeed.Deactivation = () =>
@@ -64,39 +119,15 @@ public class DevastatingCharge : BaseSkill
             currentUnit.Unit_Attack -= EffectAtkOnSpd;
         };
 
-        AttackDamageOnSpeed.Onactivation = () =>
-        {
-        };
-
-        return AttackDamageOnSpeed;
+        currentUnit.AddBuff(AttackDamageOnSpeed);
     }
 
     void EffectAtkOnSpd(FightingUnit currentUnit,FightingUnit targetUnit,Attack HaveNothing,Defense HaveNothing2)
     {
-        //Attack currentUnitAttack = new Attack();
-        //currentUnitAttack.DamageCause = currentUnit.character.AttackDamage*0.1f + currentUnit.character.Speed*0.4f;
-        //currentUnitAttack.IsStun = false;
-        //currentUnitAttack.IsCrit = false;
-        //currentUnitAttack.IsHaveEffect = false;
-
-        //Defense targetUnitDefense = targetUnit.defense(100);
-        //targetUnitDefense.IsCounter = false;
-        //targetUnitDefense.IsDogde = false;
-        //targetUnitDefense.IsHaveEffect = false;
-
-        //if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
-        //    TurnManager.Instance.AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
-
-
-        float DamageCause = currentUnit.CharacterClone.AttackDamage * 0.1f + currentUnit.CharacterClone.Speed * 0.4f;
+        float DamageCause = currentUnit.CharacterClone.AttackDamage * AttackDamageValueEffect + currentUnit.CharacterClone.Speed * SpeedDamageValueEffect;
 
         if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
-            targetUnit.OnlyTakenDamage(DamageCause, 100);
+            targetUnit.OnlyTakenDamage(DamageCause, 100);//only get damage, not effect like attack
 
-    }
-
-    public override void UpgradeSkill_Effect()
-    {
-        throw new System.NotImplementedException();
     }
 }

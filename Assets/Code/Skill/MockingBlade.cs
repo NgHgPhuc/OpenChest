@@ -5,6 +5,47 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Mocking Blade", menuName = "Skill/Mocking Blade")]
 public class MockingBlade : BaseSkill
 {
+    float DamageCause;
+    int DecreaseAttackRate;
+    float DecreaseAttackValue;
+
+    public override void UpgradeSkill_Effect()
+    {
+        switch(Level)
+        {
+            case 1:
+                DamageCause = 1f;
+                DecreaseAttackRate = 70;
+                DecreaseAttackValue = 0.2f;
+                break;
+
+            case 2:
+                DamageCause = 1.05f;
+                DecreaseAttackRate = 100;
+                DecreaseAttackValue = 0.2f;
+                break;
+
+            case 3:
+                DamageCause = 1.1f;
+                DecreaseAttackRate = 100;
+                DecreaseAttackValue = 0.3f;
+                break;
+
+            case 4:
+                DamageCause = 1.15f;
+                DecreaseAttackRate = 100;
+                DecreaseAttackValue = 0.35f;
+                break;
+
+            case 5:
+                DamageCause = 1.2f;
+                DecreaseAttackRate = 70;
+                DecreaseAttackValue = 0.4f;
+                break;
+
+        }
+    }
+
     public override void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
     {
         Attack currentUnitAttack = currentUnit.attack();
@@ -19,16 +60,18 @@ public class MockingBlade : BaseSkill
 
                 TurnManager.Instance.AttackOneEnemy(currentUnit, targetUnit, currentUnitAttack, targetUnitDefense);
 
-                float SlowRate = UnityEngine.Random.Range(0f, 100f);
-                if (SlowRate < 70)
-                    targetUnit.AddBuff(DecreaseDMG_Buff(targetUnit, 0.2f));
+                DecreaseDMG_Buff(targetUnit, DecreaseAttackValue, DecreaseAttackRate);
 
             }
 
     }
 
-    public Buff DecreaseDMG_Buff(FightingUnit targetUnit, float percent)
+    public void DecreaseDMG_Buff(FightingUnit targetUnit, float percent, float luck)
     {
+        float r = UnityEngine.Random.Range(0f, 100f);
+        if (r > luck)
+            return;
+
         Buff DecreaseAttack = new Buff();
 
         DecreaseAttack.type = Buff.Type.IncreaseDamage;
@@ -51,11 +94,6 @@ public class MockingBlade : BaseSkill
         {
         };
 
-        return DecreaseAttack;
-    }
-
-    public override void UpgradeSkill_Effect()
-    {
-        throw new System.NotImplementedException();
+        targetUnit.AddBuff(DecreaseAttack);
     }
 }

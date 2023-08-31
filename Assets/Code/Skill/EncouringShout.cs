@@ -5,18 +5,67 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Encouring Shout", menuName = "Skill/Encouring Shout")]
 public class EncouringShout : BaseSkill
 {
+    float DamageIncreaseValue;
+    float DefenseIncreaseValue;
+    float SpeedIncreaseValue;
+    float MaxHPIncreaseValue;
+
+    public override void UpgradeSkill_Effect()
+    {
+        switch(Level)
+        {
+            case 1:
+                DamageIncreaseValue = 0.2f;
+                DefenseIncreaseValue = 0.2f;
+                SpeedIncreaseValue = 0.2f;
+                MaxHPIncreaseValue = 0.2f;
+                break;
+
+            case 2:
+                DamageIncreaseValue = 0.25f;
+                DefenseIncreaseValue = 0.25f;
+                SpeedIncreaseValue = 0.25f;
+                MaxHPIncreaseValue = 0.25f;
+                break;
+
+            case 3:
+                DamageIncreaseValue = 0.3f;
+                DefenseIncreaseValue = 0.3f;
+                SpeedIncreaseValue = 0.3f;
+                MaxHPIncreaseValue = 0.3f;
+                break;
+
+            case 4:
+                DamageIncreaseValue = 0.35f;
+                DefenseIncreaseValue = 0.35f;
+                SpeedIncreaseValue = 0.35f;
+                MaxHPIncreaseValue = 0.35f;
+                break;
+
+            case 5:
+                DamageIncreaseValue = 0.4f;
+                DefenseIncreaseValue = 0.4f;
+                SpeedIncreaseValue = 0.4f;
+                MaxHPIncreaseValue = 0.4f;
+                break;
+
+            default:
+                break;
+        }
+    }
+
     public override void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
     {
         foreach(FightingUnit f in ChosenUnit)
         {
-            f.AddBuff(IncreaseDMG_Buff(f, 0.2f));
-            f.AddBuff(IncreaseDEF_Buff(f, 0.2f));
-            f.AddBuff(IncreaseSPD_Buff(f, 0.2f));
-            f.AddBuff(IncreaseMaxHP_Buff(f, 0.2f));
+            IncreaseDMG_Buff(f, DamageIncreaseValue);
+            IncreaseDEF_Buff(f, DefenseIncreaseValue);
+            IncreaseSPD_Buff(f, SpeedIncreaseValue);
+            IncreaseMaxHP_Buff(f, MaxHPIncreaseValue);
         }
     }
 
-    public Buff IncreaseDMG_Buff(FightingUnit currentUnit, float percent)
+    public void IncreaseDMG_Buff(FightingUnit currentUnit, float percent)
     {
         Buff IncreaseAttack = new Buff();
 
@@ -40,10 +89,10 @@ public class EncouringShout : BaseSkill
         {
         };
 
-        return IncreaseAttack;
+        currentUnit.AddBuff(IncreaseAttack);
     }
 
-    public Buff IncreaseDEF_Buff(FightingUnit currentUnit, float percent)
+    public void IncreaseDEF_Buff(FightingUnit currentUnit, float percent)
     {
         Buff IncreaseDEF = new Buff();
 
@@ -67,10 +116,10 @@ public class EncouringShout : BaseSkill
         {
         };
 
-        return IncreaseDEF;
+        currentUnit.AddBuff(IncreaseDEF);
     }
 
-    public Buff IncreaseSPD_Buff(FightingUnit currentUnit, float percent)
+    public void IncreaseSPD_Buff(FightingUnit currentUnit, float percent)
     {
         Buff IncreaseSPD = new Buff();
 
@@ -94,10 +143,10 @@ public class EncouringShout : BaseSkill
         {
         };
 
-        return IncreaseSPD;
+        currentUnit.AddBuff(IncreaseSPD);
     }
 
-    public Buff IncreaseMaxHP_Buff(FightingUnit currentUnit, float percent)
+    public void IncreaseMaxHP_Buff(FightingUnit currentUnit, float percent)
     {
         Buff IncreaseMaxHP = new Buff();
 
@@ -105,7 +154,7 @@ public class EncouringShout : BaseSkill
         IncreaseMaxHP.duration = 1;
 
         IncreaseMaxHP.SetIcon();
-        IncreaseMaxHP.ValueChange = currentUnit.GetPercentMaxHP(percent * 100);
+        IncreaseMaxHP.ValueChange = currentUnit.GetPercentMaxHP(percent);
 
         IncreaseMaxHP.Activation = () =>
         {
@@ -121,11 +170,6 @@ public class EncouringShout : BaseSkill
         {
         };
 
-        return IncreaseMaxHP;
-    }
-
-    public override void UpgradeSkill_Effect()
-    {
-        throw new System.NotImplementedException();
+        currentUnit.AddBuff(IncreaseMaxHP);
     }
 }

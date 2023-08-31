@@ -15,11 +15,23 @@ MonoBehaviour:
   Name: Judgement
   Cooldown: 2
   Icon: {fileID: 21300000, guid: 6b4a2a4d01a3845b8bba6d5fc6b5917b, type: 3}
+  Level: 1
   Description: Attack one enemy deal 200% Attack damage with 100% petenation, destroy
     shield if using, and decrease 40% Defense
+  SkillLevelEffect:
+  - Deal 200% Attack damage and decrease 40% Defense in 1 turn
+  - Deal 225% Attack damage and decrease 45% Defense in 1 turn
+  - Deal 250% Attack damage and decrease 50% Defense in 2 turn, deal 50% Attack to
+    next by enemy
+  - Deal 275% Attack damage and decrease 56% Defense in 2 turn, deal 75% Attack to
+    next by enemy
+  - Deal 300% Attack damage and decrease 60% Defense in 2 turn, deal 100% Attack
+    to next by enemy
   range: 1
   skillType: 1
   userType: 0
   CurrentSharp: 60
+  NeedSharp: 0
   IsHave: 1
   IsEquip: 0
+  SlotEquipIndex: 0

@@ -25,7 +25,7 @@ public class DeathAndTaxes : BaseSkill
                 break;
 
             case 2:
-                DamageCause = 2.75f;
+                DamageCause = 2.65f;
                 PetrenationArmor = 22.5f;
 
                 MaxHpThreshold = 11;
@@ -34,7 +34,7 @@ public class DeathAndTaxes : BaseSkill
                 break;
 
             case 3:
-                DamageCause = 3f;
+                DamageCause = 2.8f;
                 PetrenationArmor = 25f;
 
                 MaxHpThreshold = 12;
@@ -43,7 +43,7 @@ public class DeathAndTaxes : BaseSkill
                 break;
 
             case 4:
-                DamageCause = 3.25f;
+                DamageCause = 2.95f;
                 PetrenationArmor = 27.5f;
 
                 MaxHpThreshold = 13;
@@ -52,7 +52,7 @@ public class DeathAndTaxes : BaseSkill
                 break;
 
             case 5:
-                DamageCause = 3.5f;
+                DamageCause = 3.2f;
                 PetrenationArmor = 30f;
 
                 MaxHpThreshold = 14;
@@ -85,10 +85,10 @@ public class DeathAndTaxes : BaseSkill
                     targetUnit.BeingAttacked(99999999);
                     currentUnit.Heal(currentUnit.GetPercentMaxHP(MaxHpHealing));
 
-                    //if(Level >= 4)
-                    //    currentUnit.SetCdSkill(0, this.Name);
+                    if (Level >= 4)
+                        currentUnit.SetCdSkill(0, this.Name);
 
-                    if(Level == 5)
+                    if (Level == 5)
                     {
                         currentUnit.IsActioned = false;
                     }

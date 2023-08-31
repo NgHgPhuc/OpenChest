@@ -15,11 +15,31 @@ MonoBehaviour:
   Name: Devastating Charge
   Cooldown: 4
   Icon: {fileID: 21300000, guid: 3fca30edfc79a49ddb13a867c26e19f0, type: 3}
+  Level: 1
   Description: Increase 30% Speed, and 10% on each turn(at least 3 turns), gain a
-    effect (at least 3 turns) that dealing damage equal 10% Attack and 30% Speed
+    effect (at least 3 turns) that dealing true damage equal 10% Attack and 30% Speed
     when attack enemy.
+  SkillLevelEffect:
+  - Increase 30% Speed, and 10% on each turn (at least 3 turns), gain a effect (at
+    least 3 turns) that dealing true damage equal 10% Attack and 30% Speed when attack
+    enemy.
+  - Increase 40% Speed, and 12.5% on each turn (at least 3 turns), gain a effect
+    (at least 3 turns) that dealing true damage equal 10% Attack and 32.5% Speed
+    when attack enemy.
+  - Increase 50% Speed, and 15% on each turn (at least 3 turns), gain a effect (at
+    least 3 turns) that dealing true damage equal 10% Attack and 35% Speed when attack
+    enemy.
+  - Increase 60% Speed, and 17.5% on each turn (at least 3 turns), gain a effect
+    (at least 3 turns) that dealing true damage equal 10% Attack and 37.5% Speed
+    when attack enemy.
+  - Increase 70% Speed, and 20% on each turn (at least 3 turns), gain a effect (at
+    least 3 turns) that dealing true damage equal 10% Attack and 40% Speed when attack
+    enemy.
   range: 3
-  type: 0
+  skillType: 1
+  userType: 0
   CurrentSharp: 60
+  NeedSharp: 0
   IsHave: 1
   IsEquip: 0
+  SlotEquipIndex: 0

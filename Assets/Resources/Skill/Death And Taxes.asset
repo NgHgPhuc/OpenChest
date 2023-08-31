@@ -23,10 +23,14 @@ MonoBehaviour:
   - Attack on an enemy deal 250% Attack Damage and penetrate 20% Defense of them,
     if eneny have less than 10% max hp, currently death and user will heal 10% max
     hp
-  - 
-  - 
-  - 
-  - 
+  - Deal 265% and Penetrate 22.5%, if enemy have less 11% max hp, currenly death,
+    heal 12.5% max hp
+  - Deal 280% and Penetrate 25%, if enemy have less 12% max hp, currenly death, heal
+    15% max hp
+  - Deal 295% and Penetrate 27.5%, if enemy have less 13% max hp, currenly death,
+    heal 17.5% max hp, reset CD to 0 turn
+  - Deal 320% and Penetrate 30%, if enemy have less 14% max hp, currenly death, heal
+    20% max hp, reset CD to 0 turn and have another turn.
   range: 1
   skillType: 1
   userType: 0

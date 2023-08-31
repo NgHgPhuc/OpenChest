@@ -5,14 +5,93 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Defiance Shout", menuName = "Skill/Defiance Shout")]
 public class DefianceShout : BaseSkill
 {
+
+    float DamageCause;
+    float IncreaseDefRate;
+    float IncreaseDefValue;
+
+    float TauntRate;
+
+    float HealingValue;
+    float HealingRate;
+
+    public override void UpgradeSkill_Effect()
+    {
+        switch (Level)
+        {
+            case 1:
+                DamageCause = 0.4f;
+                IncreaseDefRate = 80;
+                IncreaseDefValue = 30;
+
+                TauntRate = 30;
+
+                HealingRate = 0;
+                HealingValue = 0;
+                break;
+
+            case 2:
+                DamageCause = 0.4f;
+                IncreaseDefRate = 100;
+                IncreaseDefValue = 35;
+
+                TauntRate = 35;
+
+                HealingRate = 0;
+                HealingValue = 0;
+
+                break;
+
+            case 3:
+                DamageCause = 0.4f;
+                IncreaseDefRate = 100;
+                IncreaseDefValue = 40;
+
+                TauntRate = 40;
+
+                HealingRate = 0;
+                HealingValue = 0;
+
+                break;
+
+            case 4:
+                DamageCause = 0.4f;
+                IncreaseDefRate = 100;
+                IncreaseDefValue = 45;
+
+                TauntRate = 45;
+
+                HealingRate = 60;
+                HealingValue = 10;
+
+                break;
+
+            case 5:
+                DamageCause = 0.4f;
+                IncreaseDefRate = 100;
+                IncreaseDefValue = 50;
+
+                TauntRate = 50;
+
+                HealingRate = 100;
+                HealingValue = 15;
+
+
+                break;
+
+            default:
+                break;
+        }
+    }
+
     public override void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
     {
         Attack currentUnitAttack = currentUnit.attack();
 
-        currentUnitAttack.DamageCause *= 0.4f;
+        currentUnitAttack.DamageCause *= DamageCause;
 
-        IncreaseDEF_Buff(currentUnit, 30);
-
+        IncreaseDEF_Buff(currentUnit, IncreaseDefRate, IncreaseDefValue);
+        Healing_Buff(currentUnit, HealingRate, HealingValue);
         foreach (FightingUnit targetUnit in ChosenUnit)
             if (targetUnit.stateFighting != FightingUnit.StateFighting.Death)
             {
@@ -23,12 +102,17 @@ public class DefianceShout : BaseSkill
 
                 float TauntRate = UnityEngine.Random.Range(0f, 100f);
                 if (TauntRate < 30)
-                    targetUnit.AddBuff(Taunt_Debuff(currentUnit, targetUnit));
+                    Taunt_Debuff(currentUnit, targetUnit,TauntRate);
             }
     }
 
-    public Buff Taunt_Debuff(FightingUnit currentUnit, FightingUnit targetUnit)
+    public void Taunt_Debuff(FightingUnit currentUnit, FightingUnit targetUnit, float luck)
     {
+
+        float r = UnityEngine.Random.Range(0, 100);
+        if (r > luck)
+            return;
+
         Buff Taunt = new Buff();
 
         Taunt.type = Buff.Type.Taunt;
@@ -52,16 +136,20 @@ public class DefianceShout : BaseSkill
             FightManager.Instance.SetPlayerTargeted(currentUnit);
         };
 
-        return Taunt;
+        targetUnit.AddBuff(Taunt);
     }
 
-    public Buff IncreaseDEF_Buff(FightingUnit currentUnit, float percent)
+    public void IncreaseDEF_Buff(FightingUnit currentUnit, float luck, float percent)
     {
+        float r = UnityEngine.Random.Range(0, 100);
+        if (r > luck)
+            return;
+
         Buff IncreaseDEF = new Buff();
 
         IncreaseDEF.type = Buff.Type.IncreaseDef;
-        IncreaseDEF.duration = 999;
-        IncreaseDEF.ValueChange = currentUnit.basicStatsCharacter.AttackDamage * percent;
+        IncreaseDEF.duration = 1;
+        IncreaseDEF.ValueChange = currentUnit.basicStatsCharacter.DefensePoint * percent;
         IncreaseDEF.SetIcon();
 
         IncreaseDEF.Activation = () =>
@@ -78,11 +166,27 @@ public class DefianceShout : BaseSkill
         {
         };
 
-        return IncreaseDEF;
+        currentUnit.AddBuff(IncreaseDEF);
     }
 
-    public override void UpgradeSkill_Effect()
+    public void Healing_Buff(FightingUnit targetUnit, float luck, float value)
     {
-        throw new System.NotImplementedException();
+        float r = UnityEngine.Random.Range(0, 100);
+        if (r > luck)
+            return;
+
+        Buff Healing = new Buff();
+
+        Healing.type = Buff.Type.Healing;
+        Healing.duration = 2;
+
+        Healing.SetIcon();
+        Healing.Onactivation = () =>
+        {
+            targetUnit.HealingPercentMaxHp(value);
+        };
+
+
+        targetUnit.AddBuff(Healing);
     }
 }

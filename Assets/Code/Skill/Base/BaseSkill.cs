@@ -49,10 +49,6 @@ public abstract class BaseSkill : ScriptableObject
     public bool IsEquip;
     public int SlotEquipIndex;
 
-    private void Awake()
-    {
-        SetAttr();
-    }
     public void SetAttr()
     {
         UpgradeSkill_Effect();//set attr    

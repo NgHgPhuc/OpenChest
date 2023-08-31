@@ -105,9 +105,13 @@ public class TurnManager : MonoBehaviour
         if (this.currentUnit.IsActioned == true)
             Invoke("EndTurnUI", 1f / FightManager.Instance.GameSpeed);
         else
-            FightManager.Instance.AnotherTurn();
+            Invoke("AnotherTurn", 1f / FightManager.Instance.GameSpeed);
     }
 
+    void AnotherTurn()
+    {
+        FightManager.Instance.AnotherTurn();
+    }
     void EndTurnUI()
     {
         this.currentUnit.EndMyTurn();

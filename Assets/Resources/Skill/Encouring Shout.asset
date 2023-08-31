@@ -15,10 +15,25 @@ MonoBehaviour:
   Name: Encouring Shout
   Cooldown: 4
   Icon: {fileID: 21300000, guid: 6fbea4620958946cc9a129ee79cc8e66, type: 3}
+  Level: 1
   Description: Increase 20% Attack Damage, 20% Defense, 20% Speed, 20% Health in
     1 turn for all Ally
+  SkillLevelEffect:
+  - Increase 20% Attack Damage, 20% Defense, 20% Speed, 20% Health in 1 turn for
+    all Ally
+  - Increase 25% Attack Damage, 25% Defense, 25% Speed, 25% Health in 1 turn for
+    all Ally
+  - Increase 30% Attack Damage, 30% Defense, 30% Speed, 30% Health in 1 turn for
+    all Ally
+  - Increase 35% Attack Damage, 235% Defense, 35% Speed, 35% Health in 1 turn for
+    all Ally
+  - Increase 40% Attack Damage, 40% Defense, 40% Speed, 40% Health in 1 turn for
+    all Ally
   range: 4
-  type: 0
+  skillType: 1
+  userType: 0
   CurrentSharp: 40
+  NeedSharp: 0
   IsHave: 0
   IsEquip: 0
+  SlotEquipIndex: 0

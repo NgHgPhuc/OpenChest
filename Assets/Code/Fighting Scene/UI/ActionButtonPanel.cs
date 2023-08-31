@@ -14,6 +14,7 @@ public class ActionButtonPanel : MonoBehaviour
     int CurrentSpeedUp;
 
     public Button AutoButton;
+    public Animator autoButtonAnim;
     bool IsAuto;
     void Start()
     {
@@ -24,7 +25,7 @@ public class ActionButtonPanel : MonoBehaviour
                 if (CurrentChosenButton != b)
                 {
                     CurrentChosenButton = b;
-                    Transform child = b.gameObject.transform.Find("Icon Button");
+                    Transform child = b.transform.Find("Border").Find("Icon Button");
                     chosenEffect.transform.SetParent(child);
                     chosenEffect.transform.position = child.position;
                 }
@@ -39,6 +40,7 @@ public class ActionButtonPanel : MonoBehaviour
 
         IsAuto = false;
         AutoButton.onClick.AddListener(AutoButton_Click);
+        
     }
 
     void SpeedUpButton_Click()
@@ -52,5 +54,7 @@ public class ActionButtonPanel : MonoBehaviour
     {
         IsAuto = !IsAuto;
         FightManager.Instance.SetAuto(IsAuto);
+        string animation = (IsAuto) ? "Auto Button Active" : "Auto Button Idle";
+        autoButtonAnim.Play(animation);
     }
 }

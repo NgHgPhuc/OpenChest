@@ -10,7 +10,6 @@ using PlayFab.ClientModels;
 public class FightManager : MonoBehaviour
 {
     public GameObject ActionPanel;
-    public GameObject SkillPanel;
 
     public List<FightingUnit> PlayerTeam;
     public List<FightingUnit> EnemyTeam;
@@ -153,7 +152,9 @@ public class FightManager : MonoBehaviour
         {
             for(int i = 0; i < All[currentTurn].CurrentCooldown.Count; i++)
             {
-                print(All[currentTurn].CurrentCooldown[i]);
+                if (All[currentTurn].CharacterClone.skills[i].skillType == BaseSkill.SkillType.Passive)
+                    continue;
+
                 if (All[currentTurn].CurrentCooldown[i] > 0)
                     continue;
 
@@ -167,8 +168,6 @@ public class FightManager : MonoBehaviour
                 ChooseAction("Block");
             else ChooseAction("Strike");
         }
-
-        print("ACTION PANEL:" + ActionPanel.activeSelf);
     }
 
     public void ChooseAction(string action)
@@ -193,7 +192,7 @@ public class FightManager : MonoBehaviour
 
         UntargetAllEnemyUI();
         UntargetAllAllyUI();
-        print(PlayerAction);
+
         switch (PlayerAction)
         {
             case "Strike":
@@ -234,6 +233,9 @@ public class FightManager : MonoBehaviour
     private void OnUsingSkillUI(int skillIndex)
     {
         if (All[currentTurn].CurrentCooldown[skillIndex] > 0)
+            return;
+
+        if (All[currentTurn].CharacterClone.skills[skillIndex].skillType == BaseSkill.SkillType.Passive)
             return;
 
         switch (All[currentTurn].CharacterClone.skills[skillIndex].range)
@@ -351,6 +353,9 @@ public class FightManager : MonoBehaviour
         UntargetAllEnemyUI();
         UntargetAllAllyUI();
 
+        IsPlayerTurn = false;
+        ActionPanel.SetActive(false);
+
         switch (All[currentTurn].CharacterClone.skills[skillIndex].range)
         {
             case BaseSkill.Range.OnEnemy: 
@@ -375,10 +380,6 @@ public class FightManager : MonoBehaviour
 
         }
 
-        IsPlayerTurn = false;
-
-        ActionPanel.SetActive(false);
-
         yield break;
 
     }
@@ -390,7 +391,13 @@ public class FightManager : MonoBehaviour
         if (!All[currentTurn].IsTaunted)//not taunted - attack random target
             CurrentPlayerTargeted = EnemyRandomTarget();
 
-        TurnManager.Instance.Attack(All[currentTurn], CurrentPlayerTargeted);
+        //TurnManager.Instance.Attack(All[currentTurn], CurrentPlayerTargeted);
+
+        int currentHP = All[currentTurn].GetPercentHP();
+        float r = UnityEngine.Random.Range(0, 100);
+        if (r > currentHP)
+            All[currentTurn].Block();
+        else TurnManager.Instance.Attack(All[currentTurn], CurrentPlayerTargeted);
     }
 
     FightingUnit EnemyRandomTarget()
@@ -423,8 +430,6 @@ public class FightManager : MonoBehaviour
 
         if (All[currentTurn].team == FightingUnit.Team.Enemy)
             Enemy_AttackAction();
-
-        print("Another Turn");
     }
 
     void ActionInTurn()

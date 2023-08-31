@@ -179,6 +179,7 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         if(Character != null)
         {
             CharacterClone = Character.Clone();
+            CharacterClone.LoadSkills();
             basicStatsCharacter = CharacterClone.Clone();
         }
 
@@ -492,9 +493,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     }
     public void DecreaseMaxHP(float DecreaseMaxHP)
     {
-        this.CharacterClone.HealthPoint -= DecreaseMaxHP;
-        this.MaxHP = this.CharacterClone.HealthPoint;
-        
+        this.MaxHP -= DecreaseMaxHP;
+
         UpdateHealthBar();
     }
 

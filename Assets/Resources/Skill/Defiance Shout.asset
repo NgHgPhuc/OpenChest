@@ -15,10 +15,25 @@ MonoBehaviour:
   Name: Defiance Shout
   Cooldown: 3
   Icon: {fileID: 21300000, guid: 213f00f82b8f84d98838057abbc42e4e, type: 3}
+  Level: 1
   Description: Deal 40% Attack Damage to all enemy, increase 30% Def and have 30%
     chance to taunt enemy
+  SkillLevelEffect:
+  - Deal 40% Attack Damage to all enemy, have 80% to increase 30% Def and have 30%
+    chance to taunt enemy
+  - Deal 40% Attack Damage to all enemy, increase 35% Def and have 35% chance to
+    taunt enemy
+  - Deal 40% Attack Damage to all enemy, increase 40% Def and have 40% chance to
+    taunt enemy
+  - Deal 40% Attack Damage to all enemy, increase 45% Def and have 45% chance to
+    taunt enemy, have 60% to get healing 10% max hp in 2 turn
+  - Deal 40% Attack Damage to all enemy, increase 30% Def and have 30% chance to
+    taunt enemy,have 100% to get healing 15% max hp in 2 turn
   range: 2
-  type: 0
+  skillType: 1
+  userType: 0
   CurrentSharp: 20
+  NeedSharp: 0
   IsHave: 1
   IsEquip: 0
+  SlotEquipIndex: 0
