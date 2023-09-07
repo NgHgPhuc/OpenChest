@@ -129,7 +129,7 @@ MonoBehaviour:
     skills:
     - {fileID: 11400000, guid: 68278dc773d26455c863906859ae37d6, type: 2}
     - {fileID: 11400000, guid: ab8f6b508ce714e5ba7f47f11afbe1ad, type: 2}
-    - {fileID: 11400000, guid: 71205acffd39b474a8a7234f074a428b, type: 2}
+    - {fileID: 11400000, guid: e40746839754e4d2992dcc348226e699, type: 2}
   - AttackDamage: 1000
     HealthPoint: 50000
     DefensePoint: 100

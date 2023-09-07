@@ -15,7 +15,25 @@ MonoBehaviour:
   Name: Vital Dance
   Cooldown: 4
   Icon: {fileID: 21300000, guid: 0e2bb13f3b7334e279b4880ff1829d02, type: 3}
-  Description: Attack on an Enemy deal 180% true damage and will apply BROKEN on,
-    destroy all Def of target in 1 turn.
-  range: 1
-  type: 0
+  Level: 5
+  Description: Attack on an Enemy deal 100% true damage and will apply "BROKEN" on
+    (destroy all Def of target in 1 turn).
+  SkillLevelEffect:
+  - Attack on an Enemy deal 100% true damage and will apply "BROKEN" on (destroy
+    all Def of target in 1 turn).
+  - Attack on an Enemy deal 110% true damage and will apply "BROKEN" on (destroy
+    all Def of target in 1 turn).
+  - Attack on an Enemy deal 120% true damage and will apply "BROKEN" on (destroy
+    all Def of target in 2 turn).
+  - Attack on an Enemy deal 130% true damage and will apply "BROKEN" on (destroy
+    all Def of target in 2 turn).
+  - Attack on All Enemy deal 140% true damage and will apply "BROKEN" on (destroy
+    all Def of target in 2 turn).
+  range: 2
+  skillType: 1
+  userType: 0
+  CurrentSharp: 0
+  NeedSharp: 0
+  IsHave: 0
+  IsEquip: 0
+  SlotEquipIndex: 0

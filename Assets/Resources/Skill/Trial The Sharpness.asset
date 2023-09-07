@@ -15,10 +15,25 @@ MonoBehaviour:
   Name: Trial The Sharpness
   Cooldown: 0
   Icon: {fileID: 21300000, guid: 12e2a0d7c7fed48f3aee682173e25b70, type: 3}
-  Description: Attack all enemy deal 60% attack damage and apply Leech on them, each
-    start turn or being attack will lost 8% max hp
+  Level: 1
+  Description: Attack all enemy deal 40% attack damage and apply Leech on them, each
+    start turn or being attack will lost 8% max hp in 1 turn
+  SkillLevelEffect:
+  - Attack all enemy deal 40% attack damage and apply Leech on them, each start turn
+    or being attack will lost 8% max hp in 1 turn
+  - Attack all enemy deal 40% attack damage and apply Leech on them, each start turn
+    or being attack will lost 9% max hp in 1 turn with 10% petrenation
+  - Attack all enemy deal 40% attack damage and apply Leech on them, each start turn
+    or being attack will lost 10% max hp in 2 turn with 20% petrenation
+  - Attack all enemy deal 40% attack damage and apply Leech on them, each start turn
+    or being attack will lost 10% max hp in 2 turn with 35% petrenation
+  - Attack all enemy deal 40% attack damage and apply Leech on them, each start turn
+    or being attack will lost 10% max hp in 2 turn with 50% petrenation
   range: 2
-  type: 0
+  skillType: 1
+  userType: 0
   CurrentSharp: 0
+  NeedSharp: 0
   IsHave: 0
   IsEquip: 0
+  SlotEquipIndex: 0

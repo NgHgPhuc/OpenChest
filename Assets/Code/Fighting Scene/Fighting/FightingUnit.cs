@@ -82,14 +82,14 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
     float MaxHP;
     public float CurrentHP;
     Image CharacterIcon;
-    Image CharacterOuterLineSignal;
     Image TargetSignal;
     Image InTurnSignal;
     Transform EffectPanel;
     Dictionary<EffectPos, Transform> EffectDict = new Dictionary<EffectPos, Transform>();
     BuffOfUnit buffOfUnit;
     EffectIcon effectIcon;
-
+    GameObject TargetArrow;
+    Image TargetArrowImage;
     //Event Catcher
     public delegate void ActionCatcher(FightingUnit currentUnit, FightingUnit targetUnit, Attack currentAttack, Defense targetDefense);
     public ActionCatcher Unit_Attack;
@@ -131,47 +131,13 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
             InTurnSignal = transform.Find("In Turn Signal").GetComponent<Image>();
         InTurnSignal.gameObject.SetActive(false);
 
-        if (CharacterOuterLineSignal == null)
-            CharacterOuterLineSignal = transform.Find("Character Outliner").GetComponent<Image>();
-        CharacterOuterLineSignal.gameObject.SetActive(false);
+        if (TargetArrow == null)
+            TargetArrow = transform.Find("Target Arrow").gameObject;
+        TargetArrow.SetActive(false);
+
+        if (TargetArrowImage == null)
+            TargetArrowImage = TargetArrow.transform.GetChild(0).GetComponent<Image>();
     }
-
-    private void Update()
-    {
-        //if (!CharacterOuterLineSignal.IsActive())
-        //    return;
-
-        //CharacterOuterLineSignal.material.SetTexture("_MainTex", ConvertSpriteToTexture(CharacterIcon.sprite));
-
-        //Material newMat = new Material(Shader.Find("Shader Graphs/Out"));
-        //newMat.CopyPropertiesFromMaterial(CharacterOuterLineSignal.material);
-        //CharacterOuterLineSignal.material = newMat;
-    }
-
-    //public Texture2D ConvertSpriteToTexture(Sprite sprite)
-    //{
-    //    try
-    //    {
-    //        if (sprite.rect.width != sprite.texture.width)
-    //        {
-    //            Texture2D newText = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
-    //            Color[] colors = newText.GetPixels();
-    //            Color[] newColors = sprite.texture.GetPixels((int)System.Math.Ceiling(sprite.textureRect.x),
-    //                                                         (int)System.Math.Ceiling(sprite.textureRect.y),
-    //                                                         (int)System.Math.Ceiling(sprite.textureRect.width),
-    //                                                         (int)System.Math.Ceiling(sprite.textureRect.height));
-    //            newText.SetPixels(newColors);
-    //            newText.Apply();
-    //            return newText;
-    //        }
-    //        else
-    //            return sprite.texture;
-    //    }
-    //    catch
-    //    {
-    //        return sprite.texture;
-    //    }
-    //}
 
     //INSTANTIATE VALUE OF THIS
     public void Instantiate()
@@ -246,9 +212,6 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
 
         if (InTurnSignal == null)
             InTurnSignal = transform.Find("In Turn Signal").GetComponent<Image>();
-
-        if (CharacterOuterLineSignal == null)
-            CharacterOuterLineSignal = transform.Find("Character Outliner").GetComponent<Image>();
     }
     public void IsTargetUI()
     {
@@ -257,9 +220,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         TargetSignal.gameObject.SetActive(true);
         TargetSignal.color = Color.red;
 
-        CharacterOuterLineSignal.gameObject.SetActive(true);
-        CharacterOuterLineSignal.material.SetColor("_BaseColor", Color.red);
-
+        TargetArrow.SetActive(true);
+        TargetArrowImage.color = Color.red;
         IsTarget = true;
     }
     public void UntargetUI()
@@ -269,8 +231,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         TargetSignal.gameObject.SetActive(false);
         TargetSignal.color = Color.white;
 
-        CharacterOuterLineSignal.gameObject.SetActive(false);
-        CharacterOuterLineSignal.material.SetColor("_BaseColor", Color.white);
+        TargetArrow.SetActive(false);
+        TargetArrowImage.color = Color.white;
 
         IsTarget = false;
     }
@@ -281,8 +243,8 @@ public class FightingUnit : MonoBehaviour, IPointerClickHandler
         TargetSignal.gameObject.SetActive(true);
         TargetSignal.color = Color.green;
 
-        CharacterOuterLineSignal.gameObject.SetActive(true);
-        CharacterOuterLineSignal.material.SetColor("_BaseColor", Color.green);
+        TargetArrow.SetActive(true);
+        TargetArrowImage.color = Color.green;
 
         IsTarget = true;
     }

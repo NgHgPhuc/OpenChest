@@ -15,9 +15,21 @@ MonoBehaviour:
   Name: The Last Lighting
   Cooldown: 3
   Icon: {fileID: 21300000, guid: 89fef0180f7e1476093c7e434c43d9a6, type: 3}
+  Level: 1
   Description: Sacrifice 20% Max HP of Using, and increase 30% Atk for All Ally
+  SkillLevelEffect:
+  - Sacrifice 20% Max HP of Using, and increase 30% Atk for All Ally in 1 turn
+  - Sacrifice 15% Max HP of Using, and increase 35% Atk for All Ally in 1 turn
+  - Sacrifice 10% Max HP of Using, and increase 40% Atk for All Ally in 1 turn
+  - Sacrifice 10% Max HP of Using, and increase 40% Atk for All Ally in 2 turn and
+    have 80% set healing buff in 1 turn (heal 10% max hp)
+  - Sacrifice 10% Max HP of Using, and increase 40% Atk for All Ally in 2 turn and
+    have 100% set healing buff in 2 turn (heal 10% max hp)
   range: 4
-  type: 0
+  skillType: 1
+  userType: 0
   CurrentSharp: 0
+  NeedSharp: 0
   IsHave: 1
   IsEquip: 0
+  SlotEquipIndex: 0

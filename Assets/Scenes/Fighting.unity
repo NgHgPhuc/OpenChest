@@ -2359,11 +2359,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8291679156091051110, guid: 150b3e84204234d27a8f459cc27cdd57, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000016958
+      value: 0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 8291679156091051110, guid: 150b3e84204234d27a8f459cc27cdd57, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.13468
+      value: 0.13468933
       objectReference: {fileID: 0}
     - target: {fileID: 8291679156338793920, guid: 150b3e84204234d27a8f459cc27cdd57, type: 3}
       propertyPath: m_LocalScale.x
@@ -5831,6 +5831,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -0.00012207031
       objectReference: {fileID: 0}
+    - target: {fileID: 8291679155297290685, guid: 150b3e84204234d27a8f459cc27cdd57, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8291679155318218402, guid: 150b3e84204234d27a8f459cc27cdd57, type: 3}
       propertyPath: m_Name
       value: Enemy 4
@@ -7004,7 +7008,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8291679156091051110, guid: 150b3e84204234d27a8f459cc27cdd57, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.0011292
+      value: -0.0011291504
       objectReference: {fileID: 0}
     - target: {fileID: 8291679156091051110, guid: 150b3e84204234d27a8f459cc27cdd57, type: 3}
       propertyPath: m_AnchoredPosition.y

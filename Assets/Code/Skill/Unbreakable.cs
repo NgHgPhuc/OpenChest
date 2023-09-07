@@ -1,23 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 [CreateAssetMenu(fileName = "Unbreakable", menuName = "Skill/Unbreakable")]
 public class Unbreakable : BaseSkill
 {
+    float DefenseValue;
+    float HealingValue;
+
+    float SharingDamage;
+    public override void UpgradeSkill_Effect()
+    {
+        switch(Level)
+        {
+            case 1:
+                DefenseValue = 0.4f;
+                HealingValue = 0.1f;
+                SharingDamage = 0.6f;
+                break;
+
+            case 2:
+                DefenseValue = 0.45f;
+                HealingValue = 0.15f;
+                SharingDamage = 0.55f;
+                break;
+
+            case 3:
+                DefenseValue = 0.5f;
+                HealingValue = 0.2f;
+                SharingDamage = 0.5f;
+                break;
+
+            case 4:
+                DefenseValue = 0.55f;
+                HealingValue = 0.25f;
+                SharingDamage = 0.45f;
+                break;
+
+            case 5:
+                DefenseValue = 0.6f;
+                HealingValue = 0.3f;
+                SharingDamage = 0.4f;
+                break;
+            default:
+                break;
+        }
+    }
+
+
     FightingUnit currentUsing;
     public override void UsingSkill(FightingUnit currentUnit, List<FightingUnit> ChosenUnit)
     {
         this.currentUsing = currentUnit;
-        currentUnit.AddBuff(IncreaseDEF_Buff(currentUnit, 0.4f));
-        currentUnit.AddBuff(Healing_Buff(currentUnit, 0.1f));
+        IncreaseDEF_Buff(currentUnit, DefenseValue);
+        Healing_Buff(currentUnit, HealingValue);
         foreach (FightingUnit f in FightManager.Instance.PlayerTeam)
             if (f != currentUnit)
-                f.AddBuff(Ally_Buff(f));
+                Ally_Buff(f);
 
     }
 
-    public Buff IncreaseDEF_Buff(FightingUnit currentUnit, float percent)
+    public void IncreaseDEF_Buff(FightingUnit currentUnit, float percent)
     {
         Buff IncreaseDEF = new Buff();
 
@@ -41,10 +85,10 @@ public class Unbreakable : BaseSkill
         {
         };
 
-        return IncreaseDEF;
+        currentUnit.AddBuff(IncreaseDEF);
     }
 
-    public Buff Healing_Buff(FightingUnit currentUnit, float percent)
+    public void Healing_Buff(FightingUnit currentUnit, float percent)
     {
         Buff Healing = new Buff();
 
@@ -67,10 +111,10 @@ public class Unbreakable : BaseSkill
             currentUnit.Heal(currentUnit.GetPercentMaxHP(percent*100));
         };
 
-        return Healing;
+        currentUnit.AddBuff(Healing);
     }
 
-    public Buff Ally_Buff(FightingUnit currentUnit)
+    public void Ally_Buff(FightingUnit currentUnit)
     {
         Buff AllyProtection = new Buff();
 
@@ -93,22 +137,17 @@ public class Unbreakable : BaseSkill
         {
         };
 
-        return AllyProtection;
+        currentUnit.AddBuff(AllyProtection);
     }
     public void ShareDamage(FightingUnit HaveNothing, FightingUnit HaveNothing2, Attack EnemyAttack, Defense HaveNothing3)
     {
         Debug.Log(EnemyAttack.DamageCause);
-        float DamageCause = EnemyAttack.DamageCause * 0.4f;
+        float DamageCause = EnemyAttack.DamageCause * (1 - SharingDamage);
         this.currentUsing.OnlyTakenDamage(DamageCause, 0);
 
-        EnemyAttack.DamageCause *= 0.6f;
+        EnemyAttack.DamageCause *= SharingDamage;
 
         Debug.Log(EnemyAttack.DamageCause);
 
-    }
-
-    public override void UpgradeSkill_Effect()
-    {
-        throw new System.NotImplementedException();
     }
 }

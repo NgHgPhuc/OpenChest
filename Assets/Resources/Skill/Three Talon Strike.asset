@@ -15,10 +15,25 @@ MonoBehaviour:
   Name: Three Talon Strike
   Cooldown: 4
   Icon: {fileID: 21300000, guid: e4acf9aed002947b6bcd1fd956fb4d41, type: 3}
-  Description: Attack all enemy total 4 times (All 160% each enemy) and apply a effect
-    on hit.
+  Level: 1
+  Description: Attack 30% all enemy total 4 times (All 120% each enemy) and apply
+    a effect on each hit.
+  SkillLevelEffect:
+  - Attack 30% all enemy total 4 times (All 120% each enemy) and apply a effect on
+    each hit.
+  - Attack 35% all enemy total 4 times (All 140% each enemy) and apply a effect on
+    each hit.
+  - Attack 40% all enemy total 5 times (All 200% each enemy) and apply a effect on
+    each hit.
+  - Attack 45% all enemy total 5 times (All 225% each enemy) and apply a effect on
+    each hit.
+  - Attack 50% all enemy total 6 times (All 300% each enemy) and apply a effect on
+    each hit.
   range: 2
-  type: 0
+  skillType: 1
+  userType: 0
   CurrentSharp: 40
+  NeedSharp: 0
   IsHave: 1
   IsEquip: 0
+  SlotEquipIndex: 0

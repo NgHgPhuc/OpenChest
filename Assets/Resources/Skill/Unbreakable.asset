@@ -15,11 +15,25 @@ MonoBehaviour:
   Name: Unbreakable
   Cooldown: 7
   Icon: {fileID: 21300000, guid: 9ac6b70701cd84241af0fdb21ce60e1a, type: 3}
-  Description: Increase 40% Def and healing 10% Max Hp in 3 turn, apply ALLY effect
-    on all team, each ally being will only takes 60% damage and the using will take
-    the remaining
+  Level: 1
+  Description: Increase 40% Def and healing 10% Max Hp in 3 turn, apply "ALLY" effect
+    on team, each ally being will only takes 60% damage and user will take the remaining.
+  SkillLevelEffect:
+  - Increase 40% Def and healing 10% Max Hp in 3 turn, apply "ALLY" effect on team,
+    each ally being will only takes 60% damage and user will take the remaining.
+  - Increase 45% Def and healing 15% Max Hp in 3 turn, apply "ALLY" effect on team,
+    each ally being will only takes 55% damage and user will take the remaining.
+  - Increase 50% Def and healing 20% Max Hp in 3 turn, apply "ALLY" effect on team,
+    each ally being will only takes 50% damage and user will take the remaining.
+  - Increase 55% Def and healing 25% Max Hp in 3 turn, apply "ALLY" effect on team,
+    each ally being will only takes 45% damage and user will take the remaining.
+  - Increase 60% Def and healing 30% Max Hp in 3 turn, apply "ALLY" effect on team,
+    each ally being will only takes 40% damage and user will take the remaining.
   range: 0
-  type: 0
+  skillType: 1
+  userType: 0
   CurrentSharp: 0
+  NeedSharp: 0
   IsHave: 1
   IsEquip: 0
+  SlotEquipIndex: 0
