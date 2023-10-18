@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: Bola Strike
   Cooldown: 4
   Icon: {fileID: 21300000, guid: 1d22df4b3bcde4f30a7b635e8b1526ee, type: 3}
-  Level: 5
+  Level: 1
   Description: Attack all enemy deal 80% Attack Damage and have 40% to decrease 30%
     Speed
   SkillLevelEffect:
@@ -32,5 +32,5 @@ MonoBehaviour:
   CurrentSharp: 0
   NeedSharp: 0
   IsHave: 0
-  IsEquip: 0
+  IsEquip: 1
   SlotEquipIndex: 0

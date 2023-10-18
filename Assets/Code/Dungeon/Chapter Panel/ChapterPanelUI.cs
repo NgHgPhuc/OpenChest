@@ -102,4 +102,9 @@ public class ChapterPanelUI : MonoBehaviour
         compainPanelArrange.gameObject.SetActive(true);
         compainPanelArrange.CompainArrangeButton();
     }
+
+    private void OnEnable()
+    {
+        TurnTo_InfomationPanel();
+    }
 }

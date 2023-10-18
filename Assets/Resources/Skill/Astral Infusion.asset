@@ -36,5 +36,5 @@ MonoBehaviour:
   CurrentSharp: 80
   NeedSharp: 0
   IsHave: 1
-  IsEquip: 0
+  IsEquip: 1
   SlotEquipIndex: 0

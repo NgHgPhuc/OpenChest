@@ -5584,7 +5584,7 @@ MonoBehaviour:
   IsAuto: 0
   playerTotalDamage: {fileID: 1535483348}
   enemyTotalDamage: {fileID: 1422336049}
-  IsTest: 1
+  IsTest: 0
 --- !u!4 &640741502
 Transform:
   m_ObjectHideFlags: 0

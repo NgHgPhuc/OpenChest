@@ -11,6 +11,7 @@ public class InfoSkillUI : MonoBehaviour
 
     public TextMeshProUGUI SkillName;
     public TextMeshProUGUI Cooldown;
+    public TextMeshProUGUI Level;
     public TextMeshProUGUI Description;
 
     public Button EquipButton;
@@ -18,12 +19,18 @@ public class InfoSkillUI : MonoBehaviour
     public Button UnlockButton;
     public Button UpgradeButton;
 
+    public Button ShowNextLevelButton;
+    public Button ShowPreLevelButton;
+    int currentLevel;
+
     private void Start()
     {
         EquipButton.onClick.AddListener(Equip_ButtonFunc);
         UnequipButton.onClick.AddListener(Unequip_ButtonFunc);
         UnlockButton.onClick.AddListener(Unlock_ButtonFunc);
         UpgradeButton.onClick.AddListener(Upgrade_ButtonFunc);
+        ShowNextLevelButton.onClick.AddListener(ShowNextLevelFunc);
+        ShowPreLevelButton.onClick.AddListener(ShowPreLevelFunc);
     }
 
     void Equip_ButtonFunc()
@@ -54,6 +61,28 @@ public class InfoSkillUI : MonoBehaviour
     void Upgrade_ButtonFunc()
     {
         //upgrade
+    }
+    void ShowNextLevelFunc()
+    {
+        if (currentLevel >= 5)
+            return;
+
+        currentLevel += 1;
+        Description.SetText(skill.SkillLevelEffect[currentLevel-1]);
+        Level.SetText("Level: " + currentLevel);
+        ShowNextLevelButton.gameObject.SetActive(currentLevel != 5);
+        ShowPreLevelButton.gameObject.SetActive(currentLevel != 1);
+    }
+    void ShowPreLevelFunc()
+    {
+        if (currentLevel <= 1)
+            return;
+
+        currentLevel -= 1;
+        Description.SetText(skill.SkillLevelEffect[currentLevel - 1]);
+        Level.SetText("Level: " + currentLevel);
+        ShowNextLevelButton.gameObject.SetActive(currentLevel != 5);
+        ShowPreLevelButton.gameObject.SetActive(currentLevel != 1);
     }
 
     void Update()
@@ -101,12 +130,17 @@ public class InfoSkillUI : MonoBehaviour
 
         SkillName.SetText(skill.Name);
         Cooldown.SetText("CD: " + skill.Cooldown + " Turns");
+        currentLevel = this.skill.Level;
+        Level.SetText("Level: " + currentLevel);
         Description.SetText(skill.Description);
 
         EquipButton.gameObject.SetActive(skill.IsHave && !skill.IsEquip);
         UnequipButton.gameObject.SetActive(skill.IsHave && skill.IsEquip);
         UpgradeButton.gameObject.SetActive(skill.IsHave);
         UnlockButton.gameObject.SetActive(!skill.IsHave);
+
+        ShowNextLevelButton.gameObject.SetActive(currentLevel != 5);
+        ShowPreLevelButton.gameObject.SetActive(currentLevel != 1);
     }
 
     public void TurnOff()
