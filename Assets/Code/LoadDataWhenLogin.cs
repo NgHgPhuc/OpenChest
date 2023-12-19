@@ -7,9 +7,6 @@ using System;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
-using System.Reflection;
-using Unity.VisualScripting;
-using UnityEditor.U2D.Path;
 
 public class LoadDataWhenLogin : MonoBehaviour
 {
